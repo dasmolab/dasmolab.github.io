@@ -1,0 +1,88 @@
+{
+  "awards": [
+    {
+      "date": "2025. 11.",
+      "title_ko": "화물차량 과적 감지기술 도입에 따른 경제성 분석",
+      "title_en": "Economic Analysis of the Introduction of Truck Overload Detection Technology",
+      "venue": "2025 한국교통학회 추계학술발표회 및 정기총회"
+    },
+    {
+      "date": "2025. 4.",
+      "title_ko": "확장된 계획행동이론을 통한 PM 이용자의 교통법규준수 의도 분석",
+      "title_en": "Analysis of PM Users' Intention to Comply with Traffic Laws through Extended Theory of Planned Behavior",
+      "venue": "한국ITS학회 2025년 춘계학술발표회 우수논문상"
+    },
+    {
+      "date": "2025. 3.",
+      "title_ko": "IPA를 통한 도시보호구역의 교통안전시설 우수사례 평가 : 부산광역시 중심으로",
+      "title_en": "Evaluation of Traffic Safety Facilities in School Zones in Busan through IPA",
+      "venue": "2025 한국교통학술대회 춘계학술발표회 우수상"
+    },
+    {
+      "date": "2024. 8.",
+      "title_ko": "신호등의 미래로의 도약 : AI 기반신호 제어시스템 향상",
+      "title_en": "Stepping to the Future Signal: Enhancing Traffic Signal Control Using AI",
+      "venue": "2024 서울시 정보통신 캠퍼스경기연합회 우수상"
+    },
+    {
+      "date": "2024. 4.",
+      "title_ko": "자동주행자동차의 공회전 제어 시스템 환경영향 분석",
+      "title_en": "Analysis of Environmental Effects of Autonomous Vehicle Idling Control System",
+      "venue": "한국ITS학회 2024년 춘계학술발표회 우수논문상"
+    },
+    {
+      "date": "2024. 4.",
+      "title_ko": "AI 기반 신호최적화 방법 개발 및 평가",
+      "title_en": "Development and Evaluation of AI-Based Traffic Signal Optimization Method",
+      "venue": "한국ITS학회 2024년 춘계학술발표회 대학생 우수논문 우수상"
+    },
+    {
+      "date": "2021. 2.",
+      "title_ko": "ADAS 데이터 기반 자동주행자동차 모빌리티 서비스 개발 및 평가",
+      "title_en": "Development and Evaluation of Mobility Service of Autonomous Vehicles Based on ADAS Data",
+      "venue": "대한교통학회 제84회 학술발표회 우수논문상"
+    },
+    {
+      "date": "2020. 10.",
+      "title_ko": "마이크로 모빌리티(Micro-mobility)의 이용 활성화를 통한 부산지역 대중교통 서비스 개선 방안 연구",
+      "title_en": "Improvement of Public Transit Services Using Micro Mobility Modes in Busan",
+      "venue": "대한교통학회 제83회 학술발표회 우수논문상"
+    },
+    {
+      "date": "2020. 6.",
+      "title_ko": "차량마일수 기반 과세 도입에 따른 운전자 행동 모형 개발",
+      "title_en": "Development of Driver Behavior Model based on Vehicle Miles Traveled (VMT) Tax Introduction",
+      "venue": "대한교통학회 제82회 학술발표회 우수논문상"
+    },
+    {
+      "date": "2019. 4.",
+      "title_ko": "ADAS 기반 활용한 교통류 추정의 신뢰성 분석 - 시뮬레이션 방법을 중심으로",
+      "title_en": "Study on Reliability Analysis of Estimated Traffic Flow with ADAS Using Simulation",
+      "venue": "한국ITS학회 2019년 춘계학술발표회 우수논문상"
+    },
+    {
+      "date": "2016. 9.",
+      "title_ko": "자동차 공회전 제어에 따른 온실가스감축효과 영향 분석",
+      "title_en": "Study on Effects of Car Idling Control on Greenhouse Gas Emission Reduction",
+      "venue": "대한교통학회 제75회 학술발표회 우수논문상"
+    },
+    {
+      "date": "2014. 10.",
+      "title_ko": "Internet of Cars through Community V2V and V2X Mobile Routers",
+      "title_en": "",
+      "venue": "한국ITS학회 2014년 추계학술발표회 우수논문상"
+    },
+    {
+      "date": "2013. 2",
+      "title_ko": "Connected Vehicle을 이용한 Smart Roundabout의 개발",
+      "title_en": "Development of Smart Roundabout Using Connected Vehicle",
+      "venue": "대한교통학회 제68회 학술발표회 우수논문상"
+    },
+    {
+      "date": "2007. 6.",
+      "title_ko": "Ad Hoc Distributed Simulations",
+      "title_en": "",
+      "venue": "Best Paper Award at Conference: 21st International Workshop on Principles of Advanced and Distributed Simulation (PADS'07)"
+    }
+  ]
+}

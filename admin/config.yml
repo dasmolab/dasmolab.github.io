@@ -1,0 +1,239 @@
+# ===========================================================================
+#  DASMOLabs 콘텐츠 관리(CMS) 설정 — Sveltia CMS
+#  이 파일은 "어떤 내용을 어떤 양식으로 편집할지"를 정의합니다.
+#  로그인한(저장소 쓰기권한이 있는) 사람만 /admin 에서 편집·저장할 수 있습니다.
+# ===========================================================================
+
+# (선택) VS Code 등에서 자동완성/검증을 받기 위한 줄
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+backend:
+  name: github
+  repo: dasmolab/dasmolab.github.io   # ★ 조직명/저장소명. 조직을 'dasmolab'이 아닌 다른 이름으로 만들었다면
+                                       #    둘 다 그 이름으로 바꾸세요 (예: dasmolabs/dasmolabs.github.io)
+  branch: main                 # GitHub Pages가 배포하는 브랜치 (항상 명시; 생략하면 master로 간주됨)
+  # ── 아래 base_url은 "GitHub으로 로그인" 버튼용입니다. ──
+  #   1단계(빠른 테스트): 아래 줄을 주석(#)으로 둔 채, /admin 에서 "Sign in with Token"으로 먼저 확인.
+  #   2단계(팀 로그인): SETUP-GUIDE.md의 Cloudflare Worker 배포 후, 아래 줄의 #을 지우고
+  #                     본인 Worker 주소로 바꾼 뒤 저장하세요. (끝에 /callback 붙이지 않음, 슬래시로 끝내지 않음)
+  # base_url: https://sveltia-cms-auth.본인서브도메인.workers.dev
+
+# 업로드한 이미지가 저장되는 위치(저장소 내 경로)와 사이트에서 불러오는 경로
+media_folder: assets/uploads
+public_folder: /assets/uploads
+
+# 편집 화면 언어(라벨은 이미 한국어로 작성했으므로 표시는 자동)
+locale: ko
+
+collections:
+  # ───────────────────────────── 사이트 기본정보 ─────────────────────────────
+  - name: site
+    label: ⚙️ 사이트 기본정보
+    delete: false
+    files:
+      - name: general
+        label: 기본 정보 · 소개 · 연구분야
+        file: data/site.json
+        fields:
+          - { name: lab_abbr,    label: 약칭(로고 옆 표시), widget: string, default: DASMOLabs }
+          - { name: lab_name_ko, label: 연구실명(국문), widget: string }
+          - { name: lab_name_en, label: 연구실명(영문), widget: string }
+          - { name: tagline_en,  label: 태그라인(영문), widget: string, required: false }
+          - { name: intro1, label: 소개 문단 1, widget: text }
+          - { name: intro2, label: 소개 문단 2, widget: text, required: false }
+          - name: research_topics
+            label: 연구 분야 카드
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { name: icon,  label: 아이콘(이모지), widget: string, required: false, default: "▣" }
+              - { name: title, label: 제목, widget: string }
+              - { name: desc,  label: 설명, widget: text, required: false }
+              - { name: tags,  label: 키워드 태그, widget: list, required: false }
+          - { name: classes_undergrad, label: 학부 강의 과목, widget: list }
+          - { name: classes_grad,      label: 대학원 강의 과목, widget: list }
+          - { name: address, label: 주소, widget: string }
+          - { name: phone,   label: 전화번호, widget: string }
+          - { name: email,   label: 대표 이메일, widget: string }
+          - { name: office,  label: 연구실 위치, widget: string, required: false }
+          - { name: logo,    label: 로고 이미지(선택), widget: image, required: false }
+
+  # ───────────────────────────── 교수 소개 ─────────────────────────────
+  - name: professor
+    label: 👤 교수 소개
+    delete: false
+    files:
+      - name: prof
+        label: 교수 정보
+        file: data/professor.json
+        fields:
+          - { name: name_ko, label: 이름(국문), widget: string }
+          - { name: name_en, label: 이름(영문), widget: string }
+          - { name: title,   label: 직위, widget: string }
+          - { name: photo,   label: 사진, widget: image, required: false }
+          - { name: fields,  label: 전공분야, widget: string, required: false }
+          - { name: phone,   label: 연구실 전화, widget: string, required: false }
+          - { name: email,   label: 이메일, widget: string, required: false }
+          - { name: office,  label: 연구실 위치, widget: string, required: false }
+          - name: education
+            label: 학력
+            widget: list
+            summary: "{{fields.place}}"
+            fields:
+              - { name: period, label: 기간, widget: string }
+              - { name: place,  label: 기관 · 전공, widget: string }
+              - { name: degree, label: 학위, widget: string, required: false }
+              - { name: thesis, label: 학위논문, widget: text, required: false }
+          - name: careers
+            label: 주요 경력
+            widget: list
+            summary: "{{fields.what}}"
+            fields:
+              - { name: period, label: 기간, widget: string }
+              - { name: what,   label: 내용, widget: string }
+          - name: societies
+            label: 학회활동
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { name: name,     label: 학회명, widget: string }
+              - { name: position, label: 직위, widget: string, required: false }
+              - { name: note,     label: 비고, widget: string, required: false }
+          - name: media
+            label: 언론활동
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { name: date,  label: 일자, widget: string, required: false }
+              - { name: title, label: 제목, widget: string }
+              - { name: url,   label: 링크(URL), widget: string, required: false }
+          - name: committees
+            label: 대외 위원회 활동
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { name: period, label: 기간, widget: string, required: false }
+              - { name: name,   label: 위원회명, widget: string }
+
+  # ───────────────────────────── 구성원 ─────────────────────────────
+  - name: members
+    label: 👥 구성원 (Members)
+    delete: false
+    files:
+      - name: members
+        label: 구성원 목록
+        file: data/members.json
+        fields:
+          - name: members
+            label: 구성원
+            widget: list
+            summary: "{{fields.name_ko}} — {{fields.group}}/{{fields.level}}"
+            fields:
+              - { name: name_ko, label: 이름(국문), widget: string }
+              - { name: name_en, label: 이름(영문), widget: string, required: false }
+              - { name: group, label: 구분, widget: select, options: [current, alumni], default: current }
+              - { name: level, label: 과정/학위, widget: select, options: [PhD, Master, Undergraduate, Bachelor] }
+              - { name: photo, label: 사진, widget: image, required: false }
+              - { name: email, label: 이메일, widget: string, required: false }
+              - { name: affiliation, label: 소속, widget: string, required: false }
+              - { name: period, label: 재학기간 (현재 구성원), widget: string, required: false }
+              - { name: grad_year, label: 졸업년도 (졸업생), widget: string, required: false }
+              - { name: degree, label: 학위명 (졸업생), widget: string, required: false }
+              - { name: thesis, label: 논문명 (졸업생), widget: text, required: false }
+
+  # ───────────────────────────── 프로젝트 ─────────────────────────────
+  - name: projects
+    label: 📁 프로젝트 (Projects)
+    delete: false
+    files:
+      - name: projects
+        label: 연구 프로젝트 목록
+        file: data/projects.json
+        fields:
+          - name: projects
+            label: 프로젝트
+            widget: list
+            summary: "{{fields.period}} — {{fields.title}}"
+            fields:
+              - { name: period, label: 연구기간, widget: string }
+              - { name: title,  label: 과제명, widget: text }
+              - { name: org,    label: 지원기관, widget: string, required: false }
+
+  # ───────────────────────────── 논문 ─────────────────────────────
+  - name: publications
+    label: 📄 논문 (Publications)
+    delete: false
+    files:
+      - name: publications
+        label: 논문 목록
+        file: data/publications.json
+        fields:
+          - name: publications
+            label: 논문
+            widget: list
+            summary: "{{fields.citation}}"
+            fields:
+              - { name: category, label: 구분, widget: select, options: [International, Domestic, Other, Books], default: International }
+              - { name: citation, label: 서지정보(전체 문장), widget: text }
+              - { name: sci,  label: SCI급 표시, widget: boolean, default: false, required: false }
+              - { name: link, label: 링크(URL, 선택), widget: string, required: false }
+
+  # ───────────────────────────── 학술대회 ─────────────────────────────
+  - name: conferences
+    label: 🎤 학술대회 (Conferences)
+    delete: false
+    files:
+      - name: conferences
+        label: 학술대회 발표 목록
+        file: data/conferences.json
+        fields:
+          - name: conferences
+            label: 발표
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { name: category,   label: 구분, widget: select, options: [International, Domestic], default: Domestic }
+              - { name: title,      label: 제목, widget: text }
+              - { name: conference, label: 학술대회명, widget: string }
+              - { name: date,       label: 일자, widget: string, required: false }
+
+  # ───────────────────────────── 특허 ─────────────────────────────
+  - name: patents
+    label: 🔖 특허 (Patents)
+    delete: false
+    files:
+      - name: patents
+        label: 지식재산권 목록
+        file: data/patents.json
+        fields:
+          - name: patents
+            label: 항목
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { name: category,  label: 구분, widget: select, options: [Application, Registration, Software], default: Application }
+              - { name: name,      label: 지식재산권명, widget: text }
+              - { name: scope,     label: 국내/국외, widget: string, required: false, default: 국내 }
+              - { name: type,      label: 종류(특허 등), widget: string, required: false }
+              - { name: date,      label: 일자, widget: string, required: false }
+              - { name: number,    label: 출원/등록번호, widget: string, required: false }
+              - { name: inventors, label: 발명인, widget: string, required: false }
+
+  # ───────────────────────────── 수상 ─────────────────────────────
+  - name: awards
+    label: 🏆 수상 (Awards)
+    delete: false
+    files:
+      - name: awards
+        label: 수상 목록
+        file: data/awards.json
+        fields:
+          - name: awards
+            label: 수상
+            widget: list
+            summary: "{{fields.date}} — {{fields.title_ko}}"
+            fields:
+              - { name: date,     label: 일자, widget: string }
+              - { name: title_ko, label: 제목(국문), widget: text }
+              - { name: title_en, label: 제목(영문), widget: text, required: false }
+              - { name: venue,    label: 시상 · 학술대회, widget: string, required: false }

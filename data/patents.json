@@ -1,0 +1,67 @@
+{
+  "patents": [
+    {
+      "category": "Application",
+      "name": "밀집 알람 시스템 및 방법",
+      "scope": "국내",
+      "type": "특허",
+      "date": "2024. 1. 8.",
+      "number": "10-2024-0002733",
+      "inventors": "김회경, 정지효, 김소윤, 차정은"
+    },
+    {
+      "category": "Application",
+      "name": "자동차 공회전 제어 시스템 및 제어방법",
+      "scope": "국내",
+      "type": "특허",
+      "date": "2024. 1. 8.",
+      "number": "10-2024-0002705",
+      "inventors": "김회경"
+    },
+    {
+      "category": "Application",
+      "name": "노선버스 정차 및 출입문 개폐 안전 제어 시스템 및 방법",
+      "scope": "국내",
+      "type": "특허",
+      "date": "2014. 4. 17.",
+      "number": "10-2015-0120125",
+      "inventors": "권태정, 김회경"
+    },
+    {
+      "category": "Application",
+      "name": "주행거리세 산정 방법, 애플리케이션 및 장치",
+      "scope": "국내",
+      "type": "특허(소프트웨어)",
+      "date": "2020. 3. 31.",
+      "number": "10-2020-0039168",
+      "inventors": "김회경, 김민정, 김아름, 우보람, 정대한"
+    },
+    {
+      "category": "Application",
+      "name": "개인형 이동수단 공유 서비스와 대중교통간 환승요금 산출 방법",
+      "scope": "국내",
+      "type": "특허",
+      "date": "2021. 10. 27",
+      "number": "10-2021-0144141",
+      "inventors": "김회경, 김민정, 김준희, 최은수"
+    },
+    {
+      "category": "Registration",
+      "name": "노선버스 정차 및 출입문 개폐 안전 제어 시스템 및 방법",
+      "scope": "국내",
+      "type": "특허",
+      "date": "2015. 10. 27.",
+      "number": "10-2015-0120125",
+      "inventors": "권태정, 김회경"
+    },
+    {
+      "category": "Software",
+      "name": "중앙집중식 자율주행자동차 모빌리티 서비스 프로그램",
+      "scope": "국내",
+      "type": "저작권등록(소프트웨어)",
+      "date": "2021. 2. 23.",
+      "number": "C-2021-009972",
+      "inventors": "김회경, 김민정, 김아름, 우보람, 정대한"
+    }
+  ]
+}

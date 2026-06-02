@@ -1,0 +1,53 @@
+{
+  "lab_abbr": "DASMOLabs",
+  "lab_name_ko": "동아대학교 도시공학과 교통공학연구실",
+  "lab_name_en": "Dong-A Smart Mobility Laboratory",
+  "tagline_en": "Smart Mobility · ITS · MaaS",
+  "intro1": "동아대학교 도시공학과 교통공학연구실은 4차산업혁명 시대 ICT 기술의 급속한 발전에 발맞춰 지능형교통체계(ITS, Intelligent Transportation System) 분야를 연구하고 있으며, 특히 미시적 시뮬레이션 기법을 활용한 개별 차량의 주행과 이동행태의 분석을 통해 각종 교통시설 및 운영에 대한 평가를 수행하고 있습니다.",
+  "intro2": "또한 교통분야 패러다임의 변화 속에서 지속가능한 도시교통의 실현을 위한 친환경 교통수단, 스마트 모빌리티(Smart Mobility), MaaS(Mobility-as-a-Service) 등의 분야를 연구하고 있으며, 주로 이용자 측면의 안전성과 편리성 평가, 그리고 운영상의 효율성과 적용가능성에 대해 제언하는 역할을 수행하고 있습니다.",
+  "research_topics": [
+    {
+      "icon": "🚗",
+      "title": "교통공학",
+      "desc": "운전자 행태, TSM, 교통류 분석 등",
+      "tags": ["운전자 행태", "TSM", "교통류 분석"]
+    },
+    {
+      "icon": "📡",
+      "title": "ITS",
+      "desc": "C-ITS, V2X, 신교통 시스템 등",
+      "tags": ["C-ITS", "V2X", "신교통 시스템"]
+    },
+    {
+      "icon": "🚦",
+      "title": "교통신호",
+      "desc": "교통신호 제어, 운영, 관제, 신호최적화 등",
+      "tags": ["신호 제어", "관제", "신호최적화"]
+    },
+    {
+      "icon": "🛡️",
+      "title": "교통안전",
+      "desc": "교통사고 이력자료 분석, 교통안전시설 평가, 소방출동 최적화 등",
+      "tags": ["사고 분석", "안전시설 평가", "소방출동 최적화"]
+    },
+    {
+      "icon": "🖥️",
+      "title": "교통 시뮬레이션",
+      "desc": "VISSIM, VISSIM COM User Interface 등",
+      "tags": ["VISSIM", "COM Interface"]
+    },
+    {
+      "icon": "🛴",
+      "title": "Smart Mobility",
+      "desc": "Personal mobility, Micro-mobility, MaaS(Mobility-as-a-Service), 자율주행 자동차 등",
+      "tags": ["Personal Mobility", "MaaS", "자율주행"]
+    }
+  ],
+  "classes_undergrad": ["교통공학", "교통계획", "지능형교통시스템(ITS)", "교통학개론", "도시시설계획", "졸업설계"],
+  "classes_grad": ["교통공학", "교통안전", "대중교통", "교통류 이론"],
+  "address": "부산시 사하구 하단동 동아대학교 승학캠퍼스 공대1호관 1404호",
+  "phone": "051-200-7665",
+  "email": "hoekim@dau.ac.kr",
+  "office": "동아대학교 승학캠퍼스 공대1호관 1404호(S03-0404)",
+  "logo": "assets/img/logo_231027.jpg"
+}

@@ -1,0 +1,328 @@
+{
+  "members": [
+    {
+      "name_ko": "라기례",
+      "name_en": "Ra, Girye",
+      "group": "current",
+      "level": "PhD",
+      "photo": "assets/uploads/240312_1.png",
+      "email": "skdb1@korea.kr",
+      "affiliation": "김해시 대중교통과",
+      "period": "2024. 3. ~ 현재"
+    },
+    {
+      "name_ko": "정지효",
+      "name_en": "Jung, Jihyo",
+      "group": "current",
+      "level": "PhD",
+      "photo": "assets/uploads/240312_3.png",
+      "email": "gihyo123450@gmail.com",
+      "affiliation": "동아대학교 도시공학과 학원",
+      "period": "2026. 3. ~ 현재"
+    },
+    {
+      "name_ko": "이은정",
+      "name_en": "Lee, Eunjung",
+      "group": "current",
+      "level": "Master",
+      "photo": "assets/uploads/20240516.png",
+      "email": "nj4444@naver.com",
+      "affiliation": "동아대학교 도시공학과 대학원",
+      "period": "2024. 3. ~ 현재"
+    },
+    {
+      "name_ko": "정지효",
+      "name_en": "Jung, Jihyo",
+      "group": "current",
+      "level": "Master",
+      "photo": "assets/uploads/20230103_01.jpg",
+      "email": "gihyo123450@gmail.com",
+      "affiliation": "동아대학교 도시공학과 대학원",
+      "period": "2024. 3. ~ 현재"
+    },
+    {
+      "name_ko": "김태규",
+      "name_en": "Kim, Taegyu",
+      "group": "current",
+      "level": "Master",
+      "photo": "assets/uploads/240312_2.png",
+      "email": "tae99@korea.kr",
+      "affiliation": "김해시 대중교통과",
+      "period": "2024. 3. ~ 현재"
+    },
+    {
+      "name_ko": "차정은",
+      "name_en": "Cha, Jungeun",
+      "group": "current",
+      "level": "Master",
+      "photo": "assets/uploads/1200005.jpg",
+      "email": "chaje0119@naver.com",
+      "affiliation": "동아대학교 도시공학과 학부",
+      "period": "2023. 1. ~ 현재"
+    },
+    {
+      "name_ko": "이정빈",
+      "name_en": "Lee, Jeongbin",
+      "group": "current",
+      "level": "Undergraduate",
+      "photo": "assets/uploads/20260205-1.png",
+      "email": "jeongbin567@gmail.com",
+      "affiliation": "동아대학교 도시공학과 학부",
+      "period": "2025. 12. ~ 현재"
+    },
+    {
+      "name_ko": "조수린",
+      "name_en": "Cho, Surin",
+      "group": "current",
+      "level": "Undergraduate",
+      "photo": "assets/uploads/20260205-2.png",
+      "email": "surin0822@naver.com",
+      "affiliation": "동아대학교 도시공학과 학부",
+      "period": "2025. 12. ~ 현재"
+    },
+    {
+      "name_ko": "김동은",
+      "name_en": "Kim, Dongeun",
+      "group": "current",
+      "level": "Undergraduate",
+      "photo": "assets/uploads/20260205-3.png",
+      "email": "dek135@naver.com",
+      "affiliation": "동아대학교 도시공학과 학부",
+      "period": "2025. 12. ~ 현재"
+    },
+    {
+      "name_ko": "이준휘",
+      "name_en": "Lee, Junhwi",
+      "group": "current",
+      "level": "Undergraduate",
+      "photo": "assets/uploads/20250108.png",
+      "email": "junhwi01@naver.com",
+      "affiliation": "동아대학교 도시공학과 학부",
+      "period": "2024. 10. ~ 현재"
+    },
+    {
+      "name_ko": "안유주",
+      "name_en": "Ahn, Yuju",
+      "group": "current",
+      "level": "Undergraduate",
+      "photo": "assets/uploads/20250410.png",
+      "email": "stella1346@naver.com",
+      "affiliation": "동아대학교 도시공학과 학부",
+      "period": "2025. 3. ~ 현재"
+    },
+    {
+      "name_ko": "김민정",
+      "name_en": "Kim, Minjeong",
+      "group": "alumni",
+      "level": "PhD",
+      "photo": "assets/uploads/20230921_img.jpg",
+      "email": "kmlalswjd@hanmail.net; mjkim@chari.re.kr",
+      "affiliation": "창원시정연구원 도시공간연구실 책임연구원",
+      "grad_year": "2022. 2.",
+      "degree": "공학박사",
+      "thesis": "친환경 자동차 보급에 따른 주행거리세 기반 행태모형의 개발과 적용 / Development and Application of Vehicle Miles Traveled(VMT) Tax-based Behavioral Model Depending on the Dissemination of Eco-friendly Vehicles"
+    },
+    {
+      "name_ko": "박종서",
+      "name_en": "Park, Jongseo",
+      "group": "alumni",
+      "level": "PhD",
+      "photo": "assets/uploads/0209_04.jpg",
+      "email": "jsp6633@korea.kr",
+      "affiliation": "(전)양산시 도시계획국장",
+      "grad_year": "2016. 2.",
+      "degree": "공학박사",
+      "thesis": "교통안전성 평가 모형의 구축에 관한 연구 : 부산광역시를 중심으로 / A Study on the Construction of Traffic Safety Evaluation Model Focused on Busan Metropolitan City"
+    },
+    {
+      "name_ko": "유초롱",
+      "name_en": "You, Chorong",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/1200002.jpg",
+      "email": "zzorong@koroad.or.kr",
+      "affiliation": "도로교통공단 부산광역시지부 안전시설부",
+      "grad_year": "2024. 2.",
+      "thesis": "택시 교통사고 심각도 영향요인 분석에 관한 연구 : 부산광역시 교차로를 중심으로 / Analysis of Factors Influencing the Severity of Taxi Traffic Accident at the Intersection of Busan"
+    },
+    {
+      "name_ko": "송수정",
+      "name_en": "Song, Soo Jeong",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/1200003.jpg",
+      "email": "nuntudong@koroad.or.kr",
+      "affiliation": "도로교통공단 부산광역시지부 안전시설부",
+      "grad_year": "2024. 2.",
+      "thesis": "어린이보호구역 교통안전시설물 설치 개선방안에 대한 연구 : 부산광역시를 중심으로 / A Study on the Improvement of the Safety Facility Installation in School Zone, Focused on Busan Metropolitan City"
+    },
+    {
+      "name_ko": "정일근",
+      "name_en": "Jung, Il Keun",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/1027_01.png",
+      "email": "darkjik@naver.com",
+      "affiliation": "도로교통공단 부산광역시지부 안전시설부 과장",
+      "grad_year": "2023. 8.",
+      "thesis": "우회전 신호 운영방식에 따른 이동성 및 안전성 평가에 관한 연구 / A Study on Efficiency and Safety Evaluation Based on Right-turn Operation"
+    },
+    {
+      "name_ko": "정대한",
+      "name_en": "Jeong, Daehan",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/0209_01.jpg",
+      "email": "shvoddl@naver.com",
+      "affiliation": "신명이앤씨(주) 교통계획부",
+      "grad_year": "2021. 2.",
+      "thesis": "ADAS 데이터 기반 자율주행자동차 모빌리티 서비스의 개발과 평가 / Development and Evaluation of Mobility Service of Autonomous Vehicles Based on ADAS Data"
+    },
+    {
+      "name_ko": "우보람",
+      "name_en": "Woo, Boram",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/0209_02.jpg",
+      "email": "wlgus_93@naver.com",
+      "affiliation": "한국교통연구원 종합교통연구본부 연구원",
+      "grad_year": "2021. 2.",
+      "thesis": "화재 출동 지체 요인 분석에 관한 연구 : 부산광역시를 중심으로 / Analysis of Factors Associated with Fire Mobilization Delay, Focused on Busan Metropolitan City"
+    },
+    {
+      "name_ko": "김아름",
+      "name_en": "Kim, Ahreum",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/0209_03.jpg",
+      "email": "dkfma7895@naver.com",
+      "affiliation": "한국교통연구원 광역·도시교통연구본부 연구원",
+      "grad_year": "2021. 2.",
+      "thesis": "경사를 고려한 마이크로 모빌리티 수단의 대중교통 서비스 개선에 대한 평가 : 부산광역시를 중심으로 / An Evaluation of Micro Mobility Modes on the Improvement of Public Transit Service Considering Slope, Focused on Busan Metropolitan City"
+    },
+    {
+      "name_ko": "안우성",
+      "name_en": "Ahn, Woosung",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/0209_07.jpg",
+      "email": "woosung5737@naver.com",
+      "affiliation": "교통경찰/경찰청 소속",
+      "grad_year": "2016. 2.",
+      "degree": "공학석사",
+      "thesis": "부산광역시 노인보호구역 평가와 지정 방법 개선에 관한 연구 / Evaluation of Silver Zone and Improvement of its Designation Method Focused on Busan Metropolitan City"
+    },
+    {
+      "name_ko": "허민",
+      "name_en": "Heo, Min",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/0209_06.jpg",
+      "email": "cost@deri.or.kr",
+      "affiliation": "동양경제연구원",
+      "grad_year": "2014. 2.",
+      "degree": "공학석사",
+      "thesis": "교통정보 제공 매체 선택 모형의 개발에 관한 연구 / A Study on Choice Model Development of Traffic Information Provision System"
+    },
+    {
+      "name_ko": "런위",
+      "name_en": "Ren, Yu",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/0209_05.jpg",
+      "email": "specialboy88@naver.com",
+      "affiliation": "㈜거원엔지니어링",
+      "grad_year": "2013. 8.",
+      "degree": "공학석사",
+      "thesis": "단속류 교통류의 노변기지국 적정거리 평가에 관한 연구 / A Study on Evaluation of Optimal Roadside Equipment Spacing in Interrupted Traffic States"
+    },
+    {
+      "name_ko": "공서준",
+      "name_en": "Kong, Seojun",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/1200020.jpg",
+      "email": "gsp3212@naver.com",
+      "affiliation": "스튜디오 갈릴레이 모빌리티, 컨설팅 사업본부, 빅데이터분석팀 연구원",
+      "grad_year": "2023. 2.",
+      "degree": "공학사"
+    },
+    {
+      "name_ko": "김준희",
+      "name_en": "Kim, Junhee",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/1200021.jpg",
+      "email": "agurt130@naver.com; dgenc@choi.com",
+      "affiliation": "㈜대건이엔씨 교통계획팀 사원",
+      "grad_year": "2023. 2.",
+      "degree": "공학사"
+    },
+    {
+      "name_ko": "최은수",
+      "name_en": "Choi, Eunsoo",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/1200022.jpg",
+      "email": "eunsoo1116@hanmail.net; eschoii1116@sinmyeong.co.kr",
+      "affiliation": "신명이엔씨(주) 교통계획1부 사원",
+      "grad_year": "2023. 2.",
+      "degree": "공학사"
+    },
+    {
+      "name_ko": "박성훈",
+      "name_en": "Park, Sunghoon",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/0419_01.png",
+      "email": "tkxksgoa123@naver.com",
+      "affiliation": "부산광역시버스운송사업조합",
+      "grad_year": "2022. 2.",
+      "degree": "공학사"
+    },
+    {
+      "name_ko": "최일송",
+      "name_en": "Choi, Ilsong",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/0209_10.jpg",
+      "email": "poiu789kr@naver.com",
+      "affiliation": "도로교통공단 울산경남지부 안전조사운영부",
+      "grad_year": "2019. 2.",
+      "degree": "공학사"
+    },
+    {
+      "name_ko": "신민정",
+      "name_en": "Shin, Minjeong",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/0209_11.jpg",
+      "email": "wjd5073@daum.net",
+      "affiliation": "시케인엔지니어링 교통계획부",
+      "grad_year": "2019. 2.",
+      "degree": "공학사"
+    },
+    {
+      "name_ko": "양태양",
+      "name_en": "Yang, Taeyang",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/0209_09.jpg",
+      "email": "ty9809@naver.com",
+      "affiliation": "한국교통연구원 교통빅데이터연구본부 국가교통DB센터",
+      "grad_year": "2018. 2.",
+      "degree": "공학사"
+    },
+    {
+      "name_ko": "강대호",
+      "name_en": "Kang, Daeho",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/0209_08.jpg",
+      "email": "szeretlek92@naver.com",
+      "affiliation": "우미건설",
+      "grad_year": "2017. 2.",
+      "degree": "공학사"
+    }
+  ]
+}

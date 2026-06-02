@@ -1,0 +1,269 @@
+{
+  "publications": [
+    {
+      "category": "International",
+      "citation": "Lee, S., Choi, B., Kwon, W., Cha, J., Jung, J., Kim, H. K.(2025), Optimal Traffic Signal Control for an Atypical Isolated Intersection Using Composite AI Model, International Journal of Urban Sciences, Accepted for Publication.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Cha, J., Lee, S., Kim, H. K. (2025). Deep Learning-based Detection and Assessment of Road Damage Caused by Disaster with Satellite Imagery, Applied Sciences, 15(14):7669.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Kim, H. K., Kim, A., Chung, Y. (2025). How Much does the Introduction of Micromobility in Hilly Cities Improve Public Transportation Services? A Case Study of Busan, Korea, Cities, 166.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Yoon, H, Kim, H. K., Kim, S. (2025). PPDD: Egocentric Crack Segmentation in the Port Pavement with Deep Learning-Based Methods, Applied Sciences, 15(10):2446.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Kim, H. K., (2024). The Environmental Benefit of Automatic Idling Control System of Connected and Autonomous Vehicles (CAVs), Applied Sciences, 14(11):4338.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Kim, H. K., Chung, Y. S., Kim, M. J. (2021). Effect of Enhanced ADAS Camera Capability on Traffic State Estimation, sensors 2021, 21(6), 1996.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Woo, B. R., Kim, H. Y., Kim, J. S., Baek, H. Y., Kim, H. K. (2021). Influence of solar glare intensity on vehicular speed variance, Journal of Transport & Health, 20.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Yang, C. H., Kim, H. K., Kim, J. G., Kim, S. (2020). Impact of an automated road debris removal system on traffic flow using VISSIM. SIMULATION, 96(9), 725-735.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Kim, M., Kim, H. K. (2020). Investigation of environmental benefits of traffic signal countdown timers. Transportation Research Part D: Transport and Environment, 85.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Kanchanasut, K., Boonsiripant, S., Tunpan, A., Kim, H. K., Ekpanyapong, M. (2015). Internet of cars through commodity V2V and V2X mobile routers: Applications for developing countries. KSCE Journal of Civil Engineering, 19(6), 1897-1904.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Randeniya, D., Kim, H. K. (2013). Estimation of its sensor operational states by analyzing measurements with errors using a Hidden Markov Model. KSCE Journal of Civil Engineering, 17(7), 1740-1748.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Kao, S. C., Kim, H. K., Liu, C., Cui, X., Bhaduri, B. L. (2012). Dependence-preserving approach to synthesizing household characteristics. Transportation Research Record, 2302(1), 192-200.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Kim, H. K. (2012). Introduction of Vehicle Miles Traveled Tax in the Developing Countries, Asian Pacific Planning Review, 8(1).",
+      "sci": false
+    },
+    {
+      "category": "International",
+      "citation": "Cui, X., Kim, H. K., Liu, C., Kao, S. C., Bhaduri, B. L. (2012). Simulating the household plug-in hybrid electric vehicle distribution and its electric distribution network impacts. Transportation Research Part D: Transport and Environment, 17(7), 548-554.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Hunter, M. P., Wu, S. K., Kim, H. K., Suh, W. (2012). A probe-vehicle-based evaluation of adaptive traffic signal control. IEEE Transactions on Intelligent Transportation Systems, 13(2), 704-713.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Kim, H. K. (2012). Improvement of ATIS Model Performance under Connected Vehicle Environment, Journal of Korean Society of Intelligent Transport Systems, 11(4), 10-18.",
+      "sci": false
+    },
+    {
+      "category": "International",
+      "citation": "Kim, H. K. (2011). Development and Comparison of Centralized and Decentralized ATIS Models with Simulation Method, Journal of Korean Society of Intelligent Transport Systems, 10(2), 1-8.",
+      "sci": false
+    },
+    {
+      "category": "International",
+      "citation": "Seshasayee, B., Hunter, M., Fujimoto, R. M., Guensler, R., Schwan, K., Kim, H. K., Sirichoke, J. Suh, W. (2011). On the resilience of ad hoc distributed simulation of surface transportation systems with unreliable communications. Journal of Algorithms & Computational Technology, 5(4), 531-544.",
+      "sci": false
+    },
+    {
+      "category": "International",
+      "citation": "Kim, H. K., Hunter, M. P., Fujimoto, R. M. (2009). A simulation-based investigation of a dynamic advanced traveler information system. In Proceedings of the 2009 Winter Simulation Conference (WSC), 1124-1135.",
+      "sci": false
+    },
+    {
+      "category": "International",
+      "citation": "Fujimoto, R., Hunter, M., Sirichoke, J., Palekar, M., Kim, H. K., Suh, W. (2007). Ad hoc distributed simulations. In Proceedings of 21st International Workshop on Principles of Advanced and Distributed Simulation (PADS'07), 15-24.",
+      "sci": false
+    },
+    {
+      "category": "International",
+      "citation": "Fujimoto, R. M., Guensler, R., Hunter, M., Schwan, K., Kim, H. K., Seshasayee, B., Sirichoke, J. Suh, W. (2007). Ad hoc distributed simulation of surface transportation systems. In International Conference on Computational Science, 1050-1057, Springer, Berlin, Heidelberg.",
+      "sci": false
+    },
+    {
+      "category": "International",
+      "citation": "Kim, H. K., Oh, S. K., Bae, G. M. (2006). Demonstrative comparison of two traffic signal optimization programs: Synchro-6 and PASSER II. KSCE Journal of Civil Engineering, 10(1), 41-45.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Hunter, M. P., Wu, S. K., Kim, H. K., (2006). Practical procedure to collect arterial travel time data using GPS-Instrumented test vehicles. Transportation Research Record, 1978(1), 160-168.",
+      "sci": true
+    },
+    {
+      "category": "International",
+      "citation": "Hunter, M. P., Fujimoto, R. M., Suh, W., Kim, H. K. (2006). An investigation of real-time dynamic data driven transportation simulation. In Proceedings of the 2006 Winter Simulation Conference (WSC), 1414-1421.",
+      "sci": false
+    },
+    {
+      "category": "International",
+      "citation": "Fujimoto, R., Guensler, R., Hunter, M., Kim, H. K., Lee, J., Leonard, J., Schwan, K. Seshasayee, B. (2006). Dynamic data driven application simulation of surface transportation systems. In International Conference on Computational Science, 425-432, Springer, Berlin, Heidelberg.",
+      "sci": false
+    },
+    {
+      "category": "International",
+      "citation": "Kim, H. K., Hunter, M. P. (2005). Effect of pedestrian-related factors on intersection performance. Transportation Research Record, 1920(1), 65-73.",
+      "sci": true
+    },
+    {
+      "category": "Domestic",
+      "citation": "정지효, 이치열, 김회경. (2025), 스마트 자중계 도입에 따른 경제성 분석에 관한 연구, 한국도로학회논문집, 27(3), 17-25.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "송수정, 정지효, 김회경. (2025), IPA를 통한 어린이보호구역 교통안전 시설물 평가-부산광역시를 중심으로, 한국도로학회논문집, 27(2), 95-103.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "유초롱, 정지효, 김회경. (2024), 택시 교통사고 심각도 요인 분석에 관한 연구 : 부산광역시 교차로를 중심으로, 한국도로학회논문집, 26(6), 311-319.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "정일근, 김회경. (2024). 우회전 신호 운영방식에 따른 이동성 및 안전성 평가에 관한 연구, 한국도로학회논문집, 26(2), 81-88.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "김민정, 김회경. (2023). 팬데믹으로 인한 대중교통 수요분석과 대안 교통수단으로서 PM 선호도에 대한 영향요인분석, 대한교통학회지, 41(7), 846-860",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "우제승, 홍순기, 유상경, 김회경. (2023). 교통약자를 위한 전동 이동 보조기기 안전 경로 서비스의 개발과 평가, 한국지리정보학회지, 26(3), 85-96.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "김민정, 양충헌, 김회경. (2023). 장대터널 교통사고 영향요인 분석에 관한 연구, 한국도로학회논문집, 25(5), 185-191",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "김민정, 김회경. (2023). 코로나19의 확산이 대중교통 수요변화에 미치는 영향요인 분석 - 부산광역시를 중심으로 -, 한국지리정보학회지, 26(3), 1-11.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "남상기, 정연식, 김회경, 김원길. (2023). 커넥티드 차량 보급률 기반 고속도로 돌발상황 검지시간 추정, 한국ITS학회논문지, 22(3), 38-50.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "정대한, 김민정, 김회경, 정연식 (2021). ADAS 데이터를 이용한 중앙집중식 자율주행자동차 모빌리티 서비스의 개발과 평가에 관한 연구, 대한교통학회지, 39(5), 631-642.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "김아름, 김회경 (2021). 경사를 고려한 마이크로 모빌리티 수단의 통행시간 산정 알고리즘의 개발과 실증. 대한교통학회지, 39(3), 357~368.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "김민정, 김회경 (2020). 주행거리 기반 세제 도입에 따른 운전자 행태 모형 개발: 부산광역시를 중심으로. 대한교통학회지, 38(6), 507-519.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "우보람, 김아름, 정대한, 오세경, 김회경 (2020). 노인보행자 교통사고 다발지와 노인보호구역 위치의 적합성 분석-부산광역시 원도심을 중심으로. 한국도시설계학회지 도시설계, 21(3), 57-67.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "김민정, 김성현, 정양록, 김회경 (2020). 국도 VMS 효율성 개선전략의 평가에 관한 연구. 한국도로학회논문집, 22(1), 105-114.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "김민정, 정대한, 김회경 (2019). 영상기반 차량인식 기법을 이용한 교통류 추정에 관한 연구. 한국 ITS 학회 논문지, 18(6), 110-123.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "김진국, 양충헌, 김회경 (2019). 도로 낙하물 수거 장비의 실도로 안전 운영을 위한 시뮬레이션 분석. 한국도로학회논문집, 21(4), 95-100.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "김민정, 김호용, 김회경 (2019). 스마트 모빌리티를 이용한 FMM과 LMM 서비스 권역의 정의에 관한 연구: 부산광역시 해운대구를 중심으로. 대한교통학회지, 37(3), 245-253.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "박종서, 오윤표, 김회경, 안우성 (2015). 메타분석을 이용한 교통안전성의 거시적 분석에 대한 실험적 고찰: 부산광역시를 중심으로. 대한토목학회논문집, 35(6), 1339-1345.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "허민, 김회경 (2015). 스마트폰 보유여부에 따른 교통정보 제공 시스템의 선호도 분석. 대한교통학회지, 33(5), 470-477.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "런위, 김회경 (2014). DSRC 기반 교통정보의 가공방안과 신뢰성 분석 (단속류 구간을 중심으로). 한국 ITS 학회 논문지, 13(6), 25-33.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "임재문, 오세경, 김회경 (2014). 막다른주차장내 차량회전구간 설계기준 정립에 관한 연구. 한국산학기술학회 논문지, 15(12), 7403-7415.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "김회경, 이영빈, 윤칠용, 오윤표 (2014). Connected Vehicle을 이용한 Smart Roundabout의 개발과 평가. 대한토목학회논문집, 34(1), 243-250.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "김회경, 임재문, 설재훈, 오윤표 (2013). Smart Bollard를 이용한 어린이보호구역에서의 안전성 제고에 관한 연구. 대한토목학회논문집, 33(1), 251-259.",
+      "sci": false
+    },
+    {
+      "category": "Domestic",
+      "citation": "Kim, H. K. (2011). 시뮬레이션기법을 통한 차량 간 통신을 이용한 첨단교통정보시스템의 효과 분석: 도시 도로망을 중심으로. 대한교통학회지, 29(5), 121-138.",
+      "sci": false
+    },
+    {
+      "category": "Other",
+      "citation": "김회경, 오석기 (2006). 미국에서의 교통데이터표준의 연구 사례, 대한교통학회 교통기술과정책, 3(1), 80-86.",
+      "sci": false
+    },
+    {
+      "category": "Other",
+      "citation": "김회경, 정지효, 이은정, 차정은, 이준휘, 박은희 (부산광역시 감사위원회) (2024). 승차구매점에 대한 교통유발부담금 징수 방안: 부산광역시 사례를 중심으로, Measures to Collect Transportation Impact Fees with Drive-Through Stores in Busan Metropolitan City, 대한교통학회 교통기술과정책, 21(6), 51-57.",
+      "sci": false
+    },
+    {
+      "category": "Books",
+      "citation": "양정훈, 김회경. (2012). 행위자기반모형의 이해와 응용 : 도시계획과 교통. 동아대학교출판부.",
+      "sci": false
+    }
+  ]
+}
