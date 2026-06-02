@@ -16,7 +16,7 @@ backend:
   #   1단계(빠른 테스트): 아래 줄을 주석(#)으로 둔 채, /admin 에서 "Sign in with Token"으로 먼저 확인.
   #   2단계(팀 로그인): SETUP-GUIDE.md의 Cloudflare Worker 배포 후, 아래 줄의 #을 지우고
   #                     본인 Worker 주소로 바꾼 뒤 저장하세요. (끝에 /callback 붙이지 않음, 슬래시로 끝내지 않음)
-  # base_url: https://sveltia-cms-auth.본인서브도메인.workers.dev
+  base_url: https://sveltia-cms-auth.gihyo123450.workers.dev
 
 # 업로드한 이미지가 저장되는 위치(저장소 내 경로)와 사이트에서 불러오는 경로
 media_folder: assets/uploads
