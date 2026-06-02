@@ -304,36 +304,33 @@
       const pic = photo
         ? `<div class="person__photo" style="background-image:url('${photo}')" role="img" aria-label="${esc(m.name_ko)}"></div>`
         : `<div class="person__photo person__photo--ph">${esc(initials(m))}</div>`;
-      const email = m.email ? `<div class="person__meta"><a href="mailto:${esc((m.email || "").split(/[,;]/)[0].trim())}">${esc(m.email)}</a></div>` : "";
       const meta = [];
-      if (m.affiliation) meta.push(esc(m.affiliation));
-      if (m.period) meta.push(esc(m.period));
+      if (m.group === "alumni") {
+        const deg = [m.degree, m.grad_year].filter(Boolean).map(esc).join(" · ");
+        if (deg) meta.push(deg);
+        if (m.affiliation) meta.push(esc(m.affiliation));
+      } else {
+        if (m.affiliation) meta.push(esc(m.affiliation));
+        if (m.period) meta.push(esc(m.period));
+      }
+      const thesis = m.thesis ? `<div class="person__thesis" title="${esc(m.thesis)}">${esc(m.thesis)}</div>` : "";
+      const email = (m.group !== "alumni" && m.email)
+        ? `<div class="person__meta"><a href="mailto:${esc((m.email || "").split(/[,;]/)[0].trim())}">${esc(m.email)}</a></div>` : "";
       return `<article class="person">
         ${pic}
         <div class="person__body">
           <div class="person__name">${esc(m.name_ko)}<small>${esc(m.name_en || "")}</small></div>
           ${meta.length ? `<div class="person__meta">${meta.join("<br>")}</div>` : ""}
+          ${thesis}
           ${email}
         </div>
       </article>`;
     };
 
-    const alumniRow = (m) => {
-      const sub = [m.degree, m.grad_year].filter(Boolean).map(esc).join(" · ");
-      return `<div class="alumni-row">
-        <div><b>${esc(m.name_ko)} <small>${esc(m.name_en || "")}</small></b>
-          ${sub ? `<div class="person__meta">${sub}</div>` : ""}
-          ${m.affiliation ? `<div class="person__meta">${esc(m.affiliation)}</div>` : ""}</div>
-        <div class="thesis">${m.thesis ? esc(m.thesis) : ""}</div>
-      </div>`;
-    };
-
-    const group = (label, items, render, kind) => {
+    const group = (label, items, render) => {
       if (!items.length) return "";
-      const body = kind === "alumni"
-        ? `<div class="alumni-list">${items.map(render).join("")}</div>`
-        : `<div class="people-grid">${items.map(render).join("")}</div>`;
-      return `<div class="group-head"><h3>${esc(label)}</h3><span class="count">${items.length}명</span></div>${body}`;
+      return `<div class="group-head"><h3>${esc(label)}</h3><span class="count">${items.length}명</span></div>
+        <div class="people-grid">${items.map(render).join("")}</div>`;
     };
 
     const cur = M.filter(m => m.group === "current");
@@ -351,9 +348,9 @@
     html += `<div class="section section--muted">
       <div class="section__head" style="margin-bottom:1rem"><span class="section__eyebrow">Alumni</span>
       <h2 class="section__title">졸업생</h2></div>`;
-    html += group("박사 (Ph.D.)", byLevel(alu, "ph"), card, "current");
-    html += group("석사 (Master's)", byLevel(alu, "master").concat(byLevel(alu, "m.s")), alumniRow, "alumni");
-    html += group("학사 (Bachelor's)", byLevel(alu, "bach"), alumniRow, "alumni");
+    html += group("박사 (Ph.D.)", byLevel(alu, "ph"), card);
+    html += group("석사 (Master's)", byLevel(alu, "master").concat(byLevel(alu, "m.s")), card);
+    html += group("학사 (Bachelor's)", byLevel(alu, "bach"), card);
     html += `</div>`;
 
     root.innerHTML = html;

@@ -222,6 +222,9 @@ ul { margin: 0; padding: 0; }
 .person__name small { display: block; font-weight: 600; color: var(--text-soft); font-size: .8rem; }
 .person__meta { font-size: .85rem; color: var(--text-soft); margin-top: .35rem; }
 .person__meta a { font-size: .82rem; word-break: break-all; }
+.person__thesis { font-size: .8rem; color: var(--text-soft); margin-top: .45rem; line-height: 1.5;
+  padding-top: .45rem; border-top: 1px dashed var(--line);
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 
 .alumni-list { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background:#fff; }
 .alumni-row { display: grid; grid-template-columns: 1.1fr 2fr; gap: 1rem; padding: .9rem 1.2rem; border-top: 1px solid var(--line); }
