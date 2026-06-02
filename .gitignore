@@ -4,3 +4,6 @@ desktop.ini
 .DS_Store
 *.tmp
 ~$*
+
+# Internal dev handoff notes (not for the public site)
+PROJECT-NOTES.md
