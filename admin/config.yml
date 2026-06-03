@@ -25,6 +25,17 @@ public_folder: /assets/uploads
 # 편집 화면 언어(라벨은 이미 한국어로 작성했으므로 표시는 자동)
 locale: ko
 
+# ── 편집 화면 사용성 (긴 목록에서 수정할 항목 찾기 쉽게) ──
+#   • collapsed: auto → 기존(내용이 채워진) 항목은 "접힌 한 줄 요약"으로, 새로 추가한
+#     빈 항목은 펼쳐진 채로 표시됩니다. 요약 줄을 클릭하면 펼쳐서 수정.
+#   • summary → 접힌 줄에 보이는 라벨. 날짜·분류를 앞에 넣어 한눈에 찾도록 구성.
+#   • add_to_top: true → "추가" 버튼이 맨 위에 있어, 수십~100개를 지나치지 않고 새 항목 추가.
+#     (사이트는 파일 순서대로 출력하므로 "최신이 맨 위" 관례와도 일치)
+#   • minimize_collapsed: true (위원회 112개) → 목록 전체를 헤더 하나로 접어 화면을 덜 차지.
+#   • thumbnail (구성원) → 접힌 줄에 사진 미리보기.
+#   ※ Sveltia 목록 위젯에는 내부 검색/필터/정렬 기능이 없습니다(폴더 컬렉션으로 바꿔야 가능하나
+#     빌드 없는 이 정적 사이트에선 사이트가 깨짐). 그래서 collapsed+summary 로 스캔성을 높였습니다.
+
 collections:
   # ───────────────────────────── 사이트 기본정보 ─────────────────────────────
   - name: site
@@ -44,6 +55,7 @@ collections:
           - name: research_topics
             label: 연구 분야 카드
             widget: list
+            collapsed: auto
             summary: "{{fields.title}}"
             fields:
               - { name: icon,  label: 아이콘(이모지), widget: string, required: false, default: "▣" }
@@ -70,6 +82,8 @@ collections:
           - name: news
             label: 소식 글
             widget: list
+            collapsed: auto
+            add_to_top: true
             summary: "{{fields.date}} · {{fields.category}} — {{fields.title}}"
             fields:
               - { name: date,     label: 날짜, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: false }
@@ -103,7 +117,8 @@ collections:
           - name: education
             label: 학력
             widget: list
-            summary: "{{fields.place}}"
+            collapsed: auto
+            summary: "{{fields.period}} · {{fields.place}}"
             fields:
               - { name: period, label: 기간, widget: string }
               - { name: place,  label: 기관 · 전공, widget: string }
@@ -112,14 +127,16 @@ collections:
           - name: careers
             label: 주요 경력
             widget: list
-            summary: "{{fields.what}}"
+            collapsed: auto
+            summary: "{{fields.period}} · {{fields.what}}"
             fields:
               - { name: period, label: 기간, widget: string }
               - { name: what,   label: 내용, widget: string }
           - name: societies
             label: 학회활동
             widget: list
-            summary: "{{fields.name}}"
+            collapsed: auto
+            summary: "{{fields.name}} {{fields.position}}"
             fields:
               - { name: name,     label: 학회명, widget: string }
               - { name: position, label: 직위, widget: string, required: false }
@@ -127,7 +144,9 @@ collections:
           - name: media
             label: 언론활동
             widget: list
-            summary: "{{fields.title}}"
+            collapsed: auto
+            add_to_top: true
+            summary: "{{fields.date}} · {{fields.title}}"
             fields:
               - { name: date,  label: 일자, widget: string, required: false }
               - { name: title, label: 제목, widget: string }
@@ -135,7 +154,10 @@ collections:
           - name: committees
             label: 대외 위원회 활동
             widget: list
-            summary: "{{fields.name}}"
+            collapsed: auto
+            minimize_collapsed: true
+            add_to_top: true
+            summary: "{{fields.period}} · {{fields.name}}"
             fields:
               - { name: period, label: 기간, widget: string, required: false }
               - { name: name,   label: 위원회명, widget: string }
@@ -152,6 +174,8 @@ collections:
           - name: members
             label: 구성원
             widget: list
+            collapsed: auto
+            thumbnail: photo
             summary: "{{fields.name_ko}} — {{fields.group}}/{{fields.level}}"
             fields:
               - { name: name_ko, label: 이름(국문), widget: string }
@@ -178,6 +202,8 @@ collections:
           - name: projects
             label: 프로젝트
             widget: list
+            collapsed: auto
+            add_to_top: true
             summary: "{{fields.period}} — {{fields.title}}"
             fields:
               - { name: period, label: 연구기간, widget: string }
@@ -196,6 +222,8 @@ collections:
           - name: publications
             label: 논문
             widget: list
+            collapsed: auto
+            add_to_top: true
             summary: "{{fields.citation}}"
             fields:
               - { name: category, label: 구분, widget: select, options: [International, Domestic, Other, Books], default: International }
@@ -215,7 +243,9 @@ collections:
           - name: conferences
             label: 발표
             widget: list
-            summary: "{{fields.title}}"
+            collapsed: auto
+            add_to_top: true
+            summary: "{{fields.date}} · {{fields.category}} — {{fields.title}}"
             fields:
               - { name: category,   label: 구분, widget: select, options: [International, Domestic], default: Domestic }
               - { name: title,      label: 제목, widget: text }
@@ -234,7 +264,9 @@ collections:
           - name: patents
             label: 항목
             widget: list
-            summary: "{{fields.name}}"
+            collapsed: auto
+            add_to_top: true
+            summary: "{{fields.category}} · {{fields.name}}"
             fields:
               - { name: category,  label: 구분, widget: select, options: [Application, Registration, Software], default: Application }
               - { name: name,      label: 지식재산권명, widget: text }
@@ -256,6 +288,8 @@ collections:
           - name: awards
             label: 수상
             widget: list
+            collapsed: auto
+            add_to_top: true
             summary: "{{fields.date}} — {{fields.title_ko}}"
             fields:
               - { name: date,     label: 일자, widget: string }
