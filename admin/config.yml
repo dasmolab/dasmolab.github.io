@@ -58,6 +58,31 @@ collections:
           - { name: office,  label: 연구실 위치, widget: string, required: false }
           - { name: logo,    label: 로고 이미지(선택), widget: image, required: false }
 
+  # ───────────────────────────── 소식 (News) ─────────────────────────────
+  - name: news
+    label: 📰 소식 (News)
+    delete: false
+    files:
+      - name: news
+        label: 소식 · 활동 일지
+        file: data/news.json
+        fields:
+          - name: news
+            label: 소식 글
+            widget: list
+            summary: "{{fields.date}} · {{fields.category}} — {{fields.title}}"
+            fields:
+              - { name: date,     label: 날짜, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: false }
+              - { name: category, label: 분류, widget: select, options: [학술대회, 세미나, 랩미팅, 모집, 기타], default: 랩미팅 }
+              - { name: title,    label: 제목, widget: string }
+              - { name: body,     label: 내용 (일기처럼 자유롭게), widget: text, required: false }
+              - name: photos
+                label: 사진 (여러 장 가능)
+                widget: list
+                required: false
+                field: { name: image, label: 사진, widget: image }
+              - { name: link,     label: 관련 링크 (URL, 선택), widget: string, required: false }
+
   # ───────────────────────────── 교수 소개 ─────────────────────────────
   - name: professor
     label: 👤 교수 소개

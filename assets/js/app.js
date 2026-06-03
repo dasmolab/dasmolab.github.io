@@ -9,6 +9,7 @@
 
   const NAV = [
     { href: "index.html",        label: "Home" },
+    { href: "news.html",         label: "News" },
     { href: "professor.html",    label: "Professor" },
     { href: "members.html",      label: "Members" },
     { href: "projects.html",     label: "Projects" },
@@ -44,6 +45,15 @@
       return '<a href="' + url + '" target="_blank" rel="noopener">' + url + "</a>" + tail;
     });
   }
+  // escape + linkify URLs + keep line breaks (used for free-form news/diary text)
+  function richText(s) { return linkify(s).replace(/\n/g, "<br>"); }
+
+  // "2026-05-20" / ISO datetime → "2026.05.20"
+  function fmtDate(d) { return String(d == null ? "" : d).slice(0, 10).replace(/-/g, "."); }
+
+  // a photo entry may be a plain path string or an object { image }
+  function photoSrc(p) { return imgSrc(typeof p === "string" ? p : (p && (p.image || p.src)) || ""); }
+  function firstPhoto(arr) { return Array.isArray(arr) && arr.length ? photoSrc(arr[0]) : ""; }
 
   async function fetchData(name) {
     try {
@@ -198,6 +208,53 @@
       const nMem = mem && mem.members ? mem.members.filter(m => m.group === "current").length : 0;
       const stat = (num, label) => `<div class="stats__item"><div class="stats__num">${num}<span>+</span></div><div class="stats__label">${esc(label)}</div></div>`;
       statsEl.innerHTML = stat(nPub, "Publications") + stat(nConf, "Conference Papers") + stat(nProj, "Projects") + stat(nMem, "Current Members");
+    }
+
+    // recruit banner + latest news (only render if there is content)
+    const news = await fetchData("news");
+    if (news && Array.isArray(news.news)) {
+      const sorted = news.news.slice().sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+      const recruits = sorted.filter(n => n.category === "모집");
+      const posts = sorted.filter(n => n.category !== "모집");
+
+      const recEl = $("#home-recruit");
+      if (recEl && recruits.length) {
+        const r = recruits[0];
+        recEl.innerHTML = `<div class="wrap" style="margin-top:1.6rem">
+          <a class="recruit-bar" href="news.html">
+            <span class="recruit-bar__icon">👩‍🎓</span>
+            <span class="recruit-bar__txt"><b>지원자 모집 중</b> — ${esc(r.title || "")}</span>
+            <span class="recruit-bar__cta">자세히 보기 →</span>
+          </a></div>`;
+      }
+
+      const newsEl = $("#home-news");
+      if (newsEl && posts.length) {
+        const cards = posts.slice(0, 3).map(n => {
+          const photo = firstPhoto(n.photos);
+          const thumb = photo
+            ? `<div class="newscard__thumb" style="background-image:url('${photo}')"></div>`
+            : `<div class="newscard__thumb newscard__thumb--ph">${catEmoji(n.category)}</div>`;
+          return `<a class="newscard" href="news.html">
+            ${thumb}
+            <div class="newscard__body">
+              <div class="newscard__meta"><span class="news-date">${esc(fmtDate(n.date))}</span> · ${esc(n.category || "기타")}</div>
+              <div class="newscard__title">${esc(n.title || "")}</div>
+            </div></a>`;
+        }).join("");
+        newsEl.innerHTML = `<section class="section" style="padding-bottom:0">
+          <div class="wrap">
+            <div class="section__head" style="margin-bottom:1.6rem">
+              <span class="section__eyebrow">News</span>
+              <h2 class="section__title">최신 소식</h2>
+            </div>
+            <div class="grid grid--3">${cards}</div>
+            <div style="text-align:center;margin-top:1.8rem">
+              <a class="btn btn--primary" href="news.html">전체 소식 보기 →</a>
+            </div>
+          </div>
+        </section>`;
+      }
     }
   }
 
@@ -493,10 +550,91 @@
   }
 
   /* ====================================================================
+     NEWS / 소식 (학술대회·세미나·랩미팅 일지 + 모집 공고)
+     ==================================================================== */
+  function catEmoji(c) {
+    return ({ "학술대회": "🎤", "세미나": "🧑‍🏫", "랩미팅": "👥", "모집": "🙋", "기타": "🗒️" })[c] || "🗒️";
+  }
+  function newsPhotos(arr) {
+    if (!Array.isArray(arr) || !arr.length) return "";
+    const items = arr.map(p => {
+      const src = photoSrc(p);
+      if (!src) return "";
+      return `<a class="news-photo" href="${esc(src)}" target="_blank" rel="noopener">` +
+        `<img src="${esc(src)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></a>`;
+    }).join("");
+    return items ? `<div class="news-photos">${items}</div>` : "";
+  }
+  function newsItem(n) {
+    return `<article class="news-item">
+      <div class="news-item__head">
+        <span class="news-date">${esc(fmtDate(n.date))}</span>
+        <span class="news-cat">${catEmoji(n.category)} ${esc(n.category || "기타")}</span>
+      </div>
+      <h3 class="news-title">${esc(n.title || "")}</h3>
+      ${newsPhotos(n.photos)}
+      ${n.body ? `<p class="news-body">${richText(n.body)}</p>` : ""}
+      ${n.link ? `<p class="news-link"><a href="${esc(n.link)}" target="_blank" rel="noopener">관련 링크 →</a></p>` : ""}
+    </article>`;
+  }
+
+  async function renderNews() {
+    const site = await fetchData("site"); mountChrome(site);
+    const data = await fetchData("news");
+    const recEl = $("#news-recruit");
+    const root = $("#news-root"); const nav = $("#news-subnav");
+    if (!data || !Array.isArray(data.news)) { setState(root, "소식을 불러오지 못했습니다."); return; }
+
+    const all = data.news.slice().sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+    const recruits = all.filter(n => n.category === "모집");
+    const posts = all.filter(n => n.category !== "모집");
+
+    // pinned recruit callouts (always visible at top so they never scroll away)
+    if (recEl) {
+      recEl.innerHTML = recruits.map(r => `
+        <div class="recruit">
+          <div class="recruit__icon">🙋</div>
+          <div class="recruit__body">
+            <div class="recruit__tag">모집 · Recruiting</div>
+            <h3>${esc(r.title || "")}</h3>
+            ${r.body ? `<p>${richText(r.body)}</p>` : ""}
+            ${newsPhotos(r.photos)}
+            <div class="recruit__foot">
+              ${r.date ? `<span class="date">${esc(fmtDate(r.date))}</span>` : ""}
+              ${r.link ? `<a href="${esc(r.link)}" target="_blank" rel="noopener">관련 링크 →</a>` : ""}
+            </div>
+          </div>
+        </div>`).join("");
+    }
+
+    // category filter over event posts (excludes 모집, which is pinned above)
+    const order = ["학술대회", "세미나", "랩미팅", "기타"];
+    const cats = order.filter(c => posts.some(p => p.category === c));
+    posts.forEach(p => { if (p.category && p.category !== "모집" && cats.indexOf(p.category) === -1) cats.push(p.category); });
+
+    const draw = (cat) => {
+      const list = cat ? posts.filter(p => p.category === cat) : posts;
+      if (!list.length) { root.innerHTML = `<div class="state">아직 등록된 소식이 없습니다.</div>`; return; }
+      root.innerHTML = `<div class="news-feed">${list.map(newsItem).join("")}</div>`;
+    };
+
+    if (nav) {
+      nav.innerHTML = ["전체"].concat(cats).map((c, i) =>
+        `<button data-cat="${i === 0 ? "" : esc(c)}" class="${i === 0 ? "active" : ""}">${esc(c)}</button>`).join("");
+      nav.onclick = (e) => {
+        const b = e.target.closest("button"); if (!b) return;
+        $$("button", nav).forEach(x => x.classList.remove("active")); b.classList.add("active");
+        draw(b.dataset.cat);
+      };
+    }
+    draw("");
+  }
+
+  /* ====================================================================
      Bootstrap by page
      ==================================================================== */
   const PAGES = {
-    home: renderHome, professor: renderProfessor, members: renderMembers,
+    home: renderHome, news: renderNews, professor: renderProfessor, members: renderMembers,
     projects: renderProjects, publications: renderPublications,
     conferences: renderConferences, patents: renderPatents, awards: renderAwards,
   };
