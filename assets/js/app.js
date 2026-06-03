@@ -3,6 +3,13 @@
    Loads content from /data/*.json and renders it client-side.
    Header & footer are injected from data/site.json so the lab can change
    the name / contact info in one place (via the CMS).
+
+   Pages are consolidated into 6 tabs for visitors, but the underlying data
+   files (and the CMS editing menus) stay separate:
+     People       = professor.json + members.json
+     Research     = site.research_topics + projects.json
+     Publications = publications.json + conferences.json
+     Achievements = patents.json + awards.json
    ========================================================================== */
 (function () {
   "use strict";
@@ -10,13 +17,10 @@
   const NAV = [
     { href: "index.html",        label: "Home" },
     { href: "news.html",         label: "News" },
-    { href: "professor.html",    label: "Professor" },
-    { href: "members.html",      label: "Members" },
-    { href: "projects.html",     label: "Projects" },
+    { href: "people.html",       label: "People" },
+    { href: "research.html",     label: "Research" },
     { href: "publications.html", label: "Publications" },
-    { href: "conferences.html",  label: "Conferences" },
-    { href: "patents.html",      label: "Patents" },
-    { href: "awards.html",       label: "Awards" },
+    { href: "achievements.html", label: "Achievements" },
   ];
 
   /* ----- utilities ----- */
@@ -174,17 +178,9 @@
       introEl.innerHTML = parts;
     }
 
-    // research topics
+    // research topics (shared with the Research page)
     const topicsEl = $("#home-topics");
-    if (topicsEl && Array.isArray(site.research_topics)) {
-      topicsEl.innerHTML = site.research_topics.map(t => {
-        const tags = Array.isArray(t.tags) && t.tags.length
-          ? `<div class="tags">${t.tags.map(x => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : "";
-        return `<div class="card topic">
-          <div class="card__icon">${esc(t.icon || "▣")}</div>
-          <h3>${esc(t.title)}</h3><p>${esc(t.desc || "")}</p>${tags}</div>`;
-      }).join("");
-    }
+    if (topicsEl) topicsEl.innerHTML = buildResearchTopics(site);
 
     // classes
     const clsEl = $("#home-classes");
@@ -259,19 +255,27 @@
   }
 
   /* ====================================================================
-     PROFESSOR
+     Content builders — pure (data → HTML string), reused by merged pages.
      ==================================================================== */
-  async function renderProfessor() {
-    const site = await fetchData("site");
-    mountChrome(site);
-    const p = await fetchData("professor");
-    const root = $("#prof-root");
-    if (!p) { setState(root, "교수 정보를 불러오지 못했습니다."); return; }
 
+  // Research-area cards (Home + Research page)
+  function buildResearchTopics(site) {
+    if (!site || !Array.isArray(site.research_topics)) return "";
+    return site.research_topics.map(t => {
+      const tags = Array.isArray(t.tags) && t.tags.length
+        ? `<div class="tags">${t.tags.map(x => `<span class="tag">${esc(x)}</span>`).join("")}</div>` : "";
+      return `<div class="card topic">
+        <div class="card__icon">${esc(t.icon || "▣")}</div>
+        <h3>${esc(t.title)}</h3><p>${esc(t.desc || "")}</p>${tags}</div>`;
+    }).join("");
+  }
+
+  // Professor profile (People page)
+  function buildProfessor(p) {
+    if (!p) return '<div class="state">교수 정보를 불러오지 못했습니다.</div>';
     const photo = imgSrc(p.photo) || "assets/uploads/prof.jpg";
     const emailLinks = (p.email || "").split(",").map(e => e.trim()).filter(Boolean)
       .map(e => `<a href="mailto:${esc(e)}">${esc(e)}</a>`).join(", ");
-
     const head = `
       <div class="prof-head">
         <div class="prof-photo"><img src="${photo}" alt="${esc(p.name_ko)} 교수" onerror="this.src='assets/uploads/prof.jpg'"></div>
@@ -286,7 +290,6 @@
           </ul>
         </div>
       </div>`;
-
     const eduBlock = (arr, title) => {
       if (!Array.isArray(arr) || !arr.length) return "";
       const items = arr.map(e => {
@@ -300,7 +303,6 @@
       return `<div class="prof-block">
         <div class="group-head"><h3>${esc(title)}</h3></div><ul class="timeline">${items}</ul></div>`;
     };
-
     const societies = (arr) => {
       if (!Array.isArray(arr) || !arr.length) return "";
       const items = arr.map(s => `<li><span class="k">${esc(s.name)}</span>
@@ -308,7 +310,6 @@
       return `<div class="group-head"><h3>학회활동 (Academic Societies)</h3><span class="count">${arr.length}</span></div>
         <ul class="deflist">${items}</ul>`;
     };
-
     const media = (arr) => {
       if (!Array.isArray(arr) || !arr.length) return "";
       const items = arr.map(m => {
@@ -318,7 +319,6 @@
       return `<div class="group-head"><h3>언론활동 (Media)</h3><span class="count">${arr.length}</span></div>
         <ul class="media-list">${items}</ul>`;
     };
-
     const committees = (arr) => {
       if (!Array.isArray(arr) || !arr.length) return "";
       const items = arr.map(c => {
@@ -330,9 +330,8 @@
         <div class="collapse__body"><ul class="deflist">${items}</ul></div>
       </details>`;
     };
-
-    root.innerHTML = head +
-      `<div class="section" style="padding:2.5rem 0 0">
+    return head +
+      `<div style="margin-top:2.2rem">
         ${eduBlock(p.education, "학력 (Education)")}
         ${eduBlock(p.careers, "주요 경력 (Academic Careers)")}
         ${societies(p.societies)}
@@ -341,21 +340,10 @@
       </div>`;
   }
 
-  /* ====================================================================
-     MEMBERS
-     ==================================================================== */
-  async function renderMembers() {
-    const site = await fetchData("site");
-    mountChrome(site);
-    const data = await fetchData("members");
-    const root = $("#members-root");
-    if (!data || !Array.isArray(data.members)) { setState(root, "구성원 정보를 불러오지 못했습니다."); return; }
-    const M = data.members;
-
-    const initials = (m) => {
-      const en = (m.name_en || m.name_ko || "?").trim();
-      return en.charAt(0).toUpperCase();
-    };
+  // Members grids — `which` is "current" or "alumni" (People page)
+  function buildMembers(M, which) {
+    if (!Array.isArray(M)) return '<div class="state">구성원 정보를 불러오지 못했습니다.</div>';
+    const initials = (m) => (m.name_en || m.name_ko || "?").trim().charAt(0).toUpperCase();
     const card = (m) => {
       const photo = imgSrc(m.photo);
       const pic = photo
@@ -383,139 +371,71 @@
         </div>
       </article>`;
     };
-
-    const group = (label, items, render) => {
+    const group = (label, items) => {
       if (!items.length) return "";
       return `<div class="group-head"><h3>${esc(label)}</h3><span class="count">${items.length}명</span></div>
-        <div class="people-grid">${items.map(render).join("")}</div>`;
+        <div class="people-grid">${items.map(card).join("")}</div>`;
     };
-
-    const cur = M.filter(m => m.group === "current");
-    const alu = M.filter(m => m.group === "alumni");
     const byLevel = (list, lv) => list.filter(m => (m.level || "").toLowerCase().startsWith(lv));
-
-    let html = `<div class="section" style="padding-top:2.5rem">
-      <div class="section__head" style="margin-bottom:1rem"><span class="section__eyebrow">Current</span>
-      <h2 class="section__title">현재 구성원</h2></div>`;
-    html += group("박사과정 (Ph.D. Students)", byLevel(cur, "ph"), card, "current");
-    html += group("석사과정 (Master's Students)", byLevel(cur, "master").concat(byLevel(cur, "m.s")), card, "current");
-    html += group("학부연구생 (Undergraduate)", byLevel(cur, "under"), card, "current");
-    html += `</div>`;
-
-    html += `<div class="section section--muted">
-      <div class="section__head" style="margin-bottom:1rem"><span class="section__eyebrow">Alumni</span>
-      <h2 class="section__title">졸업생</h2></div>`;
-    html += group("박사 (Ph.D.)", byLevel(alu, "ph"), card);
-    html += group("석사 (Master's)", byLevel(alu, "master").concat(byLevel(alu, "m.s")), card);
-    html += group("학사 (Bachelor's)", byLevel(alu, "bach"), card);
-    html += `</div>`;
-
-    root.innerHTML = html;
+    if (which === "alumni") {
+      const alu = M.filter(m => m.group === "alumni");
+      return group("박사 (Ph.D.)", byLevel(alu, "ph"))
+        + group("석사 (Master's)", byLevel(alu, "master").concat(byLevel(alu, "m.s")))
+        + group("학사 (Bachelor's)", byLevel(alu, "bach"));
+    }
+    const cur = M.filter(m => m.group === "current");
+    return group("박사과정 (Ph.D. Students)", byLevel(cur, "ph"))
+      + group("석사과정 (Master's Students)", byLevel(cur, "master").concat(byLevel(cur, "m.s")))
+      + group("학부연구생 (Undergraduate)", byLevel(cur, "under"));
   }
 
-  /* ====================================================================
-     Generic category-filtered reference renderer
-     ==================================================================== */
-  function buildSubnav(container, cats, onPick) {
-    const all = ["전체"].concat(cats);
-    container.innerHTML = all.map((c, i) =>
-      `<button data-cat="${i === 0 ? "" : esc(c)}" class="${i === 0 ? "active" : ""}">${esc(c)}</button>`).join("");
-    container.addEventListener("click", (e) => {
-      const b = e.target.closest("button"); if (!b) return;
-      $$("button", container).forEach(x => x.classList.remove("active"));
-      b.classList.add("active");
-      onPick(b.dataset.cat);
-    });
-  }
-
-  /* ----- PUBLICATIONS ----- */
-  async function renderPublications() {
-    const site = await fetchData("site"); mountChrome(site);
-    const data = await fetchData("publications");
-    const root = $("#pub-root"); const nav = $("#pub-subnav");
-    if (!data || !Array.isArray(data.publications)) { setState(root, "논문 정보를 불러오지 못했습니다."); return; }
-    const order = ["International", "Domestic", "Other", "Books"];
-    const labelMap = { International: "International Journals & Proceedings", Domestic: "국내 논문", Other: "기타", Books: "저서" };
-    const items = data.publications;
-    const cats = order.filter(c => items.some(i => i.category === c));
-
-    const draw = (cat) => {
-      const groups = cat ? [cat] : cats;
-      root.innerHTML = groups.map(g => {
-        const list = items.filter(i => i.category === g);
-        if (!list.length) return "";
-        const lis = list.map(i => {
-          const sci = i.sci ? `<span class="badge badge--sci">SCI급</span>` : "";
-          const link = i.link ? ` <a class="link" href="${esc(i.link)}" target="_blank" rel="noopener">[link]</a>` : "";
-          return `<li class="ref-item"><div><p class="title">${linkify(i.citation || i.title || "")}${sci}${link}</p>
-            ${i.venue ? `<p class="meta">${esc(i.venue)}</p>` : ""}</div></li>`;
-        }).join("");
-        return `<div class="group-head"><h3>${esc(labelMap[g] || g)}</h3><span class="count">${list.length}</span></div>
-          <ol class="ref-list">${lis}</ol>`;
-      }).join("");
-    };
-    buildSubnav(nav, cats.map(c => labelMap[c] ? c : c), () => {});
-    // override subnav to use raw category values
-    nav.innerHTML = ["전체"].concat(cats).map((c, i) =>
-      `<button data-cat="${i === 0 ? "" : esc(c)}" class="${i === 0 ? "active" : ""}">${i === 0 ? "전체" : esc(labelMap[c] || c)}</button>`).join("");
-    nav.onclick = (e) => { const b = e.target.closest("button"); if (!b) return;
-      $$("button", nav).forEach(x => x.classList.remove("active")); b.classList.add("active"); draw(b.dataset.cat); };
-    draw("");
-  }
-
-  /* ----- CONFERENCES ----- */
-  async function renderConferences() {
-    const site = await fetchData("site"); mountChrome(site);
-    const data = await fetchData("conferences");
-    const root = $("#conf-root"); const nav = $("#conf-subnav");
-    if (!data || !Array.isArray(data.conferences)) { setState(root, "학술대회 정보를 불러오지 못했습니다."); return; }
-    const items = data.conferences;
-    const cats = ["International", "Domestic"].filter(c => items.some(i => i.category === c));
-    const labelMap = { International: "International", Domestic: "Domestic (국내)" };
-
-    const draw = (cat) => {
-      const groups = cat ? [cat] : cats;
-      root.innerHTML = groups.map(g => {
-        const list = items.filter(i => i.category === g);
-        if (!list.length) return "";
-        const lis = list.map(i => `<li class="ref-item"><div>
-          <p class="title">${esc(i.title || "")}</p>
-          <p class="meta">${esc(i.conference || "")}${i.date ? ` · ${esc(i.date)}` : ""}</p></div></li>`).join("");
-        return `<div class="group-head"><h3>${esc(labelMap[g] || g)}</h3><span class="count">${list.length}</span></div>
-          <ol class="ref-list">${lis}</ol>`;
-      }).join("");
-    };
-    nav.innerHTML = ["전체"].concat(cats).map((c, i) =>
-      `<button data-cat="${i === 0 ? "" : esc(c)}" class="${i === 0 ? "active" : ""}">${i === 0 ? "전체" : esc(labelMap[c] || c)}</button>`).join("");
-    nav.onclick = (e) => { const b = e.target.closest("button"); if (!b) return;
-      $$("button", nav).forEach(x => x.classList.remove("active")); b.classList.add("active"); draw(b.dataset.cat); };
-    draw("");
-  }
-
-  /* ----- PROJECTS ----- */
-  async function renderProjects() {
-    const site = await fetchData("site"); mountChrome(site);
-    const data = await fetchData("projects");
-    const root = $("#proj-root");
-    if (!data || !Array.isArray(data.projects)) { setState(root, "프로젝트 정보를 불러오지 못했습니다."); return; }
-    const lis = data.projects.map(p => `<div class="proj-item">
+  // Project rows (Research page) — heading is added by the caller
+  function buildProjects(projects) {
+    if (!Array.isArray(projects)) return "";
+    return projects.map(p => `<div class="proj-item">
       <div class="period">${esc(p.period || "")}</div>
       <div><div class="title">${esc(p.title || "")}</div>${p.org ? `<div class="org">${esc(p.org)}</div>` : ""}</div>
     </div>`).join("");
-    root.innerHTML = `<div class="group-head"><h3>연구 프로젝트</h3><span class="count">${data.projects.length}건</span></div>${lis}`;
   }
 
-  /* ----- PATENTS ----- */
-  async function renderPatents() {
-    const site = await fetchData("site"); mountChrome(site);
-    const data = await fetchData("patents");
-    const root = $("#patent-root");
-    if (!data || !Array.isArray(data.patents)) { setState(root, "특허 정보를 불러오지 못했습니다."); return; }
+  // Publications grouped by category (Publications page → 논문 tab)
+  function buildPublications(items) {
+    const order = ["International", "Domestic", "Other", "Books"];
+    const labelMap = { International: "International Journals & Proceedings", Domestic: "국내 논문", Other: "기타", Books: "저서" };
+    const html = order.filter(g => items.some(i => i.category === g)).map(g => {
+      const list = items.filter(i => i.category === g);
+      const lis = list.map(i => {
+        const sci = i.sci ? `<span class="badge badge--sci">SCI급</span>` : "";
+        const link = i.link ? ` <a class="link" href="${esc(i.link)}" target="_blank" rel="noopener">[link]</a>` : "";
+        return `<li class="ref-item"><div><p class="title">${linkify(i.citation || i.title || "")}${sci}${link}</p>
+          ${i.venue ? `<p class="meta">${esc(i.venue)}</p>` : ""}</div></li>`;
+      }).join("");
+      return `<div class="group-head"><h3>${esc(labelMap[g] || g)}</h3><span class="count">${list.length}</span></div>
+        <ol class="ref-list">${lis}</ol>`;
+    }).join("");
+    return html || '<div class="state">등록된 논문이 없습니다.</div>';
+  }
+
+  // Conferences grouped by category (Publications page → 학술대회 tab)
+  function buildConferences(items) {
+    const labelMap = { International: "International", Domestic: "Domestic (국내)" };
+    const html = ["International", "Domestic"].filter(g => items.some(i => i.category === g)).map(g => {
+      const list = items.filter(i => i.category === g);
+      const lis = list.map(i => `<li class="ref-item"><div>
+        <p class="title">${esc(i.title || "")}</p>
+        <p class="meta">${esc(i.conference || "")}${i.date ? ` · ${esc(i.date)}` : ""}</p></div></li>`).join("");
+      return `<div class="group-head"><h3>${esc(labelMap[g] || g)}</h3><span class="count">${list.length}</span></div>
+        <ol class="ref-list">${lis}</ol>`;
+    }).join("");
+    return html || '<div class="state">등록된 학술대회 발표가 없습니다.</div>';
+  }
+
+  // Patents tables (Achievements page → 특허 tab)
+  function buildPatents(patents) {
     const order = ["Application", "Registration", "Software"];
     const labelMap = { Application: "출원 (Application)", Registration: "등록 (Registration)", Software: "프로그램·저작권 (Software)" };
-    const cats = order.filter(c => data.patents.some(p => p.category === c));
-    root.innerHTML = cats.map(c => {
-      const list = data.patents.filter(p => p.category === c);
+    const html = order.filter(c => patents.some(p => p.category === c)).map(c => {
+      const list = patents.filter(p => p.category === c);
       const rows = list.map((p, idx) => `<tr>
         <td>${idx + 1}</td>
         <td class="name">${esc(p.name || "")}</td>
@@ -530,15 +450,12 @@
           <thead><tr><th>No.</th><th>지식재산권명</th><th>국내외</th><th>구분</th><th>일자</th><th>번호</th><th>발명인</th></tr></thead>
           <tbody>${rows}</tbody></table></div><div style="height:1.5rem"></div>`;
     }).join("");
+    return html || '<div class="state">등록된 특허가 없습니다.</div>';
   }
 
-  /* ----- AWARDS ----- */
-  async function renderAwards() {
-    const site = await fetchData("site"); mountChrome(site);
-    const data = await fetchData("awards");
-    const root = $("#award-root");
-    if (!data || !Array.isArray(data.awards)) { setState(root, "수상 정보를 불러오지 못했습니다."); return; }
-    const lis = data.awards.map(a => `<div class="award-item">
+  // Awards list (Achievements page → 수상 tab)
+  function buildAwards(awards) {
+    const lis = awards.map(a => `<div class="award-item">
       <div class="date">${esc(a.date || "")}</div>
       <div>
         <div class="title">${esc(a.title_ko || a.title || "")}</div>
@@ -546,7 +463,92 @@
         ${a.venue ? `<div class="venue">🏆 ${esc(a.venue)}</div>` : ""}
       </div>
     </div>`).join("");
-    root.innerHTML = `<div class="group-head"><h3>수상 실적</h3><span class="count">${data.awards.length}건</span></div>${lis}`;
+    return lis || '<div class="state">등록된 수상 실적이 없습니다.</div>';
+  }
+
+  // a 2-button "type" sub-nav (no 전체) used by Publications / Achievements
+  function typeTabs(nav, root, tabs) {
+    if (!nav) { root.innerHTML = tabs[0].view(); return; }
+    nav.innerHTML = tabs.map((t, i) =>
+      `<button data-key="${esc(t.key)}" class="${i === 0 ? "active" : ""}">${esc(t.label)}</button>`).join("");
+    nav.onclick = (e) => {
+      const b = e.target.closest("button"); if (!b) return;
+      $$("button", nav).forEach(x => x.classList.remove("active")); b.classList.add("active");
+      const t = tabs.find(x => x.key === b.dataset.key);
+      if (t) root.innerHTML = t.view();
+    };
+    root.innerHTML = tabs[0].view();
+  }
+
+  /* ====================================================================
+     PEOPLE  (= professor + members)
+     ==================================================================== */
+  async function renderPeople() {
+    const site = await fetchData("site"); mountChrome(site);
+    const [profData, memData] = await Promise.all([fetchData("professor"), fetchData("members")]);
+    const root = $("#people-root");
+    if (!root) return;
+    const M = (memData && Array.isArray(memData.members)) ? memData.members : null;
+    const sec = (cls, eyebrow, title, body) =>
+      `<section class="section${cls}"><div class="wrap">
+        <div class="section__head" style="margin-bottom:1.6rem">
+          <span class="section__eyebrow">${esc(eyebrow)}</span>
+          <h2 class="section__title">${esc(title)}</h2>
+        </div>${body}</div></section>`;
+    root.innerHTML =
+      sec("", "Professor", "지도교수", `<div style="max-width:920px;margin:0 auto">${buildProfessor(profData)}</div>`) +
+      sec(" section--muted", "Current", "현재 구성원",
+        M ? buildMembers(M, "current") : '<div class="state">구성원 정보를 불러오지 못했습니다.</div>') +
+      (M ? sec("", "Alumni", "졸업생", buildMembers(M, "alumni")) : "");
+  }
+
+  /* ====================================================================
+     RESEARCH  (= research areas + projects)
+     ==================================================================== */
+  async function renderResearch() {
+    const site = await fetchData("site"); mountChrome(site);
+    const data = await fetchData("projects");
+    const root = $("#research-root");
+    if (!root) return;
+    const projects = (data && Array.isArray(data.projects)) ? data.projects : null;
+    const topics = buildResearchTopics(site);
+    root.innerHTML =
+      (topics ? `<div class="group-head"><h3>연구 분야 (Research Areas)</h3></div>
+        <div class="grid grid--3" style="margin:1.2rem 0 2.4rem">${topics}</div>` : "") +
+      `<div class="group-head"><h3>연구 과제 (Projects)</h3><span class="count">${projects ? projects.length + "건" : ""}</span></div>
+       ${projects ? buildProjects(projects) : '<div class="state">프로젝트 정보를 불러오지 못했습니다.</div>'}`;
+  }
+
+  /* ====================================================================
+     PUBLICATIONS  (= journals/books + conferences, by type tab)
+     ==================================================================== */
+  async function renderPublications() {
+    const site = await fetchData("site"); mountChrome(site);
+    const [pub, conf] = await Promise.all([fetchData("publications"), fetchData("conferences")]);
+    const root = $("#pub-root"); const nav = $("#pub-subnav");
+    if (!root) return;
+    const pubs = (pub && Array.isArray(pub.publications)) ? pub.publications : [];
+    const confs = (conf && Array.isArray(conf.conferences)) ? conf.conferences : [];
+    typeTabs(nav, root, [
+      { key: "논문",     label: `논문 (${pubs.length})`,     view: () => buildPublications(pubs) },
+      { key: "학술대회", label: `학술대회 (${confs.length})`, view: () => buildConferences(confs) },
+    ]);
+  }
+
+  /* ====================================================================
+     ACHIEVEMENTS  (= patents + awards, by type tab)
+     ==================================================================== */
+  async function renderAchievements() {
+    const site = await fetchData("site"); mountChrome(site);
+    const [pat, awd] = await Promise.all([fetchData("patents"), fetchData("awards")]);
+    const root = $("#ach-root"); const nav = $("#ach-subnav");
+    if (!root) return;
+    const patents = (pat && Array.isArray(pat.patents)) ? pat.patents : [];
+    const awards = (awd && Array.isArray(awd.awards)) ? awd.awards : [];
+    typeTabs(nav, root, [
+      { key: "특허", label: `특허 (${patents.length})`, view: () => buildPatents(patents) },
+      { key: "수상", label: `수상 (${awards.length})`,  view: () => buildAwards(awards) },
+    ]);
   }
 
   /* ====================================================================
@@ -634,9 +636,9 @@
      Bootstrap by page
      ==================================================================== */
   const PAGES = {
-    home: renderHome, news: renderNews, professor: renderProfessor, members: renderMembers,
-    projects: renderProjects, publications: renderPublications,
-    conferences: renderConferences, patents: renderPatents, awards: renderAwards,
+    home: renderHome, news: renderNews,
+    people: renderPeople, research: renderResearch,
+    publications: renderPublications, achievements: renderAchievements,
   };
 
   document.addEventListener("DOMContentLoaded", function () {
