@@ -97,6 +97,8 @@ collections:
                 field: { name: image, label: 사진, widget: image }
               - { name: link,     label: 관련 링크 (URL, 선택), widget: string, required: false }
 
+  - divider: true   # ── 사이드바 그룹 구분선: (위) 일반·소식 / (아래) 사람 ──
+
   # ───────────────────────────── 교수 소개 ─────────────────────────────
   - name: professor
     label: 👤 교수 소개
@@ -189,6 +191,8 @@ collections:
               - { name: grad_year, label: 졸업년도 (졸업생), widget: string, required: false }
               - { name: degree, label: 학위명 (졸업생), widget: string, required: false }
               - { name: thesis, label: 논문명 (졸업생), widget: text, required: false }
+
+  - divider: true   # ── 사이드바 그룹 구분선: (위) 사람 / (아래) 연구성과 ──
 
   # ───────────────────────────── 프로젝트 ─────────────────────────────
   - name: projects
