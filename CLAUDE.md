@@ -135,6 +135,7 @@
   # http://localhost:8000/
   ```
 - **배포**: 작업 브랜치 → `main` 병합 → `git push origin main` → GitHub Pages 자동 배포(약 1분). 기본 브랜치 `main` 루트가 그대로 공개됨.
+- **캐시 무효화(중요)**: 6개 HTML이 `app.js`/`styles.css`를 `?v=YYYYMMDD` 쿼리로 참조한다. **`app.js` 또는 `styles.css`를 수정하면 이 `?v=` 값을 반드시 올릴 것** — 안 그러면 재방문자 브라우저가 옛 파일을 캐시한 채로 새 HTML을 돌려 "불러오는 중"에서 멈춘다(2026-06-03 실제 발생). 데이터(`data/*.json`)만 바꿀 땐 `fetch(..., {cache:"no-store"})`라 버전 불필요.
 - **편집(CMS)**: `/admin`(Sveltia) — GitHub OAuth는 Cloudflare Worker가 처리하며 `dasmolab.github.io`(실제 사이트)에서만 동작(localhost 불가). 멤버 추가 등은 `EDIT-LOGIN-GUIDE.md` 참고.
 
 ---
