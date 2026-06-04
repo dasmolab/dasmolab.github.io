@@ -483,6 +483,87 @@
   }
 
   // Project rows (Research page) — heading is added by the caller
+  /* ====================================================================
+     Filter engine — 구분(category) chips + 연도(year) dropdown shared by
+     the reference-list tabs (Publications 논문·학술대회 / Achievements
+     특허·수상 / Research 연구 과제). Filters are AND-combined; the per-build*
+     category grouping is preserved (passing a filtered list still groups).
+     ==================================================================== */
+  const FILTERS = {};   // block id → { items, cats, getCat, getYear, render }
+  let _fbSeq = 0;
+
+  // first 4-digit year (19xx/20xx) found in a string ("" if none)
+  function yearIn(s) { const m = String(s == null ? "" : s).match(/(?:19|20)\d{2}/); return m ? m[0] : ""; }
+  // publication year: prefer the one in parentheses, e.g. "... (2025). Title ..."
+  function pubYear(citation) {
+    const s = String(citation == null ? "" : citation);
+    const p = s.match(/\(((?:19|20)\d{2})\)/);
+    return p ? p[1] : yearIn(s);
+  }
+  // categories actually present in `items`, in canonical order, with labels
+  function presentCats(items, order, labels) {
+    return order.filter(k => items.some(i => i.category === k))
+                .map(k => ({ key: k, label: labels[k] || k }));
+  }
+
+  // Render a filter bar + list container for one tab. cfg:
+  //   items, cats:[{key,label}]|null, getCat(item), getYear(item)→"YYYY", render(list)→HTML
+  function filterBlock(cfg) {
+    const id = "fb" + (++_fbSeq);
+    FILTERS[id] = cfg;
+    const years = Array.from(new Set(cfg.items.map(cfg.getYear).filter(Boolean)))
+      .sort((a, b) => Number(b) - Number(a));
+    const rows = [];
+    if (cfg.cats && cfg.cats.length) {
+      const chips = [{ key: "", label: "전체" }].concat(cfg.cats).map((c, i) =>
+        `<button type="button" class="fchip${i === 0 ? " active" : ""}" data-cat="${esc(c.key)}">${esc(c.label)}</button>`
+      ).join("");
+      rows.push(`<div class="fbar__row"><span class="fbar__label">구분</span>${chips}</div>`);
+    }
+    if (years.length) {
+      const opts = `<option value="">전체 연도</option>` +
+        years.map(y => `<option value="${esc(y)}">${esc(y)}</option>`).join("");
+      rows.push(`<div class="fbar__row"><span class="fbar__label">연도</span>` +
+        `<select class="fyear" aria-label="연도로 필터링">${opts}</select></div>`);
+    }
+    const bar = rows.length ? `<div class="fbar" data-fb="${id}">${rows.join("")}</div>` : "";
+    return bar + `<div class="fbar__list" data-fb-list="${id}">${cfg.render(cfg.items)}</div>`;
+  }
+
+  // Recompute one block's list from its current control state (read from DOM).
+  function applyFilter(id) {
+    const cfg = FILTERS[id]; if (!cfg) return;
+    const bar = document.querySelector('.fbar[data-fb="' + id + '"]');
+    const listEl = document.querySelector('.fbar__list[data-fb-list="' + id + '"]');
+    if (!listEl) return;
+    const chip = bar ? bar.querySelector(".fchip.active") : null;
+    const cat = chip ? (chip.dataset.cat || "") : "";
+    const sel = bar ? bar.querySelector(".fyear") : null;
+    const year = sel ? sel.value : "";
+    let list = cfg.items;
+    if (cat)  list = list.filter(i => cfg.getCat(i) === cat);
+    if (year) list = list.filter(i => String(cfg.getYear(i)) === year);
+    listEl.innerHTML = list.length ? cfg.render(list)
+      : '<div class="state">선택한 조건에 맞는 항목이 없습니다.</div>';
+  }
+
+  // One delegated handler per root (chip clicks bubble; <select> change bubbles).
+  function wireFilters(root) {
+    if (!root || root._fbWired) return;
+    root._fbWired = true;
+    root.addEventListener("click", (e) => {
+      const chip = e.target.closest(".fchip"); if (!chip || !root.contains(chip)) return;
+      const bar = chip.closest(".fbar"); if (!bar) return;
+      $$(".fchip", bar).forEach(c => c.classList.toggle("active", c === chip));
+      applyFilter(bar.dataset.fb);
+    });
+    root.addEventListener("change", (e) => {
+      const sel = e.target.closest(".fyear"); if (!sel || !root.contains(sel)) return;
+      const bar = sel.closest(".fbar"); if (!bar) return;
+      applyFilter(bar.dataset.fb);
+    });
+  }
+
   function buildProjects(projects) {
     if (!Array.isArray(projects)) return "";
     return projects.map(p => `<div class="proj-item">
@@ -643,9 +724,13 @@
              <div class="grid grid--3" style="margin:1.2rem 0 0">${topics}</div>`
           : '<div class="state">등록된 연구 분야가 없습니다.</div>' },
       { key: "projects", label: "연구 과제",
-        view: () => `<div class="group-head"><h3>연구 과제 (Projects)</h3><span class="count">${projects ? projects.length + "건" : ""}</span></div>
-          ${projects ? buildProjects(projects) : '<div class="state">프로젝트 정보를 불러오지 못했습니다.</div>'}` },
+        view: () => projects ? filterBlock({
+          items: projects, cats: null,
+          getCat: () => "", getYear: i => yearIn(i.period),
+          render: (list) => `<div class="group-head"><h3>연구 과제 (Projects)</h3><span class="count">${list.length}건</span></div>${buildProjects(list)}`,
+        }) : '<div class="state">프로젝트 정보를 불러오지 못했습니다.</div>' },
     ], "areas");
+    wireFilters(root);
   }
 
   /* ====================================================================
@@ -659,9 +744,24 @@
     const pubs = (pub && Array.isArray(pub.publications)) ? pub.publications : [];
     const confs = (conf && Array.isArray(conf.conferences)) ? conf.conferences : [];
     mountSubnav(nav, root, [
-      { key: "papers",      label: `논문 (${pubs.length})`,      view: () => buildPublications(pubs) },
-      { key: "conferences", label: `학술대회 (${confs.length})`, view: () => buildConferences(confs) },
+      { key: "papers", label: `논문 (${pubs.length})`,
+        view: () => filterBlock({
+          items: pubs,
+          cats: presentCats(pubs, ["International", "Domestic", "Other", "Books"],
+            { International: "International", Domestic: "Domestic", Other: "기타", Books: "저서" }),
+          getCat: i => i.category, getYear: i => pubYear(i.citation),
+          render: buildPublications,
+        }) },
+      { key: "conferences", label: `학술대회 (${confs.length})`,
+        view: () => filterBlock({
+          items: confs,
+          cats: presentCats(confs, ["International", "Domestic"],
+            { International: "International", Domestic: "Domestic" }),
+          getCat: i => i.category, getYear: i => yearIn(i.date),
+          render: buildConferences,
+        }) },
     ], "papers");
+    wireFilters(root);
   }
 
   /* ====================================================================
@@ -675,9 +775,22 @@
     const patents = (pat && Array.isArray(pat.patents)) ? pat.patents : [];
     const awards = (awd && Array.isArray(awd.awards)) ? awd.awards : [];
     mountSubnav(nav, root, [
-      { key: "patents", label: `특허 (${patents.length})`, view: () => buildPatents(patents) },
-      { key: "awards",  label: `수상 (${awards.length})`,  view: () => buildAwards(awards) },
+      { key: "patents", label: `특허 (${patents.length})`,
+        view: () => filterBlock({
+          items: patents,
+          cats: presentCats(patents, ["Application", "Registration", "Software"],
+            { Application: "출원", Registration: "등록", Software: "프로그램" }),
+          getCat: i => i.category, getYear: i => yearIn(i.date),
+          render: buildPatents,
+        }) },
+      { key: "awards", label: `수상 (${awards.length})`,
+        view: () => filterBlock({
+          items: awards, cats: null,
+          getCat: () => "", getYear: i => yearIn(i.date),
+          render: buildAwards,
+        }) },
     ], "patents");
+    wireFilters(root);
   }
 
   /* ====================================================================
