@@ -1,6 +1,12 @@
 {
   "conferences": [
     {
+      "category": "Domestic",
+      "title": "test_dasmolab",
+      "conference": "한국dasmo학회 2027년 춘계학술대회",
+      "date": "2027. 6."
+    },
+    {
       "category": "International",
       "title": "Development and Evaluation of V2I-based Vehicle Idling Control System",
       "conference": "International Conference for Road Engineers (2025 ICRE)",
