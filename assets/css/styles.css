@@ -45,11 +45,14 @@ body {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  word-break: keep-all;        /* 한글은 어절(공백) 단위로만 줄바꿈 — 단어 중간에서 끊기지 않게 */
+  overflow-wrap: break-word;   /* 공백 없는 긴 URL·영문 토큰은 넘칠 때만 끊어 줄바꿈 */
+  text-wrap: pretty;           /* 마지막 줄 외톨이 단어(orphan) 최소화 (미지원 브라우저는 무시) */
 }
 img { max-width: 100%; display: block; }
 a { color: var(--teal-dark); text-decoration: none; }
 a:hover { text-decoration: underline; }
-h1, h2, h3, h4 { line-height: 1.25; color: var(--ink); font-weight: 700; margin: 0 0 .5em; }
+h1, h2, h3, h4 { line-height: 1.25; color: var(--ink); font-weight: 700; margin: 0 0 .5em; text-wrap: balance; }
 p { margin: 0 0 1em; }
 ul { margin: 0; padding: 0; }
 :focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 4px; }
@@ -474,7 +477,7 @@ table.data .name { color: var(--ink); font-weight: 600; }
   background: linear-gradient(135deg, rgba(20,184,166,.16), rgba(6,182,212,.16)); }
 .newscard__body { padding: .9rem 1.1rem 1.1rem; }
 .newscard__meta { font-size: .82rem; color: var(--text-soft); font-weight: 600; }
-.newscard__title { color: var(--ink); font-weight: 700; margin-top: .3rem; font-size: 1.04rem;
+.newscard__title { color: var(--ink); font-weight: 700; margin-top: .3rem; font-size: 1.04rem; text-wrap: balance;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
 /* News feed: clickable cards (click → detail modal) */
@@ -491,7 +494,7 @@ table.data .name { color: var(--ink); font-weight: 600; }
   background: linear-gradient(135deg, rgba(20,184,166,.16), rgba(6,182,212,.16)); }
 .news-card__body { flex: 1; min-width: 0; padding: 1rem 1.2rem; display: flex; flex-direction: column; }
 .news-card__meta { font-size: .82rem; color: var(--text-soft); font-weight: 600; margin-bottom: .25rem; }
-.news-card__title { font-size: 1.08rem; color: var(--ink); font-weight: 700; margin: 0 0 .35rem;
+.news-card__title { font-size: 1.08rem; color: var(--ink); font-weight: 700; margin: 0 0 .35rem; text-wrap: balance;
   line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .news-card__excerpt { font-size: .92rem; color: var(--text-soft); margin: 0 0 .55rem; line-height: 1.6;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
