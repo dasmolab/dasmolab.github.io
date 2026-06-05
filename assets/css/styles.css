@@ -162,6 +162,25 @@ ul { margin: 0; padding: 0; }
   }
 }
 
+/* Language switch (KO ⇄ EN) — last item in the nav */
+.nav__lang { display: flex; align-items: center; }
+.nav__links a.lang-switch {
+  display: inline-flex; align-items: center; gap: .3rem;
+  margin-left: .5rem; padding: .34rem .72rem;
+  border: 1px solid var(--line); border-radius: 999px;
+  font-size: .82rem; font-weight: 700; letter-spacing: .03em; color: var(--text-soft);
+}
+.nav__links a.lang-switch::before { content: "🌐"; font-size: .92em; }
+.nav__links a.lang-switch:hover {
+  border-color: var(--teal); color: var(--teal-dark);
+  background: var(--bg-muted); text-decoration: none;
+}
+.nav__links a.lang-switch.active::after { display: none; }
+@media (max-width: 860px) {
+  .nav__lang { padding: .7rem .6rem; border-bottom: 1px solid var(--line); }
+  .nav__links a.lang-switch { margin-left: 0; width: max-content; }
+}
+
 /* ==========================================================================
    Hero
    ========================================================================== */

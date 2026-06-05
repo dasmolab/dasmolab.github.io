@@ -1,0 +1,38 @@
+{
+  "news": [
+    {
+      "date": "2026-05-20",
+      "category": "Recruiting",
+      "title": "Recruiting Graduate Students and Undergraduate Research Students for the Fall 2026 Semester",
+      "body": "We are recruiting graduate students (master's and Ph.D.) and undergraduate research students interested in transportation engineering, Intelligent Transportation Systems (ITS), and smart mobility.\nInterested students are welcome to contact Professor Hoe Kyoung Kim by email (hoekim@dau.ac.kr).",
+      "photos": [],
+      "link": ""
+    },
+    {
+      "date": "2026-05-16",
+      "category": "Conference",
+      "title": "Participation in the 2026 KST Spring Conference",
+      "body": "The laboratory presented numerous studies, including the evaluation of signal operations based on microscopic simulation. The graduate students' presentations were well received.",
+      "photos": [],
+      "link": ""
+    },
+    {
+      "date": "2026-04-25",
+      "category": "Seminar",
+      "title": "Invited Seminar — Traffic Safety Analysis Using C-ITS and V2X",
+      "body": "We held an invited seminar with an external speaker on the topic of traffic safety analysis using data from a C-ITS demonstration project.",
+      "photos": [
+        "/assets/uploads/온두라스_2000.png"
+      ],
+      "link": ""
+    },
+    {
+      "date": "2026-03-06",
+      "category": "Lab Meeting",
+      "title": "First Lab Meeting of the Spring 2026 Semester and Welcoming New Students",
+      "body": "To mark the new semester, we held a full laboratory meeting and welcomed the new graduate students. We also shared the research plans and schedule for the semester together.",
+      "photos": [],
+      "link": ""
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "lab_abbr": "DASMOLabs",
+  "lab_name_ko": "동아대학교 도시공학과 교통공학연구실",
+  "lab_name_en": "Dong-A Smart Mobility Laboratory",
+  "tagline_en": "Smart Mobility · ITS · MaaS",
+  "intro1": "The Transportation Engineering Laboratory in the Department of Urban Engineering at Dong-A University conducts research in the field of Intelligent Transportation Systems (ITS) in step with the rapid advancement of ICT technologies in the era of the Fourth Industrial Revolution. In particular, by leveraging microscopic simulation techniques to analyze the driving and movement behavior of individual vehicles, we carry out evaluations of various transportation facilities and their operations.",
+  "intro2": "In addition, amid the shifting paradigm of the transportation field, we conduct research on eco-friendly transportation modes, Smart Mobility, and Mobility-as-a-Service (MaaS) for the realization of sustainable urban transportation. We primarily focus on evaluating safety and convenience from the user's perspective, and on providing recommendations regarding operational efficiency and applicability.",
+  "research_topics": [
+    {
+      "icon": "🚗",
+      "title": "Transportation Engineering",
+      "desc": "Driver behavior, TSM, traffic flow analysis, and more",
+      "tags": [
+        "Driver Behavior",
+        "TSM",
+        "Traffic Flow Analysis"
+      ]
+    },
+    {
+      "icon": "📡",
+      "title": "ITS",
+      "desc": "C-ITS, V2X, new transportation systems, and more",
+      "tags": [
+        "C-ITS",
+        "V2X",
+        "New Transportation Systems"
+      ]
+    },
+    {
+      "icon": "🚦",
+      "title": "Traffic Signals",
+      "desc": "Traffic signal control, operation, management, signal optimization, and more",
+      "tags": [
+        "Signal Control",
+        "Traffic Management",
+        "Signal Optimization"
+      ]
+    },
+    {
+      "icon": "🛡️",
+      "title": "Traffic Safety",
+      "desc": "Traffic accident history data analysis, traffic safety facility evaluation, fire dispatch optimization, and more",
+      "tags": [
+        "Accident Analysis",
+        "Safety Facility Evaluation",
+        "Fire Dispatch Optimization"
+      ]
+    },
+    {
+      "icon": "🖥️",
+      "title": "Traffic Simulation",
+      "desc": "VISSIM, VISSIM COM User Interface, and more",
+      "tags": [
+        "VISSIM",
+        "COM Interface"
+      ]
+    },
+    {
+      "icon": "🛴",
+      "title": "Smart Mobility",
+      "desc": "Personal mobility, micro-mobility, Mobility-as-a-Service (MaaS), autonomous vehicles, and more",
+      "tags": [
+        "Personal Mobility",
+        "MaaS",
+        "Autonomous Driving"
+      ]
+    }
+  ],
+  "classes_undergrad": [
+    "Transportation Engineering",
+    "Transportation Planning",
+    "Intelligent Transportation Systems (ITS)",
+    "Introduction to Transportation",
+    "Urban Facility Planning",
+    "Capstone Design"
+  ],
+  "classes_grad": [
+    "Transportation Engineering",
+    "Traffic Safety",
+    "Public Transportation",
+    "Traffic Flow Theory"
+  ],
+  "address": "Room 1404, Engineering Building 1, Seunghak Campus, Dong-A University, Hadan-dong, Saha-gu, Busan",
+  "phone": "051-200-7665",
+  "email": "hoekim@dau.ac.kr",
+  "office": "Room 1404 (S03-0404), Engineering Building 1, Seunghak Campus, Dong-A University",
+  "logo": "assets/img/logo_231027.jpg"
+}

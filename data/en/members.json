@@ -1,0 +1,328 @@
+{
+  "members": [
+    {
+      "name_ko": "라기례",
+      "name_en": "Ra, Girye",
+      "group": "current",
+      "level": "PhD",
+      "photo": "assets/uploads/240312_1.png",
+      "email": "skdb1@korea.kr",
+      "affiliation": "Public Transportation Division, Gimhae City",
+      "period": "Mar 2024 – Present"
+    },
+    {
+      "name_ko": "정지효",
+      "name_en": "Jung, Jihyo",
+      "group": "current",
+      "level": "PhD",
+      "photo": "assets/uploads/240312_3.png",
+      "email": "gihyo123450@gmail.com",
+      "affiliation": "Graduate School, Dept. of Urban Engineering, Dong-A University",
+      "period": "Mar 2026 – Present"
+    },
+    {
+      "name_ko": "이은정",
+      "name_en": "Lee, Eunjung",
+      "group": "current",
+      "level": "Master",
+      "photo": "assets/uploads/20240516.png",
+      "email": "nj4444@naver.com",
+      "affiliation": "Graduate School, Dept. of Urban Engineering, Dong-A University",
+      "period": "Mar 2024 – Present"
+    },
+    {
+      "name_ko": "정지효",
+      "name_en": "Jung, Jihyo",
+      "group": "current",
+      "level": "Master",
+      "photo": "assets/uploads/20230103_01.jpg",
+      "email": "gihyo123450@gmail.com",
+      "affiliation": "Graduate School, Dept. of Urban Engineering, Dong-A University",
+      "period": "Mar 2024 – Present"
+    },
+    {
+      "name_ko": "김태규",
+      "name_en": "Kim, Taegyu",
+      "group": "current",
+      "level": "Master",
+      "photo": "assets/uploads/240312_2.png",
+      "email": "tae99@korea.kr",
+      "affiliation": "Public Transportation Division, Gimhae City",
+      "period": "Mar 2024 – Present"
+    },
+    {
+      "name_ko": "차정은",
+      "name_en": "Cha, Jungeun",
+      "group": "current",
+      "level": "Master",
+      "photo": "assets/uploads/1200005.jpg",
+      "email": "chaje0119@naver.com",
+      "affiliation": "Undergraduate, Dept. of Urban Engineering, Dong-A University",
+      "period": "Jan 2023 – Present"
+    },
+    {
+      "name_ko": "이정빈",
+      "name_en": "Lee, Jeongbin",
+      "group": "current",
+      "level": "Undergraduate",
+      "photo": "assets/uploads/20260205-1.png",
+      "email": "jeongbin567@gmail.com",
+      "affiliation": "Undergraduate, Dept. of Urban Engineering, Dong-A University",
+      "period": "Dec 2025 – Present"
+    },
+    {
+      "name_ko": "조수린",
+      "name_en": "Cho, Surin",
+      "group": "current",
+      "level": "Undergraduate",
+      "photo": "assets/uploads/20260205-2.png",
+      "email": "surin0822@naver.com",
+      "affiliation": "Undergraduate, Dept. of Urban Engineering, Dong-A University",
+      "period": "Dec 2025 – Present"
+    },
+    {
+      "name_ko": "김동은",
+      "name_en": "Kim, Dongeun",
+      "group": "current",
+      "level": "Undergraduate",
+      "photo": "assets/uploads/20260205-3.png",
+      "email": "dek135@naver.com",
+      "affiliation": "Undergraduate, Dept. of Urban Engineering, Dong-A University",
+      "period": "Dec 2025 – Present"
+    },
+    {
+      "name_ko": "이준휘",
+      "name_en": "Lee, Junhwi",
+      "group": "current",
+      "level": "Undergraduate",
+      "photo": "assets/uploads/20250108.png",
+      "email": "junhwi01@naver.com",
+      "affiliation": "Undergraduate, Dept. of Urban Engineering, Dong-A University",
+      "period": "Oct 2024 – Present"
+    },
+    {
+      "name_ko": "안유주",
+      "name_en": "Ahn, Yuju",
+      "group": "current",
+      "level": "Undergraduate",
+      "photo": "assets/uploads/20250410.png",
+      "email": "stella1346@naver.com",
+      "affiliation": "Undergraduate, Dept. of Urban Engineering, Dong-A University",
+      "period": "Mar 2025 – Present"
+    },
+    {
+      "name_ko": "김민정",
+      "name_en": "Kim, Minjeong",
+      "group": "alumni",
+      "level": "PhD",
+      "photo": "assets/uploads/20230921_img.jpg",
+      "email": "kmlalswjd@hanmail.net; mjkim@chari.re.kr",
+      "affiliation": "Senior Researcher, Urban Space Research Division, Changwon Research Institute",
+      "grad_year": "Feb 2022",
+      "degree": "Ph.D.",
+      "thesis": "Development and Application of Vehicle Miles Traveled(VMT) Tax-based Behavioral Model Depending on the Dissemination of Eco-friendly Vehicles"
+    },
+    {
+      "name_ko": "박종서",
+      "name_en": "Park, Jongseo",
+      "group": "alumni",
+      "level": "PhD",
+      "photo": "assets/uploads/0209_04.jpg",
+      "email": "jsp6633@korea.kr",
+      "affiliation": "(Former) Director of Urban Planning Bureau, Yangsan City",
+      "grad_year": "Feb 2016",
+      "degree": "Ph.D.",
+      "thesis": "A Study on the Construction of Traffic Safety Evaluation Model Focused on Busan Metropolitan City"
+    },
+    {
+      "name_ko": "유초롱",
+      "name_en": "You, Chorong",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/1200002.jpg",
+      "email": "zzorong@koroad.or.kr",
+      "affiliation": "Safety Facilities Department, Busan Metropolitan City Branch, Korea Road Traffic Authority (KoROAD)",
+      "grad_year": "Feb 2024",
+      "thesis": "Analysis of Factors Influencing the Severity of Taxi Traffic Accident at the Intersection of Busan"
+    },
+    {
+      "name_ko": "송수정",
+      "name_en": "Song, Soo Jeong",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/1200003.jpg",
+      "email": "nuntudong@koroad.or.kr",
+      "affiliation": "Safety Facilities Department, Busan Metropolitan City Branch, Korea Road Traffic Authority (KoROAD)",
+      "grad_year": "Feb 2024",
+      "thesis": "A Study on the Improvement of the Safety Facility Installation in School Zone, Focused on Busan Metropolitan City"
+    },
+    {
+      "name_ko": "정일근",
+      "name_en": "Jung, Il Keun",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/1027_01.png",
+      "email": "darkjik@naver.com",
+      "affiliation": "Manager, Safety Facilities Department, Busan Metropolitan City Branch, Korea Road Traffic Authority (KoROAD)",
+      "grad_year": "Aug 2023",
+      "thesis": "A Study on Efficiency and Safety Evaluation Based on Right-turn Operation"
+    },
+    {
+      "name_ko": "정대한",
+      "name_en": "Jeong, Daehan",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/0209_01.jpg",
+      "email": "shvoddl@naver.com",
+      "affiliation": "Transportation Planning Department, Shinmyeong E&C Co., Ltd.",
+      "grad_year": "Feb 2021",
+      "thesis": "Development and Evaluation of Mobility Service of Autonomous Vehicles Based on ADAS Data"
+    },
+    {
+      "name_ko": "우보람",
+      "name_en": "Woo, Boram",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/0209_02.jpg",
+      "email": "wlgus_93@naver.com",
+      "affiliation": "Researcher, Integrated Transportation Research Division, Korea Transport Institute (KOTI)",
+      "grad_year": "Feb 2021",
+      "thesis": "Analysis of Factors Associated with Fire Mobilization Delay, Focused on Busan Metropolitan City"
+    },
+    {
+      "name_ko": "김아름",
+      "name_en": "Kim, Ahreum",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/0209_03.jpg",
+      "email": "dkfma7895@naver.com",
+      "affiliation": "Researcher, Metropolitan and Urban Transportation Research Division, Korea Transport Institute (KOTI)",
+      "grad_year": "Feb 2021",
+      "thesis": "An Evaluation of Micro Mobility Modes on the Improvement of Public Transit Service Considering Slope, Focused on Busan Metropolitan City"
+    },
+    {
+      "name_ko": "안우성",
+      "name_en": "Ahn, Woosung",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/0209_07.jpg",
+      "email": "woosung5737@naver.com",
+      "affiliation": "Traffic Police / National Police Agency",
+      "grad_year": "Feb 2016",
+      "degree": "M.S.",
+      "thesis": "Evaluation of Silver Zone and Improvement of its Designation Method Focused on Busan Metropolitan City"
+    },
+    {
+      "name_ko": "허민",
+      "name_en": "Heo, Min",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/0209_06.jpg",
+      "email": "cost@deri.or.kr",
+      "affiliation": "Dongyang Economic Research Institute",
+      "grad_year": "Feb 2014",
+      "degree": "M.S.",
+      "thesis": "A Study on Choice Model Development of Traffic Information Provision System"
+    },
+    {
+      "name_ko": "런위",
+      "name_en": "Ren, Yu",
+      "group": "alumni",
+      "level": "Master",
+      "photo": "assets/uploads/0209_05.jpg",
+      "email": "specialboy88@naver.com",
+      "affiliation": "Geowon Engineering Co., Ltd.",
+      "grad_year": "Aug 2013",
+      "degree": "M.S.",
+      "thesis": "A Study on Evaluation of Optimal Roadside Equipment Spacing in Interrupted Traffic States"
+    },
+    {
+      "name_ko": "공서준",
+      "name_en": "Kong, Seojun",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/1200020.jpg",
+      "email": "gsp3212@naver.com",
+      "affiliation": "Researcher, Big Data Analysis Team, Consulting Business Division, Studio Galilei Mobility",
+      "grad_year": "Feb 2023",
+      "degree": "B.S."
+    },
+    {
+      "name_ko": "김준희",
+      "name_en": "Kim, Junhee",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/1200021.jpg",
+      "email": "agurt130@naver.com; dgenc@choi.com",
+      "affiliation": "Staff, Transportation Planning Team, Daegeon E&C Co., Ltd.",
+      "grad_year": "Feb 2023",
+      "degree": "B.S."
+    },
+    {
+      "name_ko": "최은수",
+      "name_en": "Choi, Eunsoo",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/1200022.jpg",
+      "email": "eunsoo1116@hanmail.net; eschoii1116@sinmyeong.co.kr",
+      "affiliation": "Staff, Transportation Planning Department 1, Shinmyeong E&C Co., Ltd.",
+      "grad_year": "Feb 2023",
+      "degree": "B.S."
+    },
+    {
+      "name_ko": "박성훈",
+      "name_en": "Park, Sunghoon",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/0419_01.png",
+      "email": "tkxksgoa123@naver.com",
+      "affiliation": "Busan Metropolitan City Bus Transport Business Association",
+      "grad_year": "Feb 2022",
+      "degree": "B.S."
+    },
+    {
+      "name_ko": "최일송",
+      "name_en": "Choi, Ilsong",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/0209_10.jpg",
+      "email": "poiu789kr@naver.com",
+      "affiliation": "Safety Investigation and Operation Department, Ulsan-Gyeongnam Branch, Korea Road Traffic Authority (KoROAD)",
+      "grad_year": "Feb 2019",
+      "degree": "B.S."
+    },
+    {
+      "name_ko": "신민정",
+      "name_en": "Shin, Minjeong",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/0209_11.jpg",
+      "email": "wjd5073@daum.net",
+      "affiliation": "Transportation Planning Department, Chicane Engineering",
+      "grad_year": "Feb 2019",
+      "degree": "B.S."
+    },
+    {
+      "name_ko": "양태양",
+      "name_en": "Yang, Taeyang",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/0209_09.jpg",
+      "email": "ty9809@naver.com",
+      "affiliation": "National Transport DB Center, Transportation Big Data Research Division, Korea Transport Institute (KOTI)",
+      "grad_year": "Feb 2018",
+      "degree": "B.S."
+    },
+    {
+      "name_ko": "강대호",
+      "name_en": "Kang, Daeho",
+      "group": "alumni",
+      "level": "Bachelor",
+      "photo": "assets/uploads/0209_08.jpg",
+      "email": "szeretlek92@naver.com",
+      "affiliation": "Woomi Construction",
+      "grad_year": "Feb 2017",
+      "degree": "B.S."
+    }
+  ]
+}

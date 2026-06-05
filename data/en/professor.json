@@ -1,0 +1,606 @@
+{
+  "name_ko": "김회경",
+  "name_en": "Kim, Hoe Kyoung",
+  "title": "Professor, Department of Urban Engineering, Dong-A University",
+  "photo": "assets/uploads/prof.jpg",
+  "fields": "Transportation Engineering, Intelligent Transportation System (ITS)",
+  "phone": "051-200-7665",
+  "email": "hoekim@dau.ac.kr, transurban1@gmail.com",
+  "office": "Room 1404 (S03-0404), Engineering Building 1, Seunghak Campus, Dong-A University",
+  "education": [
+    {
+      "period": "Aug 2002 – May 2010",
+      "place": "Georgia Institute of Technology, Department of Civil Engineering",
+      "degree": "Ph.D.",
+      "thesis": "Development and Evaluation of Advanced Traveler Information System (ATIS) Using Vehicle-to-Vehicle (V2V) Communication System"
+    },
+    {
+      "period": "Aug 2002 – Dec 2003",
+      "place": "Georgia Institute of Technology, Department of Civil Engineering",
+      "degree": "M.S."
+    },
+    {
+      "period": "Aug 2000 – May 2002",
+      "place": "Texas A&M University, Department of Civil Engineering",
+      "degree": "M.S.",
+      "thesis": "Demonstrative Comparison of Two Traffic Signal Optimization Programs: Synchro-6 and PASSER-II"
+    },
+    {
+      "period": "Mar 1996 – Feb 1998",
+      "place": "Dong-A University, Department of Urban Engineering",
+      "degree": "M.S.",
+      "thesis": "A Study on the Geometric Improvement of Traffic Congestion Points in Busan"
+    },
+    {
+      "period": "Mar 1990 – Feb 1996",
+      "place": "Dong-A University, Department of Urban Engineering",
+      "degree": "B.S."
+    }
+  ],
+  "careers": [
+    {
+      "period": "Sep 2011 – Present",
+      "what": "Professor, Department of Urban Engineering, Dong-A University"
+    },
+    {
+      "period": "Sep 2019 – Aug 2020",
+      "what": "Visiting Professor, Department of Civil Engineering, Georgia Institute of Technology"
+    },
+    {
+      "period": "Feb 2010 – Aug 2011",
+      "what": "Postdoctoral Researcher, Geographic Information Science & Technology (GIST) Group, Oak Ridge National Laboratory"
+    },
+    {
+      "period": "Jul 2003 – Jan 2010",
+      "what": "Research Assistant, Department of Civil Engineering, Georgia Institute of Technology"
+    },
+    {
+      "period": "Jan 2002 – May 2002",
+      "what": "Research Assistant, Department of Civil Engineering, Texas A&M University"
+    },
+    {
+      "period": "Nov 1998 – Nov 1999",
+      "what": "Research Fellow, Policy Development Office, Busan Metropolitan City"
+    }
+  ],
+  "societies": [
+    {
+      "name": "Korean Society of Transportation (KST)",
+      "position": "Member",
+      "note": "Life Member"
+    },
+    {
+      "name": "Korea Institute of Intelligent Transport Systems (KITS)",
+      "position": "Chair, Busan-Ulsan-Gyeongnam Branch",
+      "note": "Life Member"
+    },
+    {
+      "name": "Korean Society of Road Engineers (KSRE)",
+      "position": "Member",
+      "note": "Life Member"
+    },
+    {
+      "name": "Korean Society of Civil Engineers (KSCE)",
+      "position": "Member",
+      "note": "Life Member"
+    },
+    {
+      "name": "Urban Design Institute of Korea (UDIK)",
+      "position": "Member"
+    },
+    {
+      "name": "Korea Planning Association (KPA)",
+      "position": "Member"
+    },
+    {
+      "name": "Korean Association of Geographic Information Studies (KAGIS)",
+      "position": "Member"
+    },
+    {
+      "name": "Korean Society of Transportation Policy and Economics",
+      "position": "Member"
+    }
+  ],
+  "media": [
+    {
+      "date": "Nov 30, 2025 / KNN Power Talk",
+      "title": "Manhak–Centum Deep Underpass Nears Opening: Busan's Changing Road Network",
+      "url": "https://www.knn.co.kr/tv/powertalk/vods/84/282439"
+    },
+    {
+      "date": "Sep 1, 2025 / Busan Ilbo",
+      "title": "Busan's 'Toll-Free Tunnel = Traffic Surge' Formula Did Not Hold",
+      "url": "https://news.knn.co.kr/news/article/173012"
+    },
+    {
+      "date": "Jul 27, 2025 / DEEP INSIGHT / The Korea Economic Daily",
+      "title": "Trillions in Taxpayer Money Poured In, Yet 'Ghost Railways' Become a Burden Flashing Red",
+      "url": "https://news.knn.co.kr/news/article/173012"
+    },
+    {
+      "date": "May 22, 2025 / Politics / KNN",
+      "title": "Busan-Ulsan-Gyeongnam GTX Pledges Everywhere: How Feasible Are They?",
+      "url": "https://news.knn.co.kr/news/article/173012"
+    },
+    {
+      "date": "May 18, 2025 / Current Affairs Focus IN Plus / Busan MBC",
+      "title": "Can the Hydrogen Tram Busan Port Line Become the Future of Transportation?",
+      "url": "https://www.youtube.com/live/fk2YpK4A0GA"
+    },
+    {
+      "date": "Mar 21, 2025 / Society / KNN",
+      "title": "'Busan Port Line' Urban Railway Connecting Yeongdo–Jung-gu–Dong-gu–Nam-gu Announced",
+      "url": "https://news.knn.co.kr/news/article/170492"
+    },
+    {
+      "date": "Dec 30, 2024 / Society / Busan MBC",
+      "title": "Busan to Build Four More Private Toll Roads",
+      "url": "https://busanmbc.co.kr/01_new/new01_view.asp?idx=270622"
+    },
+    {
+      "date": "Dec 25, 2024 / Society / Busan MBC",
+      "title": "The 'Shackle' of Tax Injection.. Countermeasures Also Clearly Limited",
+      "url": "https://busanmbc.co.kr/01_new/new01_view.asp?idx=270526"
+    },
+    {
+      "date": "Jun 21, 2024 / People Focus / KNN",
+      "title": "[People Focus] Kim Hoe-kyoung, Professor of Urban Engineering, Dong-A University",
+      "url": "https://news.knn.co.kr/news/article/158889"
+    },
+    {
+      "date": "Nov 21, 2022 / Reporting K / KBS News",
+      "title": "[Window+] Paris's Solution to the Parking Problem... The 15-Minute City!",
+      "url": "https://news.kbs.co.kr/news/pc/view/view.do?ncd=5605718"
+    }
+  ],
+  "committees": [
+    {
+      "period": "Dec 26, 2025 – Dec 25, 2027",
+      "name": "15-Minute City Safe Route to School Public-Private Council, Busan Metropolitan City"
+    },
+    {
+      "period": "Dec 16, 2025 – Jan 28, 2027",
+      "name": "Joint Urban and Architecture Committee, Haeundae-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Nov 21, 2025 – Nov 20, 2026",
+      "name": "Architecture Committee, Haeundae-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Dec 31, 2025 – Dec 30, 2027",
+      "name": "Chair, Busan Transportation Innovation Fund Management Committee"
+    },
+    {
+      "period": "Nov 1, 2025 – Oct 31, 2027",
+      "name": "Urban Planning Committee, Buk-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Nov 1, 2025 – Oct 31, 2027",
+      "name": "Joint Urban and Architecture Committee, Buk-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Sep 30, 2025 – Sep 29, 2028",
+      "name": "Employee Representative, Labor-Management Council, Dong-A University"
+    },
+    {
+      "period": "Aug 8, 2025 – Aug 7, 2027",
+      "name": "Market Redevelopment Project Deliberation Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Jul 1, 2025 – Jun 30, 2027",
+      "name": "Urban Planning Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Jul 1, 2025 – Jun 30, 2027",
+      "name": "Joint Urban Landscape Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Jun 1, 2025 – May 31, 2027",
+      "name": "Urban Planning Committee, Seo-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Jun 1, 2025 – May 31, 2027",
+      "name": "Joint Urban and Architecture Committee, Seo-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Mar 1, 2025 – Feb 28, 2027",
+      "name": "Faculty Senator, Dong-A University Council"
+    },
+    {
+      "period": "Feb 1, 2025 – Jan 31, 2027",
+      "name": "Construction Technology Advisor, Gadeokdo New Airport Construction Corporation"
+    },
+    {
+      "period": "Dec 2024 – Mar 7, 2025",
+      "name": "16th Technical Review and Evaluation Committee, Korea Land & Housing Corporation (LH)"
+    },
+    {
+      "period": "Nov 28, 2024 – Nov 27, 2026",
+      "name": "Research Advisory Member, Gimhae Research Institute"
+    },
+    {
+      "period": "Aug 1, 2024 – Jul 31, 2026",
+      "name": "Traffic Impact Assessment Deliberation Committee, Changwon Special City"
+    },
+    {
+      "period": "Apr 24, 2024 – Apr 23, 2026",
+      "name": "Urban Planning Committee, Yeongdo-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Apr 18, 2024 – Apr 17, 2026",
+      "name": "Construction Advisory Expert (Urban and Transportation), Korea Industrial Complex Corporation"
+    },
+    {
+      "period": "Feb 28, 2024 – Feb 27, 2026",
+      "name": "Transportation Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Feb 1, 2024 – Jan 31, 2026",
+      "name": "Gadeokdo New Airport Technical Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Feb 13, 2024 – Feb 12, 2026",
+      "name": "Master Planner, LH Ulsan Seonbawi Public Housing District"
+    },
+    {
+      "period": "Jan 26, 2024 – Jan 25, 2026",
+      "name": "Urban Planning Committee, Dongnae-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Jan 26, 2024 – Jan 25, 2026",
+      "name": "Joint Urban and Architecture Committee, Dongnae-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Jan 11, 2024 – Jan 10, 2026",
+      "name": "Road Management Deliberation Committee, Saha-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2024 – 2027",
+      "name": "Technical Committee (Road Infrastructure for Automated Vehicles), World Road Association (PIARC)"
+    },
+    {
+      "period": "Nov 27, 2023 – Nov 18, 2025",
+      "name": "Architecture Committee, Haeundae-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Nov 29, 2023 – Nov 28, 2025",
+      "name": "Evaluation Member, Public Procurement Service"
+    },
+    {
+      "period": "Nov 8, 2023 – Until District Designation",
+      "name": "UCP Advisory Member, Jinju Munsan Public Housing District, Gyeongsangnam-do"
+    },
+    {
+      "period": "Oct 17, 2023 – Nov 11, 2025",
+      "name": "Architecture Committee, Gangseo-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Aug 23, 2023 – Sep 3, 2023",
+      "name": "Examiner, Second-Half 2023 Police Officer Recruitment Written Examination"
+    },
+    {
+      "period": "Aug 17, 2023 – Nov 4, 2024",
+      "name": "Expert Advisory Committee for the Gadeokdo Airport Complex City Free Economic Zone Designation and Development Plan Study, Busan Metropolitan City"
+    },
+    {
+      "period": "Aug 16, 2023 – Dec 31, 2027",
+      "name": "Traffic Safety Policy Deliberation Committee, Saha-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Aug 1, 2023 – Jul 31, 2025",
+      "name": "Advisory Group, Busan-Ulsan-Gyeongnam Super Regional Economic Alliance"
+    },
+    {
+      "period": "Jul 8, 2023 – Jul 10, 2027",
+      "name": "Traffic Impact Assessment Deliberation Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Mar 13, 2023 – Dec 27, 2023",
+      "name": "Transportation Innovation Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Nov 24, 2022 –",
+      "name": "Mobility Innovation Working Group, Busan Metropolitan City"
+    },
+    {
+      "period": "Feb 14, 2023 – Feb 13, 2027",
+      "name": "Member, 15-Minute City Advisory Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Jan 23, 2023 – Jan 24, 2024",
+      "name": "Member, Architecture Committee, Yeonje-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Jul 1, 2022 – Jun 30, 2026",
+      "name": "Member, Traffic Impact Assessment Committee, Gimhae City, Gyeongsangnam-do"
+    },
+    {
+      "period": "Jan 2023 – Jun 2023",
+      "name": "Member, Northeast Asia Logistics Platform Attraction Committee, Gimhae City, Gyeongsangnam-do"
+    },
+    {
+      "period": "Dec 8, 2022 – Dec 7, 2027",
+      "name": "External Evaluation Member, Daegu Mechatronics & Materials Institute"
+    },
+    {
+      "period": "Oct 17, 2022 – Oct 16, 2026",
+      "name": "City Bus Quasi-Public Operation System Steering Committee, Changwon City"
+    },
+    {
+      "period": "Jun 24, 2022 – Jun 23, 2025",
+      "name": "Civilian Member, Metropolitan Transportation Commission"
+    },
+    {
+      "period": "Jun 1, 2022 – May 31, 2023",
+      "name": "Architecture Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Jan 19, 2022 –",
+      "name": "Co-Chair, Busan Public Transportation Future Forum"
+    },
+    {
+      "period": "Jan 16, 2022 – Jan 25, 2024",
+      "name": "Urban Planning Committee, Dongnae-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Jan 1, 2022 – Feb 28, 2023",
+      "name": "Technical Review and Evaluation Committee, Korea Land & Housing Corporation (LH)"
+    },
+    {
+      "period": "Feb 1, 2021 – Jan 31, 2023",
+      "name": "Transportation Innovation Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Oct 7, 2021 – Oct 6, 2022",
+      "name": "Architecture Committee, Seo-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Oct 2021 – Sep 2023",
+      "name": "District Policy Advisory Committee, Haeundae-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Jul 2021 – Jun 2022",
+      "name": "Expert Advisory Group, Autonomous Police, Busan Metropolitan City"
+    },
+    {
+      "period": "Jul 19, 2021 – Until District Designation",
+      "name": "UCP (Urban Concept Planner), Busan Daejeo Public Housing District"
+    },
+    {
+      "period": "Jul 8, 2021 – Jul 7, 2023",
+      "name": "Traffic Impact Assessment Deliberation Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Jun 1, 2021 – May 31, 2022",
+      "name": "Architecture Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Feb 1, 2021 – Jan 31, 2023",
+      "name": "Transportation Innovation Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Feb 1, 2021 – Jan 31, 2023",
+      "name": "Route Subcommittee under the Transportation Innovation Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Mar 12, 2021 – Jun 30, 2022 / Dec 12, 2024 – Jun 30, 2026",
+      "name": "Advisory Committee of the Special Committee for Attracting the Gijang and Jeonggwan Urban Railway Lines, Gijang-gun Council, Busan Metropolitan City"
+    },
+    {
+      "period": "2021 – 2023",
+      "name": "Traffic Safety Policy Deliberation Committee, Yeongdo-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Sep 25, 2020 – Sep 24, 2023",
+      "name": "Architecture Committee, Dong-gu, Ulsan Metropolitan City"
+    },
+    {
+      "period": "2020 – 2022",
+      "name": "Technical Advisory Committee, Busan Transportation Corporation"
+    },
+    {
+      "period": "2020 – 2021",
+      "name": "Architecture Committee, Seo-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2020",
+      "name": "Architecture Committee, Dongnae-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2020",
+      "name": "Taxi Industry Labor-Management-Citizen-Expert-Government Council, Busan Metropolitan City"
+    },
+    {
+      "period": "Jan 1, 2019 – Dec 31, 2026",
+      "name": "Transportation Policy Advisor, Haeundae-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2018 – 2020",
+      "name": "Integrated Deliberation Committee for Corporate Rental Housing, Busan Metropolitan City"
+    },
+    {
+      "period": "2018",
+      "name": "Regional Innovation Council, Yeongdo-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2018",
+      "name": "Traffic Flow Improvement Master Plan Study, Nam-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2018",
+      "name": "Transportation Advisory Group, Haeundae-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2017 – 2019",
+      "name": "Joint Urban and Architecture Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "2017 – 2019",
+      "name": "Integrated Public Housing Deliberation Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "2017 – 2019",
+      "name": "Urban Planning Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "2017 – 2019",
+      "name": "Traffic Impact Assessment Deliberation Committee, Ulsan Metropolitan City"
+    },
+    {
+      "period": "2017 – 2019",
+      "name": "Public Transportation Improvement Committee, Ulsan Metropolitan City"
+    },
+    {
+      "period": "2017 – 2018",
+      "name": "Architecture Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "2017",
+      "name": "Architecture Committee, Saha-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2017",
+      "name": "Urban Planning Committee, Nam-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2017",
+      "name": "Traffic Safety Facilities Deliberation Committee, Busan Metropolitan Police Agency"
+    },
+    {
+      "period": "2017",
+      "name": "Construction Technology Advisory Committee, POSCO E&C Haeundae Mixed-Use Development Project"
+    },
+    {
+      "period": "2017",
+      "name": "Integrated Development Promotion Council for the Busan Port North Port Area"
+    },
+    {
+      "period": "2016 – 2018",
+      "name": "Technical Advisory Committee, Busan Metropolitan Corporation"
+    },
+    {
+      "period": "2016 – 2017",
+      "name": "Participatory Budget Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "2016",
+      "name": "Civil Complaint Mediation Committee, Suyeong-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2016",
+      "name": "Traffic Safety Policy Deliberation Committee, Gangseo-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2016",
+      "name": "Traffic Safety Policy Deliberation Committee, Buk-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2016",
+      "name": "Urban Transportation Technical Advisory Committee, Busan Transportation Corporation"
+    },
+    {
+      "period": "2016",
+      "name": "Disaster Impact Review Committee, Yangsan City"
+    },
+    {
+      "period": "2016",
+      "name": "Urban Regeneration Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "2016",
+      "name": "Advisory Group for the Creation of Downtown Pedestrian Paths"
+    },
+    {
+      "period": "2015 – 2018",
+      "name": "Architecture Committee, Suyeong-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2015 – 2017",
+      "name": "Urban Planning Committee, Yeongdo-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2015 – 2017",
+      "name": "Traffic Impact Analysis and Improvement Measures Deliberation Committee, Ulsan Metropolitan City"
+    },
+    {
+      "period": "2015 – 2016",
+      "name": "Urban Planning Committee, Yangsan City"
+    },
+    {
+      "period": "2015",
+      "name": "Architecture Committee, Gijang-gun, Busan Metropolitan City"
+    },
+    {
+      "period": "2015",
+      "name": "Technical Advisory Committee, Yangsan City"
+    },
+    {
+      "period": "2015",
+      "name": "Urban Planning Committee, Nam-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2015",
+      "name": "Urban Planning Committee, Nam-gu, Ulsan Metropolitan City"
+    },
+    {
+      "period": "2015",
+      "name": "Subcommittee Chair, Citizen Planning Group for the Re-establishment of the 2030 Busan Urban Master Plan"
+    },
+    {
+      "period": "2014 – 2016",
+      "name": "Technical Advisory Committee, Busan Metropolitan Corporation"
+    },
+    {
+      "period": "2014 – 2016",
+      "name": "First-Half Council Advisory Committee, Busan Metropolitan Council"
+    },
+    {
+      "period": "2014",
+      "name": "Architecture Committee, Sasang-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2014",
+      "name": "Construction Technical Advisory Committee, Busan Transportation Corporation"
+    },
+    {
+      "period": "2014",
+      "name": "Urban Regeneration Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "2014",
+      "name": "Gwangan Bridge Facility Safety Management Advisory Committee"
+    },
+    {
+      "period": "2013 – 2016",
+      "name": "Architecture Committee, Dongnae-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2013 – 2015",
+      "name": "Architecture Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "2012 – 2015",
+      "name": "Architecture Committee, Buk-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "2012 – 2014",
+      "name": "Construction Technology Deliberation Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "2013",
+      "name": "Traffic Impact Analysis and Improvement Measures Deliberation Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "2013",
+      "name": "Urban Regeneration and Maintenance Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "2012",
+      "name": "Construction Design Advisory Committee, Busan Transportation Corporation"
+    },
+    {
+      "period": "2012",
+      "name": "Architecture Committee, Ulju-gun, Ulsan Metropolitan City"
+    }
+  ]
+}

@@ -1,15 +1,11 @@
 /* ==========================================================================
-   DASMOLabs site script — no build step.
-   Loads content from /data/*.json and renders it client-side.
-   Header & footer are injected from data/site.json so the lab can change
-   the name / contact info in one place (via the CMS).
+   DASMOLabs site script — ENGLISH edition (no build step).
+   Mirror of /assets/js/app.js with English UI strings.
 
-   Pages are consolidated into 6 tabs for visitors, but the underlying data
-   files (and the CMS editing menus) stay separate:
-     People       = professor.json + members.json
-     Research     = site.research_topics + projects.json
-     Publications = publications.json + conferences.json
-     Achievements = patents.json + awards.json
+   Data: fetches /data/en/<name>.json (translated prose) and falls back to
+   /data/<name>.json (academic records kept in their original form:
+   publications / conferences / patents / awards). Asset & data paths are
+   resolved one level up because these pages live under /en/.
    ========================================================================== */
 (function () {
   "use strict";
@@ -23,41 +19,38 @@
     { href: "achievements.html", label: "Achievements" },
   ];
 
-  // Sub-tabs shown in each main tab's hover dropdown. Each page uses the same
-  // `key` to activate the matching sub-tab / section from the URL hash, so the
-  // dropdown can deep-link straight into a sub-tab.
-  //   tabbed pages (People/Research/Publications/Achievements): key = sub-tab id
-  //   scroll page  (Home):                             key = on-page element id
-  //   News:                                            key = category ("all" = 전체)
+  // Sub-tabs shown in each main tab's hover dropdown. Same `key`s as the Korean
+  // site so behaviour is identical; only the labels are translated. News keys
+  // are the English category values used in /data/en/news.json.
   const SUBNAV = {
     "index.html": [
-      { label: "연구실 소개", key: "about" },
-      { label: "연구 분야",   key: "research" },
-      { label: "강의 과목",   key: "classes" },
+      { label: "About the Lab", key: "about" },
+      { label: "Research",      key: "research" },
+      { label: "Courses",       key: "classes" },
     ],
     "news.html": [
-      { label: "전체",     key: "all" },
-      { label: "학술대회", key: "학술대회" },
-      { label: "세미나",   key: "세미나" },
-      { label: "랩미팅",   key: "랩미팅" },
+      { label: "All",         key: "all" },
+      { label: "Conference",  key: "Conference" },
+      { label: "Seminar",     key: "Seminar" },
+      { label: "Lab Meeting", key: "Lab Meeting" },
     ],
     "people.html": [
-      { label: "지도교수",    key: "professor" },
-      { label: "현재 구성원", key: "current" },
-      { label: "졸업생",      key: "alumni" },
-      { label: "지원",        key: "apply" },
+      { label: "Professor",         key: "professor" },
+      { label: "Current Members",   key: "current" },
+      { label: "Alumni",            key: "alumni" },
+      { label: "Join Us",           key: "apply" },
     ],
     "research.html": [
-      { label: "연구 분야", key: "areas" },
-      { label: "연구 과제", key: "projects" },
+      { label: "Research Areas", key: "areas" },
+      { label: "Projects",       key: "projects" },
     ],
     "publications.html": [
-      { label: "논문",     key: "papers" },
-      { label: "학술대회", key: "conferences" },
+      { label: "Papers",       key: "papers" },
+      { label: "Conferences",  key: "conferences" },
     ],
     "achievements.html": [
-      { label: "특허", key: "patents" },
-      { label: "수상", key: "awards" },
+      { label: "Patents", key: "patents" },
+      { label: "Awards",  key: "awards" },
     ],
   };
 
@@ -70,42 +63,38 @@
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
-  // escape but keep line breaks
   function escMultiline(s) { return esc(s).replace(/\n/g, "<br>"); }
 
-  // resolve an image/asset path so it works under any sub-path
+  // resolve an image/asset path; en/ pages are one level deep, so add "../"
   function imgSrc(p) {
     if (!p) return "";
     if (/^https?:\/\//.test(p)) return p;
-    return p.replace(/^\/+/, "");
+    return "../" + p.replace(/^\/+/, "");
   }
 
-  // turn bare URLs inside text into clickable links (used for media/citations)
   function linkify(text) {
     const safe = esc(text);
     return safe.replace(/(https?:\/\/[^\s)]+)([)\s]|$)/g, function (m, url, tail) {
       return '<a href="' + url + '" target="_blank" rel="noopener">' + url + "</a>" + tail;
     });
   }
-  // escape + linkify URLs + keep line breaks (used for free-form news/diary text)
   function richText(s) { return linkify(s).replace(/\n/g, "<br>"); }
 
-  // "2026-05-20" / ISO datetime → "2026.05.20"
   function fmtDate(d) { return String(d == null ? "" : d).slice(0, 10).replace(/-/g, "."); }
 
-  // a photo entry may be a plain path string or an object { image }
   function photoSrc(p) { return imgSrc(typeof p === "string" ? p : (p && (p.image || p.src)) || ""); }
   function firstPhoto(arr) { return Array.isArray(arr) && arr.length ? photoSrc(arr[0]) : ""; }
 
+  // Translated prose lives in /data/en/; academic records fall back to /data/.
   async function fetchData(name) {
-    try {
-      const res = await fetch("data/" + name + ".json", { cache: "no-store" });
-      if (!res.ok) throw new Error(res.status);
-      return await res.json();
-    } catch (e) {
-      console.warn("Could not load data/" + name + ".json", e);
-      return null;
+    for (const path of ["../data/en/" + name + ".json", "../data/" + name + ".json"]) {
+      try {
+        const res = await fetch(path, { cache: "no-store" });
+        if (res.ok) return await res.json();
+      } catch (e) { /* try next */ }
     }
+    console.warn("Could not load data for " + name);
+    return null;
   }
 
   function setState(el, msg) {
@@ -133,21 +122,21 @@
       return `<li class="nav__item${subs.length ? " has-sub" : ""}">` +
         `<a href="${n.href}" class="${active}">${esc(n.label)}${caret}</a>${menu}</li>`;
     }).join("");
-    // language switch → English counterpart page (or EN home for legacy pages)
-    const enHref = NAV.some(n => n.href === here) ? "en/" + here : "en/index.html";
-    const langItem = `<li class="nav__lang"><a class="lang-switch" href="${enHref}" hreflang="en" lang="en" aria-label="View in English">EN</a></li>`;
+    // language switch → Korean counterpart page (or KO home for legacy pages)
+    const koHref = NAV.some(n => n.href === here) ? "../" + here : "../index.html";
+    const langItem = `<li class="nav__lang"><a class="lang-switch" href="${koHref}" hreflang="ko" lang="ko" aria-label="한국어로 보기">한국어</a></li>`;
     const abbr = (site && site.lab_abbr) || "DASMOLabs";
-    const ko   = (site && site.lab_name_ko) || "동아대학교 교통공학연구실";
-    const logo = (site && site.logo) ? imgSrc(site.logo) : "assets/img/logo_231027.jpg";
+    const en   = (site && site.lab_name_en) || "Dong-A Smart Mobility Laboratory";
+    const logo = (site && site.logo) ? imgSrc(site.logo) : "../assets/img/logo_231027.jpg";
     return `
-      <a class="skip-link" href="#main">본문 바로가기</a>
+      <a class="skip-link" href="#main">Skip to main content</a>
       <header class="site-header">
-        <nav class="nav wrap" aria-label="주 메뉴">
+        <nav class="nav wrap" aria-label="Main menu">
           <a class="brand" href="index.html">
-            <img src="${logo}" alt="${esc(abbr)} 로고" onerror="this.style.display='none'">
-            <span class="brand__txt"><b>${esc(abbr)}</b><span>${esc(ko)}</span></span>
+            <img src="${logo}" alt="${esc(abbr)} logo" onerror="this.style.display='none'">
+            <span class="brand__txt"><b>${esc(abbr)}</b><span>${esc(en)}</span></span>
           </a>
-          <button class="nav__toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navmenu">
+          <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navmenu">
             <span></span><span></span><span></span>
           </button>
           <ul class="nav__links" id="navmenu">${links}${langItem}</ul>
@@ -158,7 +147,7 @@
   function buildFooter(site) {
     const abbr = (site && site.lab_abbr) || "DASMOLabs";
     const en   = (site && site.lab_name_en) || "Dong-A Smart Mobility Laboratory";
-    const addr = (site && site.address) || "부산시 사하구 하단동 동아대학교 승학캠퍼스 공대1호관 1404호";
+    const addr = (site && site.address) || "Room 1404, Engineering Building 1, Seunghak Campus, Dong-A University, Saha-gu, Busan";
     const tel  = (site && site.phone) || "051-200-7665";
     const email = (site && site.email) || "hoekim@dau.ac.kr";
     const navLinks = NAV.map(n => `<li><a href="${n.href}">${esc(n.label)}</a></li>`).join("");
@@ -169,14 +158,14 @@
           <div class="footer-brand">
             <b>${esc(abbr)}</b>
             <p style="margin:.5rem 0 0;font-size:.92rem;">${esc(en)}</p>
-            <p style="font-size:.88rem;">지능형 교통체계(ITS) · 스마트 모빌리티 · MaaS 연구</p>
+            <p style="font-size:.88rem;">Intelligent Transportation Systems (ITS) · Smart Mobility · MaaS research</p>
           </div>
           <div>
-            <h4>바로가기</h4>
+            <h4>Quick Links</h4>
             <ul class="footer-links">${navLinks}</ul>
           </div>
           <div>
-            <h4>연락처</h4>
+            <h4>Contact</h4>
             <p class="footer-contact">
               ${esc(addr)}<br>
               TEL. ${esc(tel)}<br>
@@ -186,7 +175,7 @@
         </div>
         <div class="wrap footer-bottom">
           <span>© ${year} ${esc(en)}. All rights reserved.</span>
-          <a class="edit-link" href="admin/" title="승인된 운영자만 로그인 후 편집할 수 있습니다">🔒 사이트 관리(로그인)</a>
+          <a class="edit-link" href="../admin/" title="Only authorized administrators can log in to edit">🔒 Site admin (login)</a>
         </div>
       </footer>`;
   }
@@ -204,7 +193,7 @@
     toggle.addEventListener("click", () => {
       const open = menu.classList.toggle("open");
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      toggle.setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기");
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     });
     $$(".nav__links a").forEach(a => a.addEventListener("click", () => {
       menu.classList.remove("open");
@@ -220,28 +209,24 @@
     mountChrome(site);
     if (!site) return;
 
-    // intro text
     const introEl = $("#home-intro");
     if (introEl) {
       const parts = [site.intro1, site.intro2].filter(Boolean).map(t => `<p>${escMultiline(t)}</p>`).join("");
       introEl.innerHTML = parts;
     }
 
-    // research topics (shared with the Research page)
     const topicsEl = $("#home-topics");
     if (topicsEl) topicsEl.innerHTML = buildResearchTopics(site);
 
-    // classes
     const clsEl = $("#home-classes");
     if (clsEl) {
       const u = Array.isArray(site.classes_undergrad) ? site.classes_undergrad.join(", ") : (site.classes_undergrad || "");
       const g = Array.isArray(site.classes_grad) ? site.classes_grad.join(", ") : (site.classes_grad || "");
       clsEl.innerHTML =
-        `<div class="card"><div class="card__icon">🎓</div><h3>학부 (Undergraduate)</h3><p>${esc(u)}</p></div>
-         <div class="card"><div class="card__icon">📚</div><h3>대학원 (Graduate)</h3><p>${esc(g)}</p></div>`;
+        `<div class="card"><div class="card__icon">🎓</div><h3>Undergraduate</h3><p>${esc(u)}</p></div>
+         <div class="card"><div class="card__icon">📚</div><h3>Graduate</h3><p>${esc(g)}</p></div>`;
     }
 
-    // live stats
     const statsEl = $("#home-stats");
     if (statsEl) {
       const [pubs, projs, mem, conf] = await Promise.all(
@@ -255,12 +240,11 @@
       statsEl.innerHTML = stat(nPub, "Publications") + stat(nConf, "Conference Papers") + stat(nProj, "Projects") + stat(nMem, "Current Members");
     }
 
-    // recruit banner + latest news (only render if there is content)
     const news = await fetchData("news");
     if (news && Array.isArray(news.news)) {
       const sorted = news.news.slice().sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
-      const recruits = sorted.filter(n => n.category === "모집");
-      const posts = sorted.filter(n => n.category !== "모집");
+      const recruits = sorted.filter(n => n.category === "Recruiting");
+      const posts = sorted.filter(n => n.category !== "Recruiting");
 
       const recEl = $("#home-recruit");
       if (recEl && recruits.length) {
@@ -268,8 +252,8 @@
         recEl.innerHTML = `<div class="wrap" style="margin-top:1.6rem">
           <a class="recruit-bar" href="people.html#apply">
             <span class="recruit-bar__icon">👩‍🎓</span>
-            <span class="recruit-bar__txt"><b>지원자 모집 중</b> — ${esc(r.title || "")}</span>
-            <span class="recruit-bar__cta">자세히 보기 →</span>
+            <span class="recruit-bar__txt"><b>Now recruiting</b> — ${esc(r.title || "")}</span>
+            <span class="recruit-bar__cta">Learn more →</span>
           </a></div>`;
       }
 
@@ -283,7 +267,7 @@
           return `<a class="newscard" href="news.html">
             ${thumb}
             <div class="newscard__body">
-              <div class="newscard__meta"><span class="news-date">${esc(fmtDate(n.date))}</span> · ${esc(n.category || "기타")}</div>
+              <div class="newscard__meta"><span class="news-date">${esc(fmtDate(n.date))}</span> · ${esc(n.category || "Other")}</div>
               <div class="newscard__title">${esc(n.title || "")}</div>
             </div></a>`;
         }).join("");
@@ -291,11 +275,11 @@
           <div class="wrap">
             <div class="section__head" style="margin-bottom:1.6rem">
               <span class="section__eyebrow">News</span>
-              <h2 class="section__title">최신 소식</h2>
+              <h2 class="section__title">Latest News</h2>
             </div>
             <div class="grid grid--3">${cards}</div>
             <div style="text-align:center;margin-top:1.8rem">
-              <a class="btn btn--primary" href="news.html">전체 소식 보기 →</a>
+              <a class="btn btn--primary" href="news.html">View all news →</a>
             </div>
           </div>
         </section>`;
@@ -309,7 +293,6 @@
      Content builders — pure (data → HTML string), reused by merged pages.
      ==================================================================== */
 
-  // Research-area cards (Home + Research page)
   function buildResearchTopics(site) {
     if (!site || !Array.isArray(site.research_topics)) return "";
     return site.research_topics.map(t => {
@@ -321,21 +304,20 @@
     }).join("");
   }
 
-  // Professor profile (People page)
   function buildProfessor(p) {
-    if (!p) return '<div class="state">교수 정보를 불러오지 못했습니다.</div>';
-    const photo = imgSrc(p.photo) || "assets/uploads/prof.jpg";
+    if (!p) return '<div class="state">Could not load professor information.</div>';
+    const photo = imgSrc(p.photo) || "../assets/uploads/prof.jpg";
     const emailLinks = (p.email || "").split(",").map(e => e.trim()).filter(Boolean)
       .map(e => `<a href="mailto:${esc(e)}">${esc(e)}</a>`).join(", ");
     const head = `
       <div class="prof-head">
-        <div class="prof-photo"><img src="${photo}" alt="${esc(p.name_ko)} 교수" onerror="this.src='assets/uploads/prof.jpg'"></div>
+        <div class="prof-photo"><img src="${photo}" alt="Professor ${esc(p.name_en || p.name_ko)}" onerror="this.src='../assets/uploads/prof.jpg'"></div>
         <div>
-          <h2 class="prof-name">${esc(p.name_ko)}<small>${esc(p.name_en || "")}</small></h2>
+          <h2 class="prof-name">${esc(p.name_en || p.name_ko)}<small>${esc(p.name_ko || "")}</small></h2>
           <div class="prof-title">${esc(p.title || "")}</div>
           <ul class="prof-contact">
-            ${p.fields ? `<li><b>전공분야</b> ${esc(p.fields)}</li>` : ""}
-            ${p.phone ? `<li><b>연구실</b> ${esc(p.phone)}</li>` : ""}
+            ${p.fields ? `<li><b>Field</b> ${esc(p.fields)}</li>` : ""}
+            ${p.phone ? `<li><b>Lab</b> ${esc(p.phone)}</li>` : ""}
             ${emailLinks ? `<li><b>E-mail</b> ${emailLinks}</li>` : ""}
             ${p.office ? `<li><b>Office</b> ${esc(p.office)}</li>` : ""}
           </ul>
@@ -358,7 +340,7 @@
       if (!Array.isArray(arr) || !arr.length) return "";
       const items = arr.map(s => `<li><span class="k">${esc(s.name)}</span>
         <span class="v">${esc(s.position || "")}${s.note ? ` <small>(${esc(s.note)})</small>` : ""}</span></li>`).join("");
-      return `<div class="group-head"><h3>학회활동 (Academic Societies)</h3><span class="count">${arr.length}</span></div>
+      return `<div class="group-head"><h3>Academic Societies</h3><span class="count">${arr.length}</span></div>
         <ul class="deflist">${items}</ul>`;
     };
     const media = (arr) => {
@@ -367,7 +349,7 @@
         const t = m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.title)}</a>` : esc(m.title);
         return `<li>${m.date ? `<span class="date">${esc(m.date)}</span> ` : ""}${t}</li>`;
       }).join("");
-      return `<div class="group-head"><h3>언론활동 (Media)</h3><span class="count">${arr.length}</span></div>
+      return `<div class="group-head"><h3>Media</h3><span class="count">${arr.length}</span></div>
         <ul class="media-list">${items}</ul>`;
     };
     const committees = (arr) => {
@@ -377,28 +359,28 @@
         return `<li><span class="k">${esc(c.period || "")}</span><span class="v">${esc(c.name || "")}</span></li>`;
       }).join("");
       return `<details class="collapse">
-        <summary>대외 위원회 활동 (Committees) · ${arr.length}건</summary>
+        <summary>External Committees · ${arr.length}</summary>
         <div class="collapse__body"><ul class="deflist">${items}</ul></div>
       </details>`;
     };
     return head +
       `<div style="margin-top:2.2rem">
-        ${eduBlock(p.education, "학력 (Education)")}
-        ${eduBlock(p.careers, "주요 경력 (Academic Careers)")}
+        ${eduBlock(p.education, "Education")}
+        ${eduBlock(p.careers, "Academic Careers")}
         ${societies(p.societies)}
         ${media(p.media)}
         <div style="margin-top:1.6rem">${committees(p.committees)}</div>
       </div>`;
   }
 
-  // Members grids — `which` is "current" or "alumni" (People page)
+  // Members grids — `which` is "current" or "alumni"
   function buildMembers(M, which) {
-    if (!Array.isArray(M)) return '<div class="state">구성원 정보를 불러오지 못했습니다.</div>';
+    if (!Array.isArray(M)) return '<div class="state">Could not load member information.</div>';
     const initials = (m) => (m.name_en || m.name_ko || "?").trim().charAt(0).toUpperCase();
     const card = (m) => {
       const photo = imgSrc(m.photo);
       const pic = photo
-        ? `<div class="person__photo" style="background-image:url('${photo}')" role="img" aria-label="${esc(m.name_ko)}"></div>`
+        ? `<div class="person__photo" style="background-image:url('${photo}')" role="img" aria-label="${esc(m.name_en || m.name_ko)}"></div>`
         : `<div class="person__photo person__photo--ph">${esc(initials(m))}</div>`;
       const meta = [];
       if (m.group === "alumni") {
@@ -415,7 +397,7 @@
       return `<article class="person">
         ${pic}
         <div class="person__body">
-          <div class="person__name">${esc(m.name_ko)}<small>${esc(m.name_en || "")}</small></div>
+          <div class="person__name">${esc(m.name_en || m.name_ko)}<small>${esc(m.name_ko || "")}</small></div>
           ${meta.length ? `<div class="person__meta">${meta.join("<br>")}</div>` : ""}
           ${thesis}
           ${email}
@@ -424,93 +406,83 @@
     };
     const group = (label, items) => {
       if (!items.length) return "";
-      return `<div class="group-head"><h3>${esc(label)}</h3><span class="count">${items.length}명</span></div>
+      return `<div class="group-head"><h3>${esc(label)}</h3><span class="count">${items.length}</span></div>
         <div class="people-grid">${items.map(card).join("")}</div>`;
     };
     const byLevel = (list, lv) => list.filter(m => (m.level || "").toLowerCase().startsWith(lv));
     if (which === "alumni") {
       const alu = M.filter(m => m.group === "alumni");
-      return group("박사 (Ph.D.)", byLevel(alu, "ph"))
-        + group("석사 (Master's)", byLevel(alu, "master").concat(byLevel(alu, "m.s")))
-        + group("학사 (Bachelor's)", byLevel(alu, "bach"));
+      return group("Ph.D.", byLevel(alu, "ph"))
+        + group("Master's", byLevel(alu, "master").concat(byLevel(alu, "m.s")))
+        + group("Bachelor's", byLevel(alu, "bach"));
     }
     const cur = M.filter(m => m.group === "current");
-    return group("박사과정 (Ph.D. Students)", byLevel(cur, "ph"))
-      + group("석사과정 (Master's Students)", byLevel(cur, "master").concat(byLevel(cur, "m.s")))
-      + group("학부연구생 (Undergraduate)", byLevel(cur, "under"));
+    return group("Ph.D. Students", byLevel(cur, "ph"))
+      + group("Master's Students", byLevel(cur, "master").concat(byLevel(cur, "m.s")))
+      + group("Undergraduate Researchers", byLevel(cur, "under"));
   }
 
-  // Application guide (People page → 지원 tab). Tells prospective students to
-  // email the advisor with the required personal info; the button pre-fills a mail.
+  // Application guide (People → Join Us). Pre-fills an email to the advisor.
   function buildApply(prof) {
     const emails = ((prof && prof.email) || "hoekim@dau.ac.kr")
       .split(",").map(e => e.trim()).filter(Boolean);
     const primary = emails[0] || "hoekim@dau.ac.kr";
-    const profName = (prof && prof.name_ko) ? prof.name_ko + " 교수" : "지도교수";
-    // [label, hint] for each field the applicant should include
+    const profName = (prof && prof.name_en) ? "Professor " + prof.name_en : "the advisor";
     const fields = [
-      ["성명 (한글 / 영문)", "예) 홍길동 / Hong Gildong"],
-      ["생년월일 (나이)", "예) 2000.01.01 (만 25세)"],
-      ["연락처", "휴대전화 번호"],
-      ["이메일", "회신받을 이메일 주소"],
-      ["현재 소속", "학교 · 학과 · 학년 (또는 졸업 여부)"],
-      ["희망 과정", "석사 / 박사 / 석·박사 통합 / 학부연구생"],
-      ["관심 연구분야", "ITS · 자율주행 · 스마트 모빌리티 · 교통안전 등"],
-      ["지원 동기", "간단한 자기소개 및 지원 동기"],
-      ["첨부 서류", "이력서 · 성적증명서 등 (파일 첨부, 선택)"],
+      ["Full name", "Korean / English, e.g. 홍길동 / Hong Gildong"],
+      ["Date of birth (age)", "e.g. 2000.01.01 (age 25)"],
+      ["Phone", "Mobile number"],
+      ["E-mail", "Address for our reply"],
+      ["Current affiliation", "School · department · year (or graduation status)"],
+      ["Desired program", "M.S. / Ph.D. / Integrated M.S.–Ph.D. / Undergraduate researcher"],
+      ["Research interests", "ITS · autonomous driving · smart mobility · traffic safety, etc."],
+      ["Motivation", "Brief self-introduction and motivation"],
+      ["Attachments", "CV · transcript, etc. (optional)"],
     ];
     const rows = fields.map(([k, v]) =>
       `<li><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span></li>`).join("");
-    // pre-filled mail template
-    const subject = "[DASMOLabs 지원] 성명 / 희망과정";
+    const subject = "[DASMOLabs Application] Name / Desired program";
     const bodyTmpl = [
-      "성명(한글/영문): ", "생년월일(나이): ", "연락처: ", "이메일: ",
-      "현재 소속(학교/학과/학년): ", "희망 과정(석사/박사/학부연구생): ",
-      "관심 연구분야: ", "지원 동기: ", "",
-      "※ 이력서·성적증명서 등은 파일로 첨부해 주세요.",
+      "Full name (Korean/English): ", "Date of birth (age): ", "Phone: ", "E-mail: ",
+      "Current affiliation (school/department/year): ", "Desired program (M.S./Ph.D./Undergraduate researcher): ",
+      "Research interests: ", "Motivation: ", "",
+      "* Please attach your CV, transcript, etc. as files.",
     ].join("\n");
     const href = `mailto:${primary}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyTmpl)}`;
     const mailLinks = emails.map(e => `<a href="mailto:${esc(e)}">${esc(e)}</a>`).join(", ");
     return `<div style="max-width:760px;margin:0 auto">
-      <p style="font-size:1.04rem">교통공학 · 지능형 교통체계(ITS) · 스마트 모빌리티 분야에 관심 있는
-        대학원생(석·박사)과 학부연구생을 모집합니다. 아래 항목을 작성하여
-        <b>${esc(profName)}</b> 이메일로 보내주시면 검토 후 회신드립니다.</p>
-      <div class="group-head"><h3>지원 시 기재 항목</h3></div>
+      <p style="font-size:1.04rem">We welcome prospective graduate students (M.S./Ph.D.) and undergraduate
+        researchers interested in transportation engineering, Intelligent Transportation Systems (ITS), and
+        smart mobility. Please complete the items below and email them to
+        <b>${esc(profName)}</b>; we will review your application and reply.</p>
+      <div class="group-head"><h3>What to include</h3></div>
       <ul class="deflist">${rows}</ul>
       <div class="apply-cta">
-        <p style="margin:0 0 .9rem;color:var(--text-soft)">아래 버튼을 누르면 작성 양식이 미리 채워진 메일 창이 열립니다.</p>
-        <a class="btn btn--primary" href="${href}">✉️ 이메일로 지원하기</a>
-        <p style="margin:.9rem 0 0;font-size:.92rem">문의 · 접수: ${mailLinks}</p>
+        <p style="margin:0 0 .9rem;color:var(--text-soft)">Click the button below to open a pre-filled email.</p>
+        <a class="btn btn--primary" href="${href}">✉️ Apply by email</a>
+        <p style="margin:.9rem 0 0;font-size:.92rem">Inquiries · submissions: ${mailLinks}</p>
       </div>
     </div>`;
   }
 
-  // Project rows (Research page) — heading is added by the caller
   /* ====================================================================
-     Filter engine — 구분(category) chips + 연도(year) dropdown shared by
-     the reference-list tabs (Publications 논문·학술대회 / Achievements
-     특허·수상 / Research 연구 과제). Filters are AND-combined; the per-build*
-     category grouping is preserved (passing a filtered list still groups).
+     Filter engine — category chips + year dropdown shared by the
+     reference-list tabs (Publications / Achievements / Research projects).
      ==================================================================== */
-  const FILTERS = {};   // block id → { items, cats, getCat, getYear, render }
+  const FILTERS = {};
   let _fbSeq = 0;
 
-  // first 4-digit year (19xx/20xx) found in a string ("" if none)
   function yearIn(s) { const m = String(s == null ? "" : s).match(/(?:19|20)\d{2}/); return m ? m[0] : ""; }
-  // publication year: prefer the one in parentheses, e.g. "... (2025). Title ..."
   function pubYear(citation) {
     const s = String(citation == null ? "" : citation);
     const p = s.match(/\(((?:19|20)\d{2})\)/);
     return p ? p[1] : yearIn(s);
   }
-  // categories actually present in `items`, in canonical order, with labels
   function presentCats(items, order, labels) {
     return order.filter(k => items.some(i => i.category === k))
                 .map(k => ({ key: k, label: labels[k] || k }));
   }
 
-  // Render a filter bar + list container for one tab. cfg:
-  //   items, cats:[{key,label}]|null, getCat(item), getYear(item)→"YYYY", render(list)→HTML
   function filterBlock(cfg) {
     const id = "fb" + (++_fbSeq);
     FILTERS[id] = cfg;
@@ -518,22 +490,21 @@
       .sort((a, b) => Number(b) - Number(a));
     const rows = [];
     if (cfg.cats && cfg.cats.length) {
-      const chips = [{ key: "", label: "전체" }].concat(cfg.cats).map((c, i) =>
+      const chips = [{ key: "", label: "All" }].concat(cfg.cats).map((c, i) =>
         `<button type="button" class="fchip${i === 0 ? " active" : ""}" data-cat="${esc(c.key)}">${esc(c.label)}</button>`
       ).join("");
-      rows.push(`<div class="fbar__row"><span class="fbar__label">구분</span>${chips}</div>`);
+      rows.push(`<div class="fbar__row"><span class="fbar__label">Category</span>${chips}</div>`);
     }
     if (years.length) {
-      const opts = `<option value="">전체 연도</option>` +
+      const opts = `<option value="">All Years</option>` +
         years.map(y => `<option value="${esc(y)}">${esc(y)}</option>`).join("");
-      rows.push(`<div class="fbar__row"><span class="fbar__label">연도</span>` +
-        `<select class="fyear" aria-label="연도로 필터링">${opts}</select></div>`);
+      rows.push(`<div class="fbar__row"><span class="fbar__label">Year</span>` +
+        `<select class="fyear" aria-label="Filter by year">${opts}</select></div>`);
     }
     const bar = rows.length ? `<div class="fbar" data-fb="${id}">${rows.join("")}</div>` : "";
     return bar + `<div class="fbar__list" data-fb-list="${id}">${cfg.render(cfg.items)}</div>`;
   }
 
-  // Recompute one block's list from its current control state (read from DOM).
   function applyFilter(id) {
     const cfg = FILTERS[id]; if (!cfg) return;
     const bar = document.querySelector('.fbar[data-fb="' + id + '"]');
@@ -547,10 +518,9 @@
     if (cat)  list = list.filter(i => cfg.getCat(i) === cat);
     if (year) list = list.filter(i => String(cfg.getYear(i)) === year);
     listEl.innerHTML = list.length ? cfg.render(list)
-      : '<div class="state">선택한 조건에 맞는 항목이 없습니다.</div>';
+      : '<div class="state">No items match the selected filters.</div>';
   }
 
-  // One delegated handler per root (chip clicks bubble; <select> change bubbles).
   function wireFilters(root) {
     if (!root || root._fbWired) return;
     root._fbWired = true;
@@ -575,14 +545,14 @@
     </div>`).join("");
   }
 
-  // Publications grouped by category (Publications page → 논문 tab)
+  // Publications grouped by category (academic records — citations kept as recorded)
   function buildPublications(items) {
     const order = ["International", "Domestic", "Other", "Books"];
-    const labelMap = { International: "International Journals & Proceedings", Domestic: "국내 논문", Other: "기타", Books: "저서" };
+    const labelMap = { International: "International Journals & Proceedings", Domestic: "Domestic Journals", Other: "Other", Books: "Books" };
     const html = order.filter(g => items.some(i => i.category === g)).map(g => {
       const list = items.filter(i => i.category === g);
       const lis = list.map(i => {
-        const sci = i.sci ? `<span class="badge badge--sci">SCI급</span>` : "";
+        const sci = i.sci ? `<span class="badge badge--sci">SCI</span>` : "";
         const link = i.link ? ` <a class="link" href="${esc(i.link)}" target="_blank" rel="noopener">[link]</a>` : "";
         return `<li class="ref-item"><div><p class="title">${linkify(i.citation || i.title || "")}${sci}${link}</p>
           ${i.venue ? `<p class="meta">${esc(i.venue)}</p>` : ""}</div></li>`;
@@ -590,62 +560,69 @@
       return `<div class="group-head"><h3>${esc(labelMap[g] || g)}</h3><span class="count">${list.length}</span></div>
         <ol class="ref-list">${lis}</ol>`;
     }).join("");
-    return html || '<div class="state">등록된 논문이 없습니다.</div>';
+    return html || '<div class="state">No publications yet.</div>';
   }
 
-  // Conferences grouped by category (Publications page → 학술대회 tab)
+  // Conferences grouped by category. Domestic titles are stored "Korean / English";
+  // show the English half on the English site.
   function buildConferences(items) {
-    const labelMap = { International: "International", Domestic: "Domestic (국내)" };
+    const labelMap = { International: "International", Domestic: "Domestic" };
+    const engTitle = (t) => {
+      t = t || "";
+      return t.indexOf(" / ") !== -1 ? t.split(" / ").slice(1).join(" / ") : t;
+    };
     const html = ["International", "Domestic"].filter(g => items.some(i => i.category === g)).map(g => {
       const list = items.filter(i => i.category === g);
       const lis = list.map(i => `<li class="ref-item"><div>
-        <p class="title">${esc(i.title || "")}</p>
+        <p class="title">${esc(engTitle(i.title))}</p>
         <p class="meta">${esc(i.conference || "")}${i.date ? ` · ${esc(i.date)}` : ""}</p></div></li>`).join("");
       return `<div class="group-head"><h3>${esc(labelMap[g] || g)}</h3><span class="count">${list.length}</span></div>
         <ol class="ref-list">${lis}</ol>`;
     }).join("");
-    return html || '<div class="state">등록된 학술대회 발표가 없습니다.</div>';
+    return html || '<div class="state">No conference presentations yet.</div>';
   }
 
-  // Patents tables (Achievements page → 특허 tab)
+  // Patents tables. Names/inventors are legal records kept in the original;
+  // the controlled scope/type vocab is mapped to English for readability.
   function buildPatents(patents) {
+    const SCOPE = { "국내": "Domestic", "국외": "International" };
+    const TYPE = {
+      "특허": "Patent", "특허(소프트웨어)": "Patent (Software)",
+      "저작권등록(소프트웨어)": "Copyright Registration (Software)",
+    };
     const order = ["Application", "Registration", "Software"];
-    const labelMap = { Application: "출원 (Application)", Registration: "등록 (Registration)", Software: "프로그램·저작권 (Software)" };
+    const labelMap = { Application: "Application", Registration: "Registration", Software: "Software / Copyright" };
     const html = order.filter(c => patents.some(p => p.category === c)).map(c => {
       const list = patents.filter(p => p.category === c);
       const rows = list.map((p, idx) => `<tr>
         <td>${idx + 1}</td>
         <td class="name">${esc(p.name || "")}</td>
-        <td>${esc(p.scope || "")}</td>
-        <td>${esc(p.type || "")}</td>
+        <td>${esc(SCOPE[p.scope] || p.scope || "")}</td>
+        <td>${esc(TYPE[p.type] || p.type || "")}</td>
         <td>${esc(p.date || "")}</td>
         <td>${esc(p.number || "")}</td>
         <td>${esc(p.inventors || "")}</td>
       </tr>`).join("");
       return `<div class="group-head"><h3>${esc(labelMap[c] || c)}</h3><span class="count">${list.length}</span></div>
         <div class="table-wrap"><table class="data">
-          <thead><tr><th>No.</th><th>지식재산권명</th><th>국내외</th><th>구분</th><th>일자</th><th>번호</th><th>발명인</th></tr></thead>
+          <thead><tr><th>No.</th><th>Title</th><th>Scope</th><th>Type</th><th>Date</th><th>Number</th><th>Inventors</th></tr></thead>
           <tbody>${rows}</tbody></table></div><div style="height:1.5rem"></div>`;
     }).join("");
-    return html || '<div class="state">등록된 특허가 없습니다.</div>';
+    return html || '<div class="state">No patents yet.</div>';
   }
 
-  // Awards list (Achievements page → 수상 tab)
+  // Awards list. Prefer the English title; venue kept as recorded.
   function buildAwards(awards) {
     const lis = awards.map(a => `<div class="award-item">
       <div class="date">${esc(a.date || "")}</div>
       <div>
-        <div class="title">${esc(a.title_ko || a.title || "")}</div>
-        ${a.title_en ? `<div class="en">${esc(a.title_en)}</div>` : ""}
+        <div class="title">${esc(a.title_en || a.title_ko || a.title || "")}</div>
         ${a.venue ? `<div class="venue">🏆 ${esc(a.venue)}</div>` : ""}
       </div>
     </div>`).join("");
-    return lis || '<div class="state">등록된 수상 실적이 없습니다.</div>';
+    return lis || '<div class="state">No awards yet.</div>';
   }
 
-  // Generic sub-tab nav (People / Publications / Achievements). Shows one view
-  // at a time, syncs the active tab with the URL hash, and listens for hash
-  // changes so the header dropdown can switch tabs without a full reload.
   function mountSubnav(nav, root, tabs, defaultKey) {
     if (!root || !tabs.length) return;
     const find = (k) => tabs.find(t => t.key === k);
@@ -668,9 +645,6 @@
     window.addEventListener("hashchange", () => { const k = fromHash(); if (find(k)) show(k); });
   }
 
-  // Smooth-scroll to the element named by the URL hash, allowing for the sticky
-  // header. Used by the scroll-based pages (Home / Research) whose target
-  // sections are rendered by JS after the browser's own hash jump has passed.
   function scrollToHash() {
     const id = decodeURIComponent((location.hash || "").replace(/^#/, ""));
     if (!id) return;
@@ -696,17 +670,17 @@
         <h2 class="section__title">${esc(title)}</h2>
       </div>`;
     const membersOr = (which) => M
-      ? buildMembers(M, which) : '<div class="state">구성원 정보를 불러오지 못했습니다.</div>';
+      ? buildMembers(M, which) : '<div class="state">Could not load member information.</div>';
     mountSubnav(nav, root, [
-      { key: "professor", label: "지도교수",
-        view: () => head("Professor", "지도교수") +
+      { key: "professor", label: "Professor",
+        view: () => head("Professor", "Professor") +
           `<div style="max-width:920px;margin:0 auto">${buildProfessor(profData)}</div>` },
-      { key: "current", label: "현재 구성원",
-        view: () => head("Current", "현재 구성원") + membersOr("current") },
-      { key: "alumni", label: "졸업생",
-        view: () => head("Alumni", "졸업생") + membersOr("alumni") },
-      { key: "apply", label: "지원",
-        view: () => head("Join Us", "지원 안내") + buildApply(profData) },
+      { key: "current", label: "Current Members",
+        view: () => head("Current", "Current Members") + membersOr("current") },
+      { key: "alumni", label: "Alumni",
+        view: () => head("Alumni", "Alumni") + membersOr("alumni") },
+      { key: "apply", label: "Join Us",
+        view: () => head("Join Us", "Join Us") + buildApply(profData) },
     ], "professor");
   }
 
@@ -721,17 +695,17 @@
     const projects = (data && Array.isArray(data.projects)) ? data.projects : null;
     const topics = buildResearchTopics(site);
     mountSubnav(nav, root, [
-      { key: "areas", label: "연구 분야",
+      { key: "areas", label: "Research Areas",
         view: () => topics
-          ? `<div class="group-head"><h3>연구 분야 (Research Areas)</h3></div>
+          ? `<div class="group-head"><h3>Research Areas</h3></div>
              <div class="grid grid--3" style="margin:1.2rem 0 0">${topics}</div>`
-          : '<div class="state">등록된 연구 분야가 없습니다.</div>' },
-      { key: "projects", label: "연구 과제",
+          : '<div class="state">No research areas yet.</div>' },
+      { key: "projects", label: "Projects",
         view: () => projects ? filterBlock({
           items: projects, cats: null,
           getCat: () => "", getYear: i => yearIn(i.period),
-          render: (list) => `<div class="group-head"><h3>연구 과제 (Projects)</h3><span class="count">${list.length}건</span></div>${buildProjects(list)}`,
-        }) : '<div class="state">프로젝트 정보를 불러오지 못했습니다.</div>' },
+          render: (list) => `<div class="group-head"><h3>Projects</h3><span class="count">${list.length}</span></div>${buildProjects(list)}`,
+        }) : '<div class="state">Could not load project information.</div>' },
     ], "areas");
     wireFilters(root);
   }
@@ -747,15 +721,15 @@
     const pubs = (pub && Array.isArray(pub.publications)) ? pub.publications : [];
     const confs = (conf && Array.isArray(conf.conferences)) ? conf.conferences : [];
     mountSubnav(nav, root, [
-      { key: "papers", label: `논문 (${pubs.length})`,
+      { key: "papers", label: `Papers (${pubs.length})`,
         view: () => filterBlock({
           items: pubs,
           cats: presentCats(pubs, ["International", "Domestic", "Other", "Books"],
-            { International: "International", Domestic: "Domestic", Other: "기타", Books: "저서" }),
+            { International: "International", Domestic: "Domestic", Other: "Other", Books: "Books" }),
           getCat: i => i.category, getYear: i => pubYear(i.citation),
           render: buildPublications,
         }) },
-      { key: "conferences", label: `학술대회 (${confs.length})`,
+      { key: "conferences", label: `Conferences (${confs.length})`,
         view: () => filterBlock({
           items: confs,
           cats: presentCats(confs, ["International", "Domestic"],
@@ -778,15 +752,15 @@
     const patents = (pat && Array.isArray(pat.patents)) ? pat.patents : [];
     const awards = (awd && Array.isArray(awd.awards)) ? awd.awards : [];
     mountSubnav(nav, root, [
-      { key: "patents", label: `특허 (${patents.length})`,
+      { key: "patents", label: `Patents (${patents.length})`,
         view: () => filterBlock({
           items: patents,
           cats: presentCats(patents, ["Application", "Registration", "Software"],
-            { Application: "출원", Registration: "등록", Software: "프로그램" }),
+            { Application: "Application", Registration: "Registration", Software: "Software" }),
           getCat: i => i.category, getYear: i => yearIn(i.date),
           render: buildPatents,
         }) },
-      { key: "awards", label: `수상 (${awards.length})`,
+      { key: "awards", label: `Awards (${awards.length})`,
         view: () => filterBlock({
           items: awards, cats: null,
           getCat: () => "", getYear: i => yearIn(i.date),
@@ -797,10 +771,10 @@
   }
 
   /* ====================================================================
-     NEWS / 소식 (학술대회·세미나·랩미팅 일지 + 모집 공고)
+     NEWS (conference / seminar / lab-meeting log + recruiting notices)
      ==================================================================== */
   function catEmoji(c) {
-    return ({ "학술대회": "🎤", "세미나": "🧑‍🏫", "랩미팅": "👥", "모집": "🙋", "기타": "🗒️" })[c] || "🗒️";
+    return ({ "Conference": "🎤", "Seminar": "🧑‍🏫", "Lab Meeting": "👥", "Recruiting": "🙋", "Other": "🗒️" })[c] || "🗒️";
   }
   function newsPhotos(arr) {
     if (!Array.isArray(arr) || !arr.length) return "";
@@ -812,7 +786,6 @@
     }).join("");
     return items ? `<div class="news-photos">${items}</div>` : "";
   }
-  // short single-line preview of the body for the feed cards
   function newsExcerpt(s, max) {
     const t = String(s == null ? "" : s).replace(/\s+/g, " ").trim();
     const n = max || 90;
@@ -824,20 +797,18 @@
       ? `<span class="news-card__thumb" style="background-image:url('${photo}')"></span>`
       : `<span class="news-card__thumb news-card__thumb--ph">${catEmoji(n.category)}</span>`;
   }
-  // compact, clickable feed card (opens the detail modal). idx → index in `posts`.
   function newsCard(n, idx) {
-    return `<button class="news-card" type="button" data-idx="${idx}" aria-label="${esc(n.title || "")} 자세히 보기">
+    return `<button class="news-card" type="button" data-idx="${idx}" aria-label="Read more: ${esc(n.title || "")}">
       ${newsThumb(n)}
       <span class="news-card__body">
-        <span class="news-card__meta"><span class="news-date">${esc(fmtDate(n.date))}</span> · ${esc(n.category || "기타")}</span>
+        <span class="news-card__meta"><span class="news-date">${esc(fmtDate(n.date))}</span> · ${esc(n.category || "Other")}</span>
         <span class="news-card__title">${esc(n.title || "")}</span>
         ${n.body ? `<span class="news-card__excerpt">${esc(newsExcerpt(n.body))}</span>` : ""}
-        <span class="news-card__more">자세히 보기 →</span>
+        <span class="news-card__more">Read more →</span>
       </span>
     </button>`;
   }
 
-  // Detail modal (full title, photos, body, link) opened from a feed card.
   let newsModalEl = null;
   function newsModalKey(e) { if (e.key === "Escape") closeNewsModal(); }
   function closeNewsModal() {
@@ -852,19 +823,19 @@
     wrap.className = "news-modal";
     wrap.setAttribute("role", "dialog");
     wrap.setAttribute("aria-modal", "true");
-    wrap.setAttribute("aria-label", n.title || "소식");
+    wrap.setAttribute("aria-label", n.title || "News");
     wrap.innerHTML =
       `<div class="news-modal__backdrop" data-close></div>
        <div class="news-modal__panel">
-         <button class="news-modal__close" type="button" data-close aria-label="닫기">&times;</button>
+         <button class="news-modal__close" type="button" data-close aria-label="Close">&times;</button>
          <div class="news-modal__head">
            <span class="news-date">${esc(fmtDate(n.date))}</span>
-           <span class="news-cat">${catEmoji(n.category)} ${esc(n.category || "기타")}</span>
+           <span class="news-cat">${catEmoji(n.category)} ${esc(n.category || "Other")}</span>
          </div>
          <h2 class="news-modal__title">${esc(n.title || "")}</h2>
          ${(Array.isArray(n.photos) && n.photos.length) ? `<div class="news-modal__photos">${newsPhotos(n.photos)}</div>` : ""}
          ${n.body ? `<div class="news-modal__body">${richText(n.body)}</div>` : ""}
-         ${n.link ? `<p class="news-link" style="margin-top:1.1rem"><a href="${esc(n.link)}" target="_blank" rel="noopener">관련 링크 →</a></p>` : ""}
+         ${n.link ? `<p class="news-link" style="margin-top:1.1rem"><a href="${esc(n.link)}" target="_blank" rel="noopener">Related link →</a></p>` : ""}
        </div>`;
     wrap.addEventListener("click", (e) => { if (e.target.closest("[data-close]")) closeNewsModal(); });
     document.body.appendChild(wrap);
@@ -879,39 +850,36 @@
     const site = await fetchData("site"); mountChrome(site);
     const data = await fetchData("news");
     const root = $("#news-root"); const nav = $("#news-subnav");
-    if (!data || !Array.isArray(data.news)) { setState(root, "소식을 불러오지 못했습니다."); return; }
+    if (!data || !Array.isArray(data.news)) { setState(root, "Could not load news."); return; }
 
-    // 모집(Recruiting) is intentionally NOT shown on News — prospective students
-    // are directed to People → 지원 tab (linked from the Home recruit bar).
+    // Recruiting is intentionally NOT shown on News — prospective students are
+    // directed to People → Join Us (linked from the Home recruit bar).
     const posts = data.news.slice()
-      .filter(n => n.category !== "모집")
+      .filter(n => n.category !== "Recruiting")
       .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
 
-    // category filter over event posts
-    const order = ["학술대회", "세미나", "랩미팅", "기타"];
+    const order = ["Conference", "Seminar", "Lab Meeting", "Other"];
     const cats = order.filter(c => posts.some(p => p.category === c));
-    posts.forEach(p => { if (p.category && p.category !== "모집" && cats.indexOf(p.category) === -1) cats.push(p.category); });
+    posts.forEach(p => { if (p.category && p.category !== "Recruiting" && cats.indexOf(p.category) === -1) cats.push(p.category); });
 
     const draw = (cat) => {
       if (nav) $$("button", nav).forEach(x => x.classList.toggle("active", (x.dataset.cat || "") === (cat || "")));
       const list = cat ? posts.filter(p => p.category === cat) : posts;
-      if (!list.length) { root.innerHTML = `<div class="state">아직 등록된 소식이 없습니다.</div>`; return; }
+      if (!list.length) { root.innerHTML = `<div class="state">No news yet.</div>`; return; }
       root.innerHTML = `<div class="news-list">${list.map(n => newsCard(n, posts.indexOf(n))).join("")}</div>`;
     };
-    // open the detail modal when a feed card is activated (native button = mouse + keyboard)
     root.addEventListener("click", (e) => {
       const card = e.target.closest(".news-card"); if (!card) return;
       const idx = parseInt(card.dataset.idx, 10);
       if (!isNaN(idx) && posts[idx]) openNewsModal(posts[idx]);
     });
-    // a category from the URL hash ("all"/unknown/empty → 전체)
     const catFromHash = () => {
       const h = decodeURIComponent((location.hash || "").replace(/^#/, ""));
       return (h && h !== "all" && cats.indexOf(h) !== -1) ? h : "";
     };
 
     if (nav) {
-      nav.innerHTML = ["전체"].concat(cats).map((c, i) =>
+      nav.innerHTML = ["All"].concat(cats).map((c, i) =>
         `<button data-cat="${i === 0 ? "" : esc(c)}">${esc(c)}</button>`).join("");
       nav.onclick = (e) => {
         const b = e.target.closest("button"); if (!b) return;
@@ -937,8 +905,6 @@
     const page = document.body.dataset.page;
     const fn = PAGES[page];
     if (fn) fn();
-    else { // unknown page: at least mount chrome
-      fetchData("site").then(mountChrome);
-    }
+    else { fetchData("site").then(mountChrome); }
   });
 })();

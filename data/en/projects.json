@@ -1,0 +1,163 @@
+{
+  "projects": [
+    {
+      "period": "Apr 2026 – Mar 2028",
+      "title": "Development of Resident Evacuation Strategies and an AI-Based Emergency Response Model for Emergency Situations at Spent Nuclear Fuel Dry Storage Facilities",
+      "org": "Korea Hydro & Nuclear Power (KHNP)"
+    },
+    {
+      "period": "Dec 2025 – Nov 2026",
+      "title": "Evaluation of a Real-Data-Based Emergency Vehicle Priority Signal System and Development of a Converged Approach",
+      "org": "Dong-A University DAU Special Research Project"
+    },
+    {
+      "period": "Oct 2025 – Oct 2026",
+      "title": "Service for Establishing Revitalization and Development Strategies for Jeonggwan New Town and Other Areas",
+      "org": "Gijang-gun, Busan Metropolitan City"
+    },
+    {
+      "period": "Sep 2025 – Aug 2026",
+      "title": "Service for Establishing a Banyeo–Bansong Development Master Plan",
+      "org": "Haeundae-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Sep 2025 – Aug 2028",
+      "title": "Study on the Development and Evaluation of a C-ITS-Based Idling Control Function",
+      "org": "National Research Foundation of Korea (NRF)"
+    },
+    {
+      "period": "Apr 2025 – Sep 2025",
+      "title": "Service for Estimating Resident Evacuation Time for the HANARO EPZ",
+      "org": "Korea Atomic Energy Research Institute (KAERI)"
+    },
+    {
+      "period": "Oct 2024 – Jul 2025",
+      "title": "Establishment of a Strategy for Developing Infrastructure and Transportation Information Systems in Honduras",
+      "org": "Korea Development Institute (KDI)"
+    },
+    {
+      "period": "Sep 2024 – Mar 2025",
+      "title": "Economic Feasibility Analysis for Reviewing the Introduction of Weigh-in-Motion Systems",
+      "org": "Korea Institute of Civil Engineering and Building Technology (KICT)"
+    },
+    {
+      "period": "Sep 2024 – Nov 2024",
+      "title": "Service for Estimating Resident Evacuation Time Considering Resident Protective Measures for the Export-Oriented New Research Reactor",
+      "org": "Korea Atomic Energy Research Institute (KAERI)"
+    },
+    {
+      "period": "Jan 2024 – Feb 2024",
+      "title": "Traffic Impact Analysis for the New Construction of Apartment Housing in the Metroland/Seopjari Area Following Reflection of the Port Redevelopment Zone",
+      "org": "BIMI ENC Co., Ltd."
+    },
+    {
+      "period": "Sep 2023 – Dec 2023",
+      "title": "Traffic Simulation Analysis Related to the “Study on Traffic Impact and Utilization Plans Following Changes to the Changwon Plaza Traffic System”",
+      "org": "Changwon Research Institute"
+    },
+    {
+      "period": "Mar 2023 – Jun 2023",
+      "title": "Service for Traffic Impact Analysis of Surrounding Roads Following the Construction of a Logistics Facility in Uijeon-ri, Gimhae",
+      "org": "Yuseom ENG Co., Ltd."
+    },
+    {
+      "period": "Dec 2022 – Jun 2023",
+      "title": "Service for Calculating Resident Evacuation Time Following the EPZ Designation for the Export-Oriented New Research Reactor",
+      "org": "Korea Atomic Energy Research Institute (KAERI)"
+    },
+    {
+      "period": "May 2022 – Dec 2022",
+      "title": "Road Surface Damage Image Data Caused by Container Vehicles on Port Roads in Busan Metropolitan City; 2022 AI Training Data Construction Support Project; National Information Society Agency (NIA); Ministry of Science and ICT (MSIT)"
+    },
+    {
+      "period": "Mar 2022 – Sep 2022",
+      "title": "Service for Designating the Radiological Emergency Planning Zone for the Export-Oriented New Research Reactor (Gijang Research Reactor)",
+      "org": "Korea Atomic Energy Research Institute (KAERI)"
+    },
+    {
+      "period": "Apr 2021 – Oct 2021",
+      "title": "Prototype Development and Demonstration of an Integrated Public Transportation Platform for Busan Metropolitan City",
+      "org": "Leaders in Industry-University Cooperation (LINC+) (National Research Foundation of Korea)"
+    },
+    {
+      "period": "Mar 2021 – Feb 2024",
+      "title": "Development and Evaluation of a Dynamic Environment-Optimal Route Search System",
+      "org": "National Research Foundation of Korea (NRF)"
+    },
+    {
+      "period": "Jan 2021 – Jun 2021",
+      "title": "Public Transportation Policy Directions for Busan Metropolitan City in the Post-COVID Era",
+      "org": "Busan Metropolitan City Public Transportation Citizens Fund"
+    },
+    {
+      "period": "Jan 2020 – Mar 2021",
+      "title": "[Year 3] Development of Road Hazard Information and Traffic Volume Collection Technology",
+      "org": "Korea Institute of Civil Engineering and Building Technology (KICT)"
+    },
+    {
+      "period": "Mar 2019 – Feb 2020",
+      "title": "[Year 3] Study on the Establishment and Evaluation of an IoT-Based Mileage-Based Tax Collection System",
+      "org": "National Research Foundation of Korea (Ministry of Science and ICT)"
+    },
+    {
+      "period": "Jan 2019 – Dec 2019",
+      "title": "[Year 2] Development of Road Hazard Information and Traffic Volume Collection Technology",
+      "org": "Korea Institute of Civil Engineering and Building Technology (KICT)"
+    },
+    {
+      "period": "Aug 2018 – Jul 2019",
+      "title": "Study on Revitalizing Public Transportation in Busan Through First and Last Mile Mobility Services",
+      "org": "Busan Metropolitan City Public Transportation Citizens Fund"
+    },
+    {
+      "period": "Jul 2018 – Dec 2018",
+      "title": "[Year 1] Development of Road Hazard Information and Traffic Volume Collection Technology",
+      "org": "Korea Institute of Civil Engineering and Building Technology (KICT)"
+    },
+    {
+      "period": "Jul 2018 – Oct 2018",
+      "title": "Commissioned Service for Estimating Appropriate Traffic Volume and Field Evaluation for Turbo Roundabout Operation",
+      "org": "Korea Transport Institute (KOTI)"
+    },
+    {
+      "period": "Jun 2018 – Oct 2018",
+      "title": "Service for Analyzing the Effects of the 2017 Busan Regional Office National Highway ITS Construction",
+      "org": "Korean Society of Road Engineers (KSRE)"
+    },
+    {
+      "period": "Mar 2018 – Feb 2019",
+      "title": "[Year 2] Study on the Establishment and Evaluation of an IoT-Based Mileage-Based Tax Collection System",
+      "org": "National Research Foundation of Korea (Ministry of Science and ICT)"
+    },
+    {
+      "period": "Mar 2018 – Apr 2018",
+      "title": "Effect Analysis of the Yeongdo-gu 50-30 Speed Reduction Pilot Project",
+      "org": "Busan Metropolitan City"
+    },
+    {
+      "period": "Jun 2017 – Dec 2017",
+      "title": "Service for Research on Efficiency Improvement Measures for National Highway Use in the Gyeongsang Region Based on Big Data",
+      "org": "Korean Society of Road Engineers (KSRE)"
+    },
+    {
+      "period": "Mar 2017 – Feb 2018",
+      "title": "[Year 1] Study on the Establishment and Evaluation of an IoT-Based Mileage-Based Tax Collection System",
+      "org": "Ministry of Science, ICT and Future Planning (National Research Foundation of Korea)"
+    },
+    {
+      "period": "Sep 2016 – Mar 2018",
+      "title": "Service for the Basic Plan to Create a Modern and Contemporary History and Culture Tourism Belt",
+      "org": "Korean Society of Transportation (KST)"
+    },
+    {
+      "period": "Nov 2015 – Oct 2016",
+      "title": "Study on Greenhouse Gas Reduction and Energy Efficiency Improvement Through Vehicle Idling Control",
+      "org": "National Research Foundation of Korea (NRF)"
+    },
+    {
+      "period": "Aug 2015 – Dec 2015",
+      "title": "Commissioned Service for Establishing Changwon City’s Response Strategy to the Advent of the Busan-Ulsan-Changwon Metropolitan Railway Era",
+      "org": "Changwon Research Institute"
+    }
+  ]
+}
