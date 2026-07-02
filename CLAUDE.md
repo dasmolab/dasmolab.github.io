@@ -133,7 +133,7 @@
   python -m http.server 8000 --bind 127.0.0.1
   # KO: http://localhost:8000/   EN: http://localhost:8000/en/
   ```
-- **배포**: `main` 병합 → `git push origin main` → GitHub Pages 자동 배포(약 1분).
+- **배포**: `main` 병합 → `git push origin main` → **GitHub Actions 워크플로**(`.github/workflows/pages.yml`)가 사이트 파일을 그대로 업로드해 Pages에 게시(약 1~2분). 저장소 Settings ▸ Pages ▸ Source = "GitHub Actions". (레거시 Jekyll 빌더의 간헐적 "Page build failed"를 피하기 위해 2026-07-03 이 방식으로 전환.) CMS(/admin) 저장도 main 커밋 → 같은 워크플로로 배포된다.
 - **캐시 무효화(중요)**: 루트 6개 + en/ 6개 + 404.html이 `app.js`/`styles.css`를 `?v=YYYYMMDD` 쿼리로 참조.
   **`app.js` 또는 `styles.css`를 수정하면 배포 전에 반드시 실행**:
   ```powershell

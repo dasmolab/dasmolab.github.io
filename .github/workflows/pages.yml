@@ -1,0 +1,54 @@
+# ===========================================================================
+#  GitHub Pages 배포 (GitHub Actions 방식)
+#
+#  main 브랜치에 push가 들어오면 사이트 파일을 그대로 업로드해 배포합니다.
+#  빌드 단계 없는 정적 사이트라 콘텐츠를 가공하지 않고 그대로 게시합니다.
+#  (레거시 Jekyll 빌더의 간헐적 "Page build failed"를 피하기 위해 전환함.)
+# ===========================================================================
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:   # 저장소 Actions 탭에서 수동 실행도 가능
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 동시에 여러 배포가 겹치지 않도록 (진행 중 배포는 유지하고 대기열은 최신만)
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Assemble site (exclude VCS / CI / dev-only files)
+        run: |
+          mkdir _site
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='node_modules' \
+            ./ _site/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
