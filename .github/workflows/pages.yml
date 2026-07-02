@@ -52,3 +52,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # GitHub Pages 백엔드가 느릴 때 10분(기본) 안에 게시를 못 끝내
+          # 배포가 취소되는 일이 있어, 대기 시간을 30분으로 늘림.
+          timeout: 1800000
