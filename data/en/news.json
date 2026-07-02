@@ -21,9 +21,7 @@
       "category": "Seminar",
       "title": "Invited Seminar — Traffic Safety Analysis Using C-ITS and V2X",
       "body": "We held an invited seminar with an external speaker on the topic of traffic safety analysis using data from a C-ITS demonstration project.",
-      "photos": [
-        "/assets/uploads/온두라스_2000.png"
-      ],
+      "photos": [],
       "link": ""
     },
     {
@@ -31,6 +29,30 @@
       "category": "Lab Meeting",
       "title": "First Lab Meeting of the Spring 2026 Semester and Welcoming New Students",
       "body": "To mark the new semester, we held a full laboratory meeting and welcomed the new graduate students. We also shared the research plans and schedule for the semester together.",
+      "photos": [],
+      "link": ""
+    },
+    {
+      "date": "2025-11-07",
+      "category": "Conference",
+      "title": "Presentation at the 2025 KOSPI Fall Conference (Korea Society of Private Investment)",
+      "body": "We presented a study on the economic analysis of introducing truck overload detection technology.",
+      "photos": [],
+      "link": ""
+    },
+    {
+      "date": "2025-10-31",
+      "category": "Conference",
+      "title": "Presentations at the 2025 KITS Fall Conference",
+      "body": "We presented three studies: the evaluation of an emergency vehicle preemption system, an analysis of BRT policy effectiveness through bus punctuality evaluation, and traffic signal control strategies for atypical intersections using composite AI models.",
+      "photos": [],
+      "link": ""
+    },
+    {
+      "date": "2025-04-25",
+      "category": "Conference",
+      "title": "Presentations and Best Paper Award at the 2025 KITS Spring Conference",
+      "body": "We presented six studies, including deep learning-based detection of disaster-damaged roads from satellite images and an economic analysis of smart weigh-in-motion systems. The paper 'Analysis of PM Users' Intention to Comply with Traffic Laws through the Extended Theory of Planned Behavior' received the Best Paper Award.",
       "photos": [],
       "link": ""
     }

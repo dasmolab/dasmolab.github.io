@@ -1,0 +1,42 @@
+{
+  "intro": "We welcome prospective graduate students (M.S./Ph.D.) and undergraduate researchers interested in transportation engineering, Intelligent Transportation Systems (ITS), and smart mobility. Please complete the items below and email them to the advisor; we will review your application and reply.",
+  "items": [
+    {
+      "label": "Full name",
+      "hint": "Korean / English, e.g. 홍길동 / Hong Gildong"
+    },
+    {
+      "label": "Date of birth (age)",
+      "hint": "e.g. 2000.01.01 (age 25)"
+    },
+    {
+      "label": "Phone",
+      "hint": "Mobile number"
+    },
+    {
+      "label": "E-mail",
+      "hint": "Address for our reply"
+    },
+    {
+      "label": "Current affiliation",
+      "hint": "School · department · year (or graduation status)"
+    },
+    {
+      "label": "Desired program",
+      "hint": "M.S. / Ph.D. / Integrated M.S.–Ph.D. / Undergraduate researcher"
+    },
+    {
+      "label": "Research interests",
+      "hint": "ITS · autonomous driving · smart mobility · traffic safety, etc."
+    },
+    {
+      "label": "Motivation",
+      "hint": "Brief self-introduction and motivation"
+    },
+    {
+      "label": "Attachments",
+      "hint": "CV · transcript, etc. (optional)"
+    }
+  ],
+  "faq": []
+}

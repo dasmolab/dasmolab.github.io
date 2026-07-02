@@ -1,12 +1,6 @@
 {
   "conferences": [
     {
-      "category": "Domestic",
-      "title": "test_dasmolab",
-      "conference": "한국dasmo학회 2027년 춘계학술대회",
-      "date": "2027. 6."
-    },
-    {
       "category": "International",
       "title": "Development and Evaluation of V2I-based Vehicle Idling Control System",
       "conference": "International Conference for Road Engineers (2025 ICRE)",
@@ -123,7 +117,7 @@
     {
       "category": "International",
       "title": "Effect of pedestrian-related factors on intersection performance",
-      "conference": "Transportation Research Board 83th Annual Meeting",
+      "conference": "Transportation Research Board 83rd Annual Meeting",
       "date": "2004. 1."
     },
     {
@@ -154,13 +148,13 @@
       "category": "Domestic",
       "title": "과속방지턱에 대한 소방대원의 의식조사 및 분석 / Perception Survey and Analysis of Speed Humps by Firefighters",
       "conference": "대한교통학회 2025 추계학술대회",
-      "date": "2024. 9. 26"
+      "date": "2025. 9. 26."
     },
     {
       "category": "Domestic",
       "title": "원자력시설 재난대응을 위한 소개 정책 및 전략 검토 / Review of Evacuation Policy and Strategy for Disaster Response of Nuclear Facilities",
       "conference": "대한교통학회 2025 추계학술대회",
-      "date": "2024. 9. 26"
+      "date": "2025. 9. 26."
     },
     {
       "category": "Domestic",

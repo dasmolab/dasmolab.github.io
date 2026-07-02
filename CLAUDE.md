@@ -8,10 +8,11 @@
 ## 1. 한 줄 요약 / 기술 스택
 
 - **정적 사이트, 빌드 단계 없음**(no build). 순수 HTML + CSS + 바닐라 JS.
-- 콘텐츠 데이터는 **`data/*.json`** 에 있고, `assets/js/app.js`가 클라이언트에서 읽어 렌더링.
+- 콘텐츠 데이터는 **`data/*.json`**(국문) / **`data/en/*.json`**(영문 번역본)에 있고,
+  **단일 `assets/js/app.js`가 한/영 페이지를 모두** 렌더링한다(`<html lang>`으로 언어 감지).
 - 헤더/푸터는 `data/site.json` 기반으로 JS가 주입(연구실명·연락처를 한 곳에서 관리).
 - 호스팅: **GitHub Pages**, repo `dasmolab/dasmolab.github.io`, 공개 URL **https://dasmolab.github.io/** (기본 브랜치 `main` 루트 서빙).
-- 편집(CMS): `/admin` Sveltia CMS, GitHub OAuth(Cloudflare Worker). → `EDIT-LOGIN-GUIDE.md`.
+- 편집(CMS): `/admin` Sveltia CMS(버전 고정 로드), GitHub OAuth(Cloudflare Worker). → `EDIT-LOGIN-GUIDE.md`.
 
 ---
 
@@ -19,141 +20,152 @@
 
 ```
 / (repo 루트 = 사이트 루트)
-├─ index.html              data-page="home"
-├─ news.html               data-page="news"
-├─ people.html             data-page="people"
-├─ research.html           data-page="research"
-├─ publications.html       data-page="publications"
-├─ achievements.html       data-page="achievements"
-├─ (professor/members/projects/conferences/patents/awards).html   ← 구 URL(6탭 nav에는 없음, 옛 북마크 보존용)
+├─ index.html              data-page="home"   (KO)
+├─ news/people/research/publications/achievements.html   (KO 5탭)
+├─ en/                     영문 페이지 6개 — 같은 껍데기, lang="en", ../assets 참조
+├─ (professor/members/projects/conferences/patents/awards).html  ← 구 URL 리다이렉트(noindex)
+├─ 404.html                크롬만 마운트되는 404 (base href="/")
+├─ sitemap.xml / robots.txt
 ├─ assets/
 │  ├─ css/styles.css       디자인 토큰(:root) + 전체 스타일(플레인 CSS)
-│  ├─ js/app.js            ★ 모든 로직(헤더/푸터 + 페이지별 렌더 + 빌더)
-│  ├─ img/                 로고 등 정적 이미지
-│  └─ uploads/             CMS 업로드 이미지(교수·구성원 사진 등)
-├─ data/*.json             ★ 콘텐츠 데이터(아래 5장 스키마)
-├─ admin/                  Sveltia CMS (config.yml = 편집 메뉴 정의)
+│  ├─ js/app.js            ★ 유일한 스크립트 — KO/EN 공용(언어 감지 + I18N 테이블)
+│  ├─ img/                 로고·파비콘(favicon-32/192, apple-touch-icon)·og-image.png
+│  └─ uploads/             CMS 업로드 이미지 (신규 업로드는 members/ · news/ 하위 폴더로 분리)
+├─ data/*.json             ★ 국문 콘텐츠 데이터(아래 5장 스키마)
+├─ data/en/*.json          영문 번역 데이터: site·news·professor·members·projects·apply 6종만.
+│                          없는 파일(publications 등)은 국문으로 자동 폴백.
+├─ admin/                  Sveltia CMS (config.yml = 편집 메뉴 정의, 국문+영문 컬렉션)
+├─ scripts/bump-version.ps1  ?v= 캐시버전 일괄 갱신 스크립트 (배포 전 필수)
 └─ *.md                    README, SETUP-GUIDE, EDIT-LOGIN-GUIDE, (이 파일)
 ```
 
-**각 HTML 페이지는 얇은 껍데기다.** `<div data-header></div>` + 콘텐츠 컨테이너(`#xxx-root`, `#xxx-subnav`) + `<div data-footer></div>` + `app.js` 로드가 전부. `<body data-page="...">` 값으로 어떤 렌더 함수가 실행될지 결정된다.
+**각 HTML 페이지는 얇은 껍데기다.** `<div data-header></div>` + 콘텐츠 컨테이너(`#xxx-root`, `#xxx-subnav`) + `<div data-footer></div>` + `app.js` 로드가 전부. `<body data-page="...">` 값으로 렌더 함수가 결정된다. `<head>`에는 페이지별 OG 메타·canonical·hreflang(ko/en/x-default)이 정적으로 들어 있다.
 
 ---
 
 ## 3. 네비게이션 (6탭 + 소탭/호버 드롭다운)
 
-상단 메인탭 6개. 각 탭에 **마우스를 올리면 소탭 드롭다운**이 내려오고, **소탭 클릭 = URL 해시로 해당 소탭 딥링크**, **메인탭 클릭 = 그 페이지 기본 화면**.
+상단 메인탭 6개. 데스크톱: 호버 드롭다운. **모바일: 메인탭만 표시되고 ▾ 버튼으로 해당 탭 소탭만 아코디언 펼침.** 소탭 클릭 = URL 해시 딥링크. KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전환된다(News 카테고리는 언어별 키를 매핑).
 
 | 메인탭 | data-page | 소탭 (URL 해시 key) | 소탭 동작 | 데이터 소스 |
 |---|---|---|---|---|
-| **Home** | home | 연구실 소개(`about`) / 연구 분야(`research`) / 강의 과목(`classes`) | 페이지 내 **섹션 스크롤** | `site.json` |
-| **News** | news | 전체(`all`) / 학술대회 / 세미나 / 랩미팅 | **분류 필터** | `news.json` |
-| **People** | people | 지도교수(`professor`) / 현재 구성원(`current`) / 졸업생(`alumni`) / 지원(`apply`) | **탭 전환**(한 번에 하나) | `professor.json`, `members.json` |
-| **Research** | research | 연구 분야(`areas`) / 연구 과제(`projects`) | **탭 전환** | `site.research_topics`, `projects.json` |
-| **Publications** | publications | 논문(`papers`) / 학술대회(`conferences`) | **탭 전환** | `publications.json`, `conferences.json` |
-| **Achievements** | achievements | 특허(`patents`) / 수상(`awards`) | **탭 전환** | `patents.json`, `awards.json` |
+| **Home** | home | 소개(`about`) / 연구 분야(`research`) / 강의(`classes`) / **오시는 길(`location`)** | 섹션 스크롤 | `site.json` |
+| **News** | news | 전체(`all`) / 학술대회 / 세미나 / 랩미팅 (EN은 `Conference` 등 영문 키) | 분류 필터 | `news.json` |
+| **People** | people | 지도교수(`professor`) / 현재 구성원(`current`) / 졸업생(`alumni`) / 지원(`apply`) | 탭 전환 | `professor.json`, `members.json`, `apply.json` |
+| **Research** | research | 연구 분야(`areas`) / 연구 과제(`projects`) | 탭 전환 | `site.research_topics`, `projects.json` |
+| **Publications** | publications | 논문(`papers`) / 학술대회(`conferences`) | 탭 전환 | `publications.json`, `conferences.json` |
+| **Achievements** | achievements | 특허(`patents`) / 수상(`awards`) | 탭 전환 | `patents.json`, `awards.json` |
 
-- 드롭다운과 페이지 내 소탭은 **`SUBNAV` 맵 하나**로 정의되어 동기화된다. 소탭을 추가/수정하려면 `SUBNAV`와 해당 `render*` 함수의 탭 배열 **둘 다** 같은 `key`로 맞춰야 한다.
-- "탭 전환" 페이지는 `mountSubnav()`가 처리(아래 4장). "섹션 스크롤"(Home/Research 진입)·"분류 필터"(News)는 각자 처리.
+- 드롭다운과 페이지 내 소탭은 **`SUBNAV` 맵 하나**(언어별 2벌)로 정의. 소탭 추가 시 `SUBNAV`와 해당 `render*`의 탭 배열 **둘 다** 같은 `key`로 맞출 것.
 
 ---
 
 ## 4. `assets/js/app.js` 아키텍처 (전부 한 IIFE 안)
 
-> 멀티페이지 사이트라 **페이지를 이동할 때마다 문서가 새로 로드**되고 IIFE가 다시 실행된다(SPA 아님 → 이벤트 리스너가 페이지 이동으로 누적되지 않음).
+> 멀티페이지 사이트라 페이지 이동마다 문서가 새로 로드되고 IIFE가 다시 실행된다(SPA 아님).
 
-**상수**
-- `NAV` — 메인탭 6개 `{href, label}`.
-- `SUBNAV` — `{ "people.html": [{label, key}, ...], ... }` 탭별 소탭 정의(드롭다운 + 페이지 내 소탭 공용).
+**언어 계층 (파일 상단)**
+- `EN` — `<html lang>`이 en으로 시작하면 true. `BASE` — EN이면 `"../"`.
+- `T` — **모든 UI 문자열의 I18N 테이블**(KO/EN 2벌). 새 UI 문자열은 반드시 T에 추가.
+- `EN_DATA` — 영문 번역 파일이 존재하는 데이터 이름 화이트리스트(`site, news, professor, members, projects, apply`).
+  `fetchData()`는 EN에서 이 목록에 있으면 `data/en/`을 먼저, 아니면 바로 국문 `data/`를 읽는다(불필요한 404 없음).
+- `SUBNAV`, `CAT_EMOJI`, `RECRUIT_CAT`("모집"/"Recruiting"), `NEWS_KEY_MAP`(언어 전환용 카테고리 매핑) — 언어별 상수.
 
-**공통 크롬(헤더/푸터)**
-- `currentPage()` — 현재 파일명.
-- `buildHeader(site)` — 로고 + nav. 각 탭을 `<li class="nav__item">`로, 소탭이 있으면 `<ul class="nav__sub">` 드롭다운 + `▾` 캐럿. 자식 링크 = `page.html#key`.
-- `buildFooter(site)` / `mountChrome(site)` / `initNav()`(모바일 햄버거 토글 + 링크 클릭 시 드로어 닫기).
+**공통 크롬** — `buildHeader`(드롭다운 + 모바일 아코디언 토글 버튼 + 언어 전환), `buildFooter`(연도 자동, 주소는 지도 링크), `mountChrome`, `initNav`(햄버거 + 아코디언 + Esc 닫기 + 언어 전환 시 해시 유지).
 
-**소탭 엔진**
-- `mountSubnav(nav, root, tabs, defaultKey)` — 탭 버튼 렌더 + 한 번에 한 view 표시. `location.hash`로 초기 탭 결정, 클릭 시 `history.replaceState`로 해시 갱신, `hashchange`로 드롭다운 딥링크에 반응. People/Research/Publications/Achievements가 사용.
-- `scrollToHash()` — 헤더 높이 보정해 해시 요소로 스무스 스크롤. Home/Research(JS 렌더 뒤) 진입 시 사용.
+**소탭 엔진** — `mountSubnav`(해시 딥링크·hashchange 반응), `scrollToHash`.
 
-**페이지별 렌더 함수** (`PAGES` 맵 → `DOMContentLoaded`에서 `body[data-page]`로 디스패치)
-- `renderHome` — hero/통계(`#home-stats`)/모집 배너(`#home-recruit`)/최신소식 카드(`#home-news`)/소개·연구·강의 채움.
-- `renderNews` — 모집 제외 피드를 **간략 카드**(`newsCard`)로, 분류 필터(`#news-subnav`). **모집(category "모집")은 News에 표시 안 함**.
-- `renderPeople` — 4개 소탭(지도교수/현재구성원/졸업생/지원), 기본 `professor`.
-- `renderResearch` / `renderPublications` / `renderAchievements` — 각 2개 소탭.
+**필터 엔진** — `filterBlock(cfg)`: 구분 칩 + 연도 드롭다운 + **텍스트 검색(`getText`)**. `applyFilter`/`wireFilters`(위임 핸들러). Publications/Conferences/Patents/Awards/Projects가 사용. 목록은 렌더 전에 `sortByDateDesc`로 날짜 내림차순 정렬(편집 순서 실수를 코드가 흡수).
 
-**순수 빌더(데이터 → HTML 문자열)** — 병합 페이지들이 재사용
-- `buildResearchTopics(site)`, `buildProfessor(p)`, `buildMembers(M, which)`(`which`="current"|"alumni"), `buildApply(prof)`(지원 안내 + 지도교수 mailto), `buildProjects`, `buildPublications`, `buildConferences`, `buildPatents`, `buildAwards`.
+**페이지 렌더 함수** (`PAGES` 맵 → `body[data-page]` 디스패치)
+- `renderHome` — 통계/모집 배너(**deadline 지나면 자동 숨김** `recruitOpen`)/최신소식/소개(+`about_photo`)/연구/강의(문자열·`{name,link}` 겸용)/**오시는 길(`buildLocation`)**.
+- `renderNews` — 간략 카드 + 상세 모달. **모집 카테고리는 News 미노출**(홈 배너 + 지원 탭 전용).
+- `renderPeople` — 지도교수(`links` 연구자 프로필 버튼, media `date`+`source`)/구성원(관심분야 태그, group×level 미매칭도 '기타'로 표시)/졸업생/지원(**`apply.json` 데이터 + 현재 모집 공고 본문 + FAQ**).
+- `renderResearch` / `renderPublications` / `renderAchievements`.
 
-**News 카드 + 상세 모달**
-- `newsCard(n, idx)` — `<button class="news-card" data-idx>` 썸네일+메타+제목+미리보기. `idx`는 `posts` 배열 인덱스.
-- `openNewsModal(n)` / `closeNewsModal()` / `newsModalKey` — 카드 클릭 시 제목·사진 갤러리·본문·링크를 모달로. ESC/배경/✕ 닫기, body 스크롤 잠금.
-- `catEmoji`, `newsPhotos`, `newsExcerpt`, `newsThumb` 보조.
+**순수 빌더** — `buildResearchTopics`, `buildLocation`, `buildProfessor`, `buildMembers`, `buildApply(prof, apply, recruit)`, `buildProjects`, `buildPublications`, `buildConferences`(EN은 `한글 / English` 제목의 영문부만), `buildPatents`(EN은 `name_en` 우선 + scope/type 영문 매핑), `buildAwards`(EN은 `title_en` 폴백).
 
-**유틸** — `$`,`$$`,`esc`,`escMultiline`,`imgSrc`,`linkify`,`richText`,`fmtDate`,`photoSrc`,`firstPhoto`,`fetchData(name)`,`setState`.
+**News 모달** — 포커스 트랩(Tab 순환), Esc/배경/✕/**브라우저 뒤로가기**(pushState+popstate)로 닫힘, 닫힌 뒤 연 카드로 포커스 복원.
+
+**유틸** — `esc`, `escMultiline`, `imgSrc`(BASE 처리), `cssUrl`(경로를 속성/CSS url 안전하게), `linkify`, `richText`, `fmtDate`, `todayStr`, `photoSrc`, `firstPhoto`, `fetchData`, `setState`, `yearIn`, `pubYear`, `dateKey`.
 
 ---
 
-## 5. 데이터 스키마 (`data/*.json`)
+## 5. 데이터 스키마 (`data/*.json` — 영문판은 `data/en/` 동일 구조)
 
-- **`site.json`** — `lab_abbr`, `lab_name_ko/en`, `tagline_en`, `intro1`, `intro2`, `research_topics[]`{`icon`,`title`,`desc`,`tags[]`}, `classes_undergrad[]`, `classes_grad[]`, `address`, `phone`, `email`, `office`, `logo`.
-- **`professor.json`** — `name_ko`, `name_en`, `title`, `photo`, `fields`, `phone`, `email`(쉼표구분 다중), `office`, `education[]`{`period`,`place`,`degree`,`thesis`}, `careers[]`, `societies[]`{`name`,`position`,`note`}, `media[]`{`date`,`title`,`url`}, `committees[]`.
-- **`members.json`** — `members[]`{`name_ko`,`name_en`,`group`("current"|"alumni"),`level`("ph"/"master"/"under"/"bach"…로 시작),`affiliation`,`period`,`degree`,`grad_year`,`thesis`,`email`,`photo`}.
-- **`news.json`** — `news[]`{`date`(YYYY-MM-DD),`category`("학술대회"|"세미나"|"랩미팅"|"모집"|"기타"),`title`,`body`(줄바꿈·URL 허용),`photos[]`(경로 또는 {image}),`link`}.
-- **`projects.json`** — `projects[]`{`period`,`title`,`org`}.
-- **`publications.json`** — `publications[]`{`category`("International"|"Domestic"|"Other"|"Books"),`citation`,`venue`,`sci`(bool),`link`}.
-- **`conferences.json`** — `conferences[]`{`category`("International"|"Domestic"),`title`,`conference`,`date`}.
-- **`patents.json`** — `patents[]`{`category`("Application"|"Registration"|"Software"),`name`,`scope`,`type`,`date`,`number`,`inventors`}.
-- **`awards.json`** — `awards[]`{`date`,`title_ko`,`title_en`,`venue`}.
+- **`site.json`** — `lab_abbr`, `lab_name_ko/en`, `tagline_en`, `intro1/2`, `about_photo`(선택), `research_topics[]`{icon,title,desc,tags[]}, `classes_undergrad/grad[]`(**`{name, link?}` 객체** — 문자열도 하위호환), `address`, `phone`, `email`, `office`, `transit_info`, `map_kakao/naver/google`, `logo`.
+- **`apply.json`** — `intro`, `items[]`{label,hint}, `faq[]`{q,a} — People→지원 탭 내용(CMS 편집 가능).
+- **`professor.json`** — 기본 정보 + `links[]`{label,url}(Google Scholar 등) + `education[]`, `careers[]`, `societies[]`, `media[]`{**date, source**, title, url}, `committees[]`.
+- **`members.json`** — `members[]`{name_ko, name_en, group("current"|"alumni"), level("PhD"|"Master"|"Undergraduate"|"Bachelor"), photo, email(재학생만 표시·졸업생은 저장도 하지 않음), affiliation, period, grad_year, degree, thesis, `interests[]`}.
+- **`news.json`** — `news[]`{date(YYYY-MM-DD), category("학술대회"|"세미나"|"랩미팅"|"모집"|"기타" — EN 파일은 "Conference"|"Seminar"|"Lab Meeting"|"Recruiting"|"Other"), `deadline`(모집 자동 종료일, 선택), title, body, photos[](문자열 배열), link}.
+- **`projects.json`** — `projects[]`{period, title, org}.
+- **`publications.json`** — `publications[]`{category("International"|"Domestic"|"Other"|"Books"), citation(연도는 반드시 `(YYYY)` 괄호 표기), venue?, sci(bool), link(DOI 권장)}.
+- **`conferences.json`** — `conferences[]`{category, title(국내는 `한글 / English` 병기), conference, date}.
+- **`patents.json`** — `patents[]`{category("Application"|"Registration"|"Software"), name, `name_en?`, scope, type, date, number, inventors}.
+- **`awards.json`** — `awards[]`{date, title_ko, title_en?, venue}.
 
 ---
 
-## 6. 페이지별 콘텐츠 요약
+## 6. CMS (`admin/config.yml`)
 
-- **Home** — 히어로(연구실 슬로건) → 실시간 통계(논문·학회발표·과제·구성원 수, 다른 json에서 집계) → **모집 배너**(news.json에 "모집" 항목 있을 때만; "자세히 보기"→`people.html#apply`) → 최신소식 카드 3개 → 연구실 소개 → 연구 분야 → 강의 과목.
-- **News** — 학술대회·세미나·랩미팅 등 활동 일지(간략 카드, 클릭 시 모달). 모집 공고는 여기 노출 안 함.
-- **People** — 지도교수 프로필 / 재학생 / 졸업생 / **지원**(필수 기재항목 + 지도교수 이메일로 작성양식 미리채운 메일 버튼).
-- **Research** — 연구 분야 카드 / 수행 연구 과제 목록.
-- **Publications** — 논문(국제·국내·기타·저서) / 학술대회 발표.
-- **Achievements** — 특허·프로그램 등록 / 수상 실적.
+- 국문 컬렉션 + **🌐 [영문] 컬렉션**(data/en/ 6종)이 divider로 구분되어 있음.
+- select는 전부 **label(한국어)/value(코드)** 분리 — value를 바꾸면 사이트 렌더링이 깨지므로 value는 고정.
+- 사진 필드는 **필드별 media_folder**(`assets/uploads/members`, `assets/uploads/news`)와 규격 hint 포함. 뉴스 사진은 `multiple: true`(문자열 배열로 저장 — `photoSrc()`가 문자열/객체 모두 처리).
+- `editor: preview: false`(미리보기 패널 비활성), `site_url` 지정.
+- `admin/index.html`은 Sveltia를 **@버전 고정**으로 로드 — 반년에 한 번쯤 버전 숫자 갱신.
 
 ---
 
 ## 7. CSS (`assets/css/styles.css`)
 
-- 디자인 토큰은 `:root`(네이비 베이스 `--navy` + 틸 액센트 `--teal`, Pretendard 폰트, `--header-h`, `--radius` 등).
-- 주요 컴포넌트: `.site-header/.nav/.nav__sub`(드롭다운), `.subnav`(소탭 버튼), `.hero`, `.section`, `.card/.grid`, `.people-grid/.person`, `.prof-*`, `.ref-list`(논문), `table.data`(특허), `.news-card`(피드 카드)·`.news-modal`(상세 모달), `.recruit-bar`(홈 모집 배너), `.apply-cta`(지원 버튼 박스).
-- 반응형 분기: `max-width: 860px`(모바일 nav 햄버거 + 드롭다운을 정적 목록으로), `560px`(카드 세로 쌓기).
+- 디자인 토큰 `:root` — 네이비 `--navy` + 틸 액센트. **`--teal-dark`(#0B7568)는 흰 배경 텍스트용으로 WCAG AA(5.6:1)를 맞춘 값** — 밝게 되돌리지 말 것.
+- 주요 컴포넌트: `.site-header/.nav/.nav__sub/.nav__subtoggle`(모바일 아코디언), `.subnav`, `.fbar/.fchip/.fyear/.fsearch`(필터+검색), `.hero`, `.card/.grid`, `.people-grid/.person`, `.prof-*/.prof-links`, `.ref-list`, `table.data`, `.news-card/.news-modal`, `.recruit/.recruit-bar`, `.apply-cta/.collapse--faq`, `.loc-box/.btn--map`, `.about-photo`, `.tags--sm`.
+- 썸네일·인물 사진은 `<img loading="lazy">`로 렌더(placeholder만 div/span). `@media print` 블록 있음.
+- 반응형 분기: `max-width: 860px`(모바일 nav), `560px`(카드 세로 쌓기).
 
 ---
 
 ## 8. 빌드 · 로컬 미리보기 · 배포
 
 - **빌드 없음.** 파일 수정 = 즉시 반영.
-- **로컬 미리보기**(JSON `fetch` 때문에 `file://` 불가 → 반드시 HTTP 서버):
+- **로컬 미리보기**(JSON `fetch` 때문에 `file://` 불가):
   ```bash
   python -m http.server 8000 --bind 127.0.0.1
-  # http://localhost:8000/
+  # KO: http://localhost:8000/   EN: http://localhost:8000/en/
   ```
-- **배포**: 작업 브랜치 → `main` 병합 → `git push origin main` → GitHub Pages 자동 배포(약 1분). 기본 브랜치 `main` 루트가 그대로 공개됨.
-- **캐시 무효화(중요)**: 6개 HTML이 `app.js`/`styles.css`를 `?v=YYYYMMDD` 쿼리로 참조한다. **`app.js` 또는 `styles.css`를 수정하면 이 `?v=` 값을 반드시 올릴 것** — 안 그러면 재방문자 브라우저가 옛 파일을 캐시한 채로 새 HTML을 돌려 "불러오는 중"에서 멈춘다(2026-06-03 실제 발생). 데이터(`data/*.json`)만 바꿀 땐 `fetch(..., {cache:"no-store"})`라 버전 불필요.
-- **편집(CMS)**: `/admin`(Sveltia) — GitHub OAuth는 Cloudflare Worker가 처리하며 `dasmolab.github.io`(실제 사이트)에서만 동작(localhost 불가). 멤버 추가 등은 `EDIT-LOGIN-GUIDE.md` 참고.
+- **배포**: `main` 병합 → `git push origin main` → GitHub Pages 자동 배포(약 1분).
+- **캐시 무효화(중요)**: 루트 6개 + en/ 6개 + 404.html이 `app.js`/`styles.css`를 `?v=YYYYMMDD` 쿼리로 참조.
+  **`app.js` 또는 `styles.css`를 수정하면 배포 전에 반드시 실행**:
+  ```powershell
+  powershell -ExecutionPolicy Bypass -File scripts/bump-version.ps1
+  ```
+  (수동 갱신 누락으로 “불러오는 중” 멈춤 장애가 실제 발생했었음 — 2026-06-03.)
+  데이터(`data/*.json`)만 바꿀 땐 `fetch(..., {cache:"no-store"})`라 버전 불필요.
+- **편집(CMS)**: `/admin`(Sveltia) — GitHub OAuth는 Cloudflare Worker가 처리하며 실제 사이트에서만 동작(localhost 불가). → `EDIT-LOGIN-GUIDE.md`(복구 절차 §2-2 포함).
 
 ---
 
 ## 9. 자주 하는 수정 (How-to)
 
-- **구성원 추가/이동(재학↔졸업)** → `data/members.json`(`group`/`level` 조정, 사진은 `assets/uploads/`).
-- **소식 추가** → `data/news.json`에 항목 추가(`category`로 분류, `photos[]`에 이미지).
-- **교수 정보** → `data/professor.json`.
-- **연구 분야 카드/강의/소개문** → `data/site.json`(`research_topics`, `classes_*`, `intro*`).
-- **새 소탭 추가** → ① `app.js`의 `SUBNAV[해당페이지]`에 `{label, key}` 추가 ② 같은 페이지 `render*`의 `mountSubnav(...)` 탭 배열에 같은 `key`로 view 추가. (탭 전환 페이지 기준)
-- **메인탭 추가/순서 변경** → `app.js`의 `NAV` 배열(헤더·푸터 공용).
+- **구성원 추가/졸업 처리** → `data/members.json` **+ `data/en/members.json` 동시 수정**. 졸업 시 email 필드 삭제(개인정보).
+- **소식 추가** → `data/news.json`(+ 영문도 원하면 `data/en/news.json`). 모집 공고는 category "모집" + `deadline`.
+- **교수 정보/연구자 링크** → `data/professor.json`(+en). Scholar/ORCID는 `links[]`에.
+- **지원 안내·FAQ** → `data/apply.json`(+en).
+- **연구 분야/강의/소개/오시는 길** → `data/site.json`(+en).
+- **새 소탭 추가** → ① `app.js`의 `SUBNAV`(KO/EN 두 벌 모두) ② 해당 `render*`의 탭 배열, 같은 `key`로.
+- **UI 문자열 수정** → `app.js`의 `T` 테이블(KO/EN 두 곳).
+- **메인탭 추가/순서 변경** → `app.js`의 `NAV` + 새 페이지는 KO/EN HTML 2개 생성 + sitemap.xml 갱신.
 
 ---
 
 ## 10. 주의점 / 함정
 
+- **국문/영문 데이터는 이중 관리**: `data/en/`에 파일이 존재하는 6종(site·news·professor·members·projects·apply)은 국문만 고치면 영문판이 낡는다. CMS의 🌐 [영문] 메뉴로 함께 수정할 것.
 - `SUBNAV`의 `key`와 `render*` 탭의 `key`가 **반드시 일치**해야 드롭다운 딥링크가 작동.
-- 모든 사용자 데이터는 출력 시 `esc()`(또는 `richText`/`linkify`) 처리 — XSS 방지. 새 빌더 작성 시 동일하게.
-- 이미지 경로는 `imgSrc()`로 정규화(앞 `/` 제거)해야 서브경로 배포에서도 안전.
-- News 모달은 `posts` 배열 인덱스(`data-idx`)로 항목을 찾음 — 분류 필터가 걸려도 인덱스는 항상 전체 `posts` 기준.
+- News의 category 값은 **언어별로 다름**(KO 한글 / EN 영문). 코드에서 비교할 땐 `RECRUIT_CAT` 등 상수 사용.
+- 국내 학술대회 title은 `한글 / English` 병기 — 슬래시 구분자를 지우면 영문판에 한글이 노출됨.
+- 모든 사용자 데이터는 출력 시 `esc()`(텍스트) / `cssUrl()`(이미지 경로·url()) / `richText`(뉴스 본문) 처리 — 새 빌더도 동일하게.
+- 이미지 경로는 `imgSrc()`로 정규화(BASE 처리 포함)해야 /en/ 아래에서도 안전.
+- News 모달은 `posts` 배열 인덱스(`data-idx`)로 항목을 찾음 — 분류 필터가 걸려도 인덱스는 전체 `posts` 기준.
+- members의 group×level 조합이 어긋나도 이제 '기타' 그룹으로 표시되지만, CMS hint의 권장 조합을 따를 것.
+- 이 저장소는 Google Drive 동기화 폴더 안에 있음 — `.git` 파손 위험이 있으므로 가능하면 Drive 밖 클론에서 작업 권장.

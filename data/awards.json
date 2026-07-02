@@ -4,7 +4,7 @@
       "date": "2025. 11.",
       "title_ko": "화물차량 과적 감지기술 도입에 따른 경제성 분석",
       "title_en": "Economic Analysis of the Introduction of Truck Overload Detection Technology",
-      "venue": "2025 한국교통학회 추계학술발표회 및 정기총회"
+      "venue": "2025 한국민간투자학회 추계학술대회"
     },
     {
       "date": "2025. 4.",
@@ -14,9 +14,9 @@
     },
     {
       "date": "2025. 3.",
-      "title_ko": "IPA를 통한 도시보호구역의 교통안전시설 우수사례 평가 : 부산광역시 중심으로",
+      "title_ko": "IPA를 통한 어린이보호구역의 교통안전시설 우수사례 평가 : 부산광역시 중심으로",
       "title_en": "Evaluation of Traffic Safety Facilities in School Zones in Busan through IPA",
-      "venue": "2025 한국교통학술대회 춘계학술발표회 우수상"
+      "venue": "2025 한국교통정책경제학회 춘계학술대회 우수상"
     },
     {
       "date": "2024. 8.",
@@ -26,7 +26,7 @@
     },
     {
       "date": "2024. 4.",
-      "title_ko": "자동주행자동차의 공회전 제어 시스템 환경영향 분석",
+      "title_ko": "자율주행자동차의 공회전 제어 시스템 환경영향 분석",
       "title_en": "Analysis of Environmental Effects of Autonomous Vehicle Idling Control System",
       "venue": "한국ITS학회 2024년 춘계학술발표회 우수논문상"
     },
@@ -38,7 +38,7 @@
     },
     {
       "date": "2021. 2.",
-      "title_ko": "ADAS 데이터 기반 자동주행자동차 모빌리티 서비스 개발 및 평가",
+      "title_ko": "ADAS 데이터 기반 자율주행자동차 모빌리티 서비스 개발 및 평가",
       "title_en": "Development and Evaluation of Mobility Service of Autonomous Vehicles Based on ADAS Data",
       "venue": "대한교통학회 제84회 학술발표회 우수논문상"
     },
@@ -69,11 +69,10 @@
     {
       "date": "2014. 10.",
       "title_ko": "Internet of Cars through Community V2V and V2X Mobile Routers",
-      "title_en": "",
       "venue": "한국ITS학회 2014년 추계학술발표회 우수논문상"
     },
     {
-      "date": "2013. 2",
+      "date": "2013. 2.",
       "title_ko": "Connected Vehicle을 이용한 Smart Roundabout의 개발",
       "title_en": "Development of Smart Roundabout Using Connected Vehicle",
       "venue": "대한교통학회 제68회 학술발표회 우수논문상"
@@ -81,7 +80,6 @@
     {
       "date": "2007. 6.",
       "title_ko": "Ad Hoc Distributed Simulations",
-      "title_en": "",
       "venue": "Best Paper Award at Conference: 21st International Workshop on Principles of Advanced and Distributed Simulation (PADS'07)"
     }
   ]
