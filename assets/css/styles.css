@@ -423,8 +423,9 @@ ul { margin: 0; padding: 0; }
 .ref-item a.link { font-size: .85rem; font-weight: 600; }
 
 /* Project rows */
-.proj-item { display: grid; grid-template-columns: 9.5rem 1fr; gap: 1rem; padding: 1rem .4rem; border-bottom: 1px solid var(--line); }
-.proj-item .period { font-weight: 700; color: var(--navy); font-size: .9rem; font-variant-numeric: tabular-nums; }
+.proj-item { display: grid; grid-template-columns: 12rem 1fr; gap: 1rem; padding: 1rem .4rem; border-bottom: 1px solid var(--line); }
+/* 기간 칸은 절대 줄바꿈하지 않음 — 두 자리 월(예: 2025. 12. ~ 2026. 11.)도 한 줄 유지 */
+.proj-item .period { font-weight: 700; color: var(--navy); font-size: .9rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .proj-item .title { color: var(--ink); font-weight: 600; }
 .proj-item .org { color: var(--teal-dark); font-size: .9rem; font-weight: 600; margin-top: .15rem; }
 @media (max-width: 620px) { .proj-item { grid-template-columns: 1fr; gap: .2rem; } }
