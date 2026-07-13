@@ -1,6 +1,36 @@
 {
   "conferences": [
     {
+      "category": "Domestic",
+      "title": "버스 운영체계에 따른 정시성 평가와 영향요인 분석 / Evaluation of Punctuality and Analysis of Influence Factors Based on Bus Operation Systems",
+      "conference": "대한교통학회 2026 춘계학술대회",
+      "date": "2026. 3. 13."
+    },
+    {
+      "category": "Domestic",
+      "title": "과속방지턱이 긴급차량 출동에 미치는 실증적 영향 분석: 부산광역시 사례 / An Empirical Analysis of the Impact of Speed Bumps on Emergency Vehicle Dispatch, Focused on Busan Metropolitan City",
+      "conference": "대한교통학회 2026 춘계학술대회",
+      "date": "2026. 3. 13."
+    },
+    {
+      "category": "Domestic",
+      "title": "긴급차량 우선신호 운영방식에 따른 통행시간 단축 효과분석 / Analysis of Travel Time Reduction Effects by Emergency Vehicle Signal Preemption Operation Modes",
+      "conference": "대한교통학회 2026 춘계학술대회",
+      "date": "2026. 3. 13."
+    },
+    {
+      "category": "International",
+      "title": "An Analysis of Factors Influencing Bus Punctuality by Operation System, BRT and Non-BRT",
+      "conference": "2026 Gangneung ITS World Congress",
+      "date": "2026. 10."
+    },
+    {
+      "category": "International",
+      "title": "Comparative Evaluation of Local and Central Emergency Vehicle Preemption Systems Based on the Field Data",
+      "conference": "The 15th Asia-Pacific Conference on Transportation and the Environment",
+      "date": "2026. 7."
+    },
+    {
       "category": "International",
       "title": "Development and Evaluation of V2I-based Vehicle Idling Control System",
       "conference": "International Conference for Road Engineers (2025 ICRE)",
