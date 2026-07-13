@@ -1,6 +1,20 @@
 {
   "publications": [
     {
+      "category": "Domestic",
+      "citation": "1. 이은정, 김민정, 양정모, 정지효, 김회경 (2026), 과속방지턱에 의한 긴급차량 출동 지연 관련 소방대원의 의식조사 및 분석 : 부산광역시를 중심으로, 한국도로학회논문집, accepted",
+      "sci": false,
+      "link": "",
+      "venue": ""
+    },
+    {
+      "category": "Domestic",
+      "citation": "1. 정지효, 김회경 (2026), 버스 통행시간의 신뢰성 평가와 비교, 부산광역시 간선급행버스와 비간선급행버스를 중심으로, 대한교통학회지, accepted",
+      "sci": false,
+      "link": "",
+      "venue": ""
+    },
+    {
       "category": "International",
       "citation": "Lee, S., Choi, B., Kwon, W., Cha, J., Jung, J., Kim, H. K.(2025), Optimal Traffic Signal Control for an Atypical Isolated Intersection Using Composite AI Model, International Journal of Urban Sciences, Accepted for Publication.",
       "sci": true,
@@ -165,7 +179,8 @@
       "category": "Domestic",
       "citation": "송수정, 정지효, 김회경. (2025), IPA를 통한 어린이보호구역 교통안전 시설물 평가-부산광역시를 중심으로, 한국도로학회논문집, 27(2), 95-103.",
       "sci": false,
-      "link": "https://doi.org/10.7855/IJHE.2025.27.2.095"
+      "link": "https://doi.org/10.7855/IJHE.2025.27.2.095",
+      "venue": ""
     },
     {
       "category": "Domestic",
