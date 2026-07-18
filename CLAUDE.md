@@ -21,9 +21,9 @@
 ```
 / (repo 루트 = 사이트 루트)
 ├─ index.html              data-page="home"   (KO)
-├─ news/people/research/publications/achievements.html   (KO 5탭)
-├─ en/                     영문 페이지 6개 — 같은 껍데기, lang="en", ../assets 참조
-├─ (professor/members/projects/conferences/patents/awards).html  ← 구 URL 리다이렉트(noindex)
+├─ news/people/research/publications/conferences/patents/awards.html   (KO 7탭)
+├─ en/                     영문 페이지 8개 — 같은 껍데기, lang="en", ../assets 참조
+├─ (professor/members/projects/achievements).html  ← 구 URL 리다이렉트(noindex)
 ├─ 404.html                크롬만 마운트되는 404 (base href="/")
 ├─ sitemap.xml / robots.txt
 ├─ assets/
@@ -43,9 +43,9 @@
 
 ---
 
-## 3. 네비게이션 (6탭 + 소탭/호버 드롭다운)
+## 3. 네비게이션 (8탭 — 앞 4개만 소탭/호버 드롭다운)
 
-상단 메인탭 6개. 데스크톱: 호버 드롭다운. **모바일: 메인탭만 표시되고 ▾ 버튼으로 해당 탭 소탭만 아코디언 펼침.** 소탭 클릭 = URL 해시 딥링크. KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전환된다(News 카테고리는 언어별 키를 매핑).
+상단 메인탭 8개. Home/News/People/Research는 데스크톱 호버 드롭다운(모바일은 ▾ 아코디언), 소탭 클릭 = URL 해시 딥링크. Papers/Conferences/Patents/Awards는 **소탭 없는 단일 페이지**(구분 칩·연도·검색 필터만). KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전환된다(News 카테고리는 언어별 키를 매핑).
 
 | 메인탭 | data-page | 소탭 (URL 해시 key) | 소탭 동작 | 데이터 소스 |
 |---|---|---|---|---|
@@ -53,10 +53,13 @@
 | **News** | news | 전체(`all`) / 학술대회 / 세미나 / 랩미팅 (EN은 `Conference` 등 영문 키) | 분류 필터 | `news.json` |
 | **People** | people | 지도교수(`professor`) / 현재 구성원(`current`) / 졸업생(`alumni`) / 지원(`apply`) | 탭 전환 | `professor.json`, `members.json`, `apply.json` |
 | **Research** | research | 연구 분야(`areas`) / 연구 과제(`projects`) | 탭 전환 | `site.research_topics`, `projects.json` |
-| **Publications** | publications | 논문(`papers`) / 학술대회(`conferences`) | 탭 전환 | `publications.json`, `conferences.json` |
-| **Achievements** | achievements | 특허(`patents`) / 수상(`awards`) | 탭 전환 | `patents.json`, `awards.json` |
+| **Papers** | publications | (없음) | — | `publications.json` |
+| **Conferences** | conferences | (없음) | — | `conferences.json` |
+| **Patents** | patents | (없음) | — | `patents.json` |
+| **Awards** | awards | (없음) | — | `awards.json` |
 
 - 드롭다운과 페이지 내 소탭은 **`SUBNAV` 맵 하나**(언어별 2벌)로 정의. 소탭 추가 시 `SUBNAV`와 해당 `render*`의 탭 배열 **둘 다** 같은 `key`로 맞출 것.
+- 구 URL 호환: `achievements.html(#patents|#awards)` → `patents.html`/`awards.html` 스텁 리다이렉트, `publications.html#conferences` → `conferences.html`(renderPublications 안에서 처리).
 
 ---
 
@@ -81,7 +84,7 @@
 - `renderHome` — 통계/모집 배너(**deadline 지나면 자동 숨김** `recruitOpen`)/최신소식/소개(+`about_photo`)/연구/강의(문자열·`{name,link}` 겸용)/**오시는 길(`buildLocation`)**.
 - `renderNews` — 간략 카드 + 상세 모달. **모집 카테고리는 News 미노출**(홈 배너 + 지원 탭 전용).
 - `renderPeople` — 지도교수(`links` 연구자 프로필 버튼, media `date`+`source`)/구성원(관심분야 태그, group×level 미매칭도 '기타'로 표시)/졸업생/지원(**`apply.json` 데이터 + 현재 모집 공고 본문 + FAQ**).
-- `renderResearch` / `renderPublications` / `renderAchievements`.
+- `renderResearch` / `renderPublications`(Papers) / `renderConferences` / `renderPatents` / `renderAwards` — 뒤 4개는 소탭 없이 `filterBlock` 하나를 바로 렌더.
 
 **순수 빌더** — `buildResearchTopics`, `buildLocation`, `buildProfessor`, `buildMembers`, `buildApply(prof, apply, recruit)`, `buildProjects`, `buildPublications`, `buildConferences`(EN은 `한글 / English` 제목의 영문부만), `buildPatents`(EN은 `name_en` 우선 + scope/type 영문 매핑), `buildAwards`(EN은 `title_en` 폴백).
 
@@ -121,7 +124,7 @@
 - 디자인 토큰 `:root` — 네이비 `--navy` + 틸 액센트. **`--teal-dark`(#0B7568)는 흰 배경 텍스트용으로 WCAG AA(5.6:1)를 맞춘 값** — 밝게 되돌리지 말 것.
 - 주요 컴포넌트: `.site-header/.nav/.nav__sub/.nav__subtoggle`(모바일 아코디언), `.subnav`, `.fbar/.fchip/.fyear/.fsearch`(필터+검색), `.hero`, `.card/.grid`, `.people-grid/.person`, `.prof-*/.prof-links`, `.ref-list`, `table.data`, `.news-card/.news-modal`, `.recruit/.recruit-bar`, `.apply-cta/.collapse--faq`, `.loc-box/.btn--map`, `.about-photo`, `.tags--sm`.
 - 썸네일·인물 사진은 `<img loading="lazy">`로 렌더(placeholder만 div/span). `@media print` 블록 있음.
-- 반응형 분기: `max-width: 860px`(모바일 nav), `560px`(카드 세로 쌓기).
+- 반응형 분기: `max-width: 1080px`(모바일 nav — 메인탭 8개가 그 아래에선 넘침), `1081~1280px`(nav 링크 슬림 + 브랜드 부제 숨김), `560px`(카드 세로 쌓기).
 
 ---
 
@@ -134,7 +137,7 @@
   # KO: http://localhost:8000/   EN: http://localhost:8000/en/
   ```
 - **배포**: `main` 병합 → `git push origin main` → **GitHub Actions 워크플로**(`.github/workflows/pages.yml`)가 사이트 파일을 그대로 업로드해 Pages에 게시(약 1~2분). 저장소 Settings ▸ Pages ▸ Source = "GitHub Actions". (레거시 Jekyll 빌더의 간헐적 "Page build failed"를 피하기 위해 2026-07-03 이 방식으로 전환.) CMS(/admin) 저장도 main 커밋 → 같은 워크플로로 배포된다.
-- **캐시 무효화(중요)**: 루트 6개 + en/ 6개 + 404.html이 `app.js`/`styles.css`를 `?v=YYYYMMDD` 쿼리로 참조.
+- **캐시 무효화(중요)**: 루트 8개 + en/ 8개 + 404.html이 `app.js`/`styles.css`를 `?v=YYYYMMDD` 쿼리로 참조.
   **`app.js` 또는 `styles.css`를 수정하면 배포 전에 반드시 실행**:
   ```powershell
   powershell -ExecutionPolicy Bypass -File scripts/bump-version.ps1

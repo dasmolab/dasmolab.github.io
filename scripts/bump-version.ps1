@@ -2,7 +2,7 @@
 #  bump-version.ps1 — 캐시 버스팅 버전(?v=...) 일괄 갱신
 #
 #  app.js 또는 styles.css를 수정했다면 배포 전에 반드시 실행하세요.
-#  루트 6개 + en/ 6개 + 404.html의 ?v= 값을 오늘 날짜(yyyyMMdd + 'a')로 바꿉니다.
+#  루트 8개 + en/ 8개 + 404.html의 ?v= 값을 오늘 날짜(yyyyMMdd + 'a')로 바꿉니다.
 #  같은 날 두 번째 배포라면 -Suffix b 처럼 접미사를 바꿔 주세요.
 #
 #  사용:  powershell -ExecutionPolicy Bypass -File scripts/bump-version.ps1

@@ -27,9 +27,19 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://dasmolab.github.io/en/publications.html"/>
   </url>
   <url>
-    <loc>https://dasmolab.github.io/achievements.html</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolab.github.io/achievements.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolab.github.io/en/achievements.html"/>
+    <loc>https://dasmolab.github.io/conferences.html</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolab.github.io/conferences.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolab.github.io/en/conferences.html"/>
+  </url>
+  <url>
+    <loc>https://dasmolab.github.io/patents.html</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolab.github.io/patents.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolab.github.io/en/patents.html"/>
+  </url>
+  <url>
+    <loc>https://dasmolab.github.io/awards.html</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolab.github.io/awards.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolab.github.io/en/awards.html"/>
   </url>
   <url>
     <loc>https://dasmolab.github.io/en/</loc>
@@ -57,8 +67,18 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://dasmolab.github.io/en/publications.html"/>
   </url>
   <url>
-    <loc>https://dasmolab.github.io/en/achievements.html</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolab.github.io/achievements.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolab.github.io/en/achievements.html"/>
+    <loc>https://dasmolab.github.io/en/conferences.html</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolab.github.io/conferences.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolab.github.io/en/conferences.html"/>
+  </url>
+  <url>
+    <loc>https://dasmolab.github.io/en/patents.html</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolab.github.io/patents.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolab.github.io/en/patents.html"/>
+  </url>
+  <url>
+    <loc>https://dasmolab.github.io/en/awards.html</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolab.github.io/awards.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolab.github.io/en/awards.html"/>
   </url>
 </urlset>

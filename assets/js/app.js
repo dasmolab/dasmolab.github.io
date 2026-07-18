@@ -9,12 +9,14 @@
    without a translation file (publications / conferences / patents /
    awards) automatically fall back to the Korean data.
 
-   Pages are consolidated into 6 tabs for visitors, but the underlying data
-   files (and the CMS editing menus) stay separate:
+   The site shows 8 main tabs; each academic-record tab has its own page
+   and data file:
      People       = professor.json + members.json (+ apply.json, news 모집)
      Research     = site.research_topics + projects.json
-     Publications = publications.json + conferences.json
-     Achievements = patents.json + awards.json
+     Papers       = publications.json   (publications.html)
+     Conferences  = conferences.json
+     Patents      = patents.json
+     Awards       = awards.json
    ========================================================================== */
 (function () {
   "use strict";
@@ -76,7 +78,6 @@
     headProfessor: ["Professor", "Professor"], headCurrent: ["Current", "Current Members"],
     headAlumni: ["Alumni", "Alumni"], headApply: ["Join Us", "Join Us"],
     tabAreas: "Research Areas", tabProjects: "Projects",
-    tabPapers: "Papers", tabConfs: "Conferences", tabPatents: "Patents", tabAwards: "Awards",
     newsLoadFail: "Could not load news.", newsNone: "No news yet.", newsMore: "Read more →",
     newsAria: (t) => "Read more: " + t, newsClose: "Close", newsLink: "Related link →", newsModal: "News",
     locAddress: "Address", locOffice: "Office", locTransit: "Public transit",
@@ -132,7 +133,6 @@
     headProfessor: ["Professor", "지도교수"], headCurrent: ["Current", "현재 구성원"],
     headAlumni: ["Alumni", "졸업생"], headApply: ["Join Us", "지원 안내"],
     tabAreas: "연구 분야", tabProjects: "연구 과제",
-    tabPapers: "논문", tabConfs: "학술대회", tabPatents: "특허", tabAwards: "수상",
     newsLoadFail: "소식을 불러오지 못했습니다.", newsNone: "아직 등록된 소식이 없습니다.", newsMore: "자세히 보기 →",
     newsAria: (t) => t + " 자세히 보기", newsClose: "닫기", newsLink: "관련 링크 →", newsModal: "소식",
     locAddress: "주소", locOffice: "연구실", locTransit: "대중교통",
@@ -145,15 +145,18 @@
     { href: "news.html",         label: "News" },
     { href: "people.html",       label: "People" },
     { href: "research.html",     label: "Research" },
-    { href: "publications.html", label: "Publications" },
-    { href: "achievements.html", label: "Achievements" },
+    { href: "publications.html", label: "Papers" },
+    { href: "conferences.html",  label: "Conferences" },
+    { href: "patents.html",      label: "Patents" },
+    { href: "awards.html",       label: "Awards" },
   ];
 
   // Sub-tabs shown in each main tab's hover dropdown. Each page uses the same
   // `key` to activate the matching sub-tab / section from the URL hash.
-  //   tabbed pages (People/Research/Publications/Achievements): key = sub-tab id
-  //   scroll page  (Home):                             key = on-page element id
-  //   News:                                            key = category ("all" = 전체)
+  // Tabs without an entry (Papers/Conferences/Patents/Awards) have no dropdown.
+  //   tabbed pages (People/Research): key = sub-tab id
+  //   scroll page  (Home):            key = on-page element id
+  //   News:                           key = category ("all" = 전체)
   const SUBNAV = EN ? {
     "index.html": [
       { label: "About the Lab", key: "about" },
@@ -177,14 +180,6 @@
       { label: "Research Areas", key: "areas" },
       { label: "Projects",       key: "projects" },
     ],
-    "publications.html": [
-      { label: "Papers",      key: "papers" },
-      { label: "Conferences", key: "conferences" },
-    ],
-    "achievements.html": [
-      { label: "Patents", key: "patents" },
-      { label: "Awards",  key: "awards" },
-    ],
   } : {
     "index.html": [
       { label: "연구실 소개", key: "about" },
@@ -207,14 +202,6 @@
     "research.html": [
       { label: "연구 분야", key: "areas" },
       { label: "연구 과제", key: "projects" },
-    ],
-    "publications.html": [
-      { label: "논문",     key: "papers" },
-      { label: "학술대회", key: "conferences" },
-    ],
-    "achievements.html": [
-      { label: "특허", key: "patents" },
-      { label: "수상", key: "awards" },
     ],
   };
 
@@ -893,7 +880,7 @@
     </div>`).join("");
   }
 
-  // Publications grouped by category (Publications page → 논문 tab)
+  // Publications grouped by category (Papers page)
   function buildPublications(items) {
     const order = ["International", "Domestic", "Other", "Books"];
     const html = order.filter(g => items.some(i => i.category === g)).map(g => {
@@ -910,7 +897,7 @@
     return html || '<div class="state">' + esc(T.pubNone) + "</div>";
   }
 
-  // Conferences grouped by category (Publications page → 학술대회 tab).
+  // Conferences grouped by category (Conferences page).
   // Domestic titles are stored "한글 / English"; the EN site shows the
   // English half only.
   function buildConferences(items) {
@@ -933,7 +920,7 @@
     return html || '<div class="state">' + esc(T.confNone) + "</div>";
   }
 
-  // Patents tables (Achievements page → 특허 tab). Names/inventors are legal
+  // Patents tables (Patents page). Names/inventors are legal
   // records; on the EN site a translated name_en is preferred when present
   // and the controlled scope/type vocabulary is mapped to English.
   function buildPatents(patents) {
@@ -962,7 +949,7 @@
     return html || '<div class="state">' + esc(T.patNone) + "</div>";
   }
 
-  // Awards list (Achievements page → 수상 tab)
+  // Awards list (Awards page)
   function buildAwards(awards) {
     const lis = awards.map(a => {
       const main = EN ? (a.title_en || a.title_ko || a.title || "") : (a.title_ko || a.title || "");
@@ -979,7 +966,7 @@
     return lis || '<div class="state">' + esc(T.awdNone) + "</div>";
   }
 
-  // Generic sub-tab nav (People / Research / Publications / Achievements).
+  // Generic sub-tab nav (People / Research).
   function mountSubnav(nav, root, tabs, defaultKey) {
     if (!root || !tabs.length) return;
     const find = (k) => tabs.find(t => t.key === k);
@@ -1085,67 +1072,84 @@
   }
 
   /* ====================================================================
-     PUBLICATIONS  (= journals/books + conferences, by type tab)
+     PAPERS  (publications.html — journal papers & books)
      ==================================================================== */
   async function renderPublications() {
+    // legacy deep link from the merged era: publications.html#conferences
+    // → conferences now live on their own page
+    if (hashKey() === "conferences") { location.replace("conferences.html"); return; }
     const site = await fetchData("site"); mountChrome(site);
-    const [pub, conf] = await Promise.all([fetchData("publications"), fetchData("conferences")]);
-    const root = $("#pub-root"); const nav = $("#pub-subnav");
+    const pub = await fetchData("publications");
+    const root = $("#pub-root");
     if (!root) return;
     const pubs = (pub && Array.isArray(pub.publications))
       ? sortByDateDesc(pub.publications, i => pubYear(i.citation)) : [];
-    const confs = (conf && Array.isArray(conf.conferences))
-      ? sortByDateDesc(conf.conferences, i => i.date) : [];
-    mountSubnav(nav, root, [
-      { key: "papers", label: `${T.tabPapers} (${pubs.length})`,
-        view: () => filterBlock({
-          items: pubs,
-          cats: presentCats(pubs, ["International", "Domestic", "Other", "Books"], T.pubChips),
-          getCat: i => i.category, getYear: i => pubYear(i.citation),
-          getText: i => (i.citation || "") + " " + (i.venue || ""),
-          render: buildPublications,
-        }) },
-      { key: "conferences", label: `${T.tabConfs} (${confs.length})`,
-        view: () => filterBlock({
-          items: confs,
-          cats: presentCats(confs, ["International", "Domestic"], T.confLabels),
-          getCat: i => i.category, getYear: i => yearIn(i.date),
-          getText: i => (i.title || "") + " " + (i.conference || ""),
-          render: buildConferences,
-        }) },
-    ], "papers");
+    root.innerHTML = filterBlock({
+      items: pubs,
+      cats: presentCats(pubs, ["International", "Domestic", "Other", "Books"], T.pubChips),
+      getCat: i => i.category, getYear: i => pubYear(i.citation),
+      getText: i => (i.citation || "") + " " + (i.venue || ""),
+      render: buildPublications,
+    });
     wireFilters(root);
   }
 
   /* ====================================================================
-     ACHIEVEMENTS  (= patents + awards, by type tab)
+     CONFERENCES  (conferences.html)
      ==================================================================== */
-  async function renderAchievements() {
+  async function renderConferences() {
     const site = await fetchData("site"); mountChrome(site);
-    const [pat, awd] = await Promise.all([fetchData("patents"), fetchData("awards")]);
-    const root = $("#ach-root"); const nav = $("#ach-subnav");
+    const conf = await fetchData("conferences");
+    const root = $("#conf-root");
+    if (!root) return;
+    const confs = (conf && Array.isArray(conf.conferences))
+      ? sortByDateDesc(conf.conferences, i => i.date) : [];
+    root.innerHTML = filterBlock({
+      items: confs,
+      cats: presentCats(confs, ["International", "Domestic"], T.confLabels),
+      getCat: i => i.category, getYear: i => yearIn(i.date),
+      getText: i => (i.title || "") + " " + (i.conference || ""),
+      render: buildConferences,
+    });
+    wireFilters(root);
+  }
+
+  /* ====================================================================
+     PATENTS  (patents.html)
+     ==================================================================== */
+  async function renderPatents() {
+    const site = await fetchData("site"); mountChrome(site);
+    const pat = await fetchData("patents");
+    const root = $("#pat-root");
     if (!root) return;
     const patents = (pat && Array.isArray(pat.patents))
       ? sortByDateDesc(pat.patents, i => i.date) : [];
+    root.innerHTML = filterBlock({
+      items: patents,
+      cats: presentCats(patents, ["Application", "Registration", "Software"], T.patChips),
+      getCat: i => i.category, getYear: i => yearIn(i.date),
+      getText: i => [i.name, i.name_en, i.number, i.inventors].filter(Boolean).join(" "),
+      render: buildPatents,
+    });
+    wireFilters(root);
+  }
+
+  /* ====================================================================
+     AWARDS  (awards.html)
+     ==================================================================== */
+  async function renderAwards() {
+    const site = await fetchData("site"); mountChrome(site);
+    const awd = await fetchData("awards");
+    const root = $("#awd-root");
+    if (!root) return;
     const awards = (awd && Array.isArray(awd.awards))
       ? sortByDateDesc(awd.awards, i => i.date) : [];
-    mountSubnav(nav, root, [
-      { key: "patents", label: `${T.tabPatents} (${patents.length})`,
-        view: () => filterBlock({
-          items: patents,
-          cats: presentCats(patents, ["Application", "Registration", "Software"], T.patChips),
-          getCat: i => i.category, getYear: i => yearIn(i.date),
-          getText: i => [i.name, i.name_en, i.number, i.inventors].filter(Boolean).join(" "),
-          render: buildPatents,
-        }) },
-      { key: "awards", label: `${T.tabAwards} (${awards.length})`,
-        view: () => filterBlock({
-          items: awards, cats: null,
-          getCat: () => "", getYear: i => yearIn(i.date),
-          getText: i => [i.title_ko, i.title_en, i.venue].filter(Boolean).join(" "),
-          render: buildAwards,
-        }) },
-    ], "patents");
+    root.innerHTML = filterBlock({
+      items: awards, cats: null,
+      getCat: () => "", getYear: i => yearIn(i.date),
+      getText: i => [i.title_ko, i.title_en, i.venue].filter(Boolean).join(" "),
+      render: buildAwards,
+    });
     wireFilters(root);
   }
 
@@ -1312,7 +1316,8 @@
   const PAGES = {
     home: renderHome, news: renderNews,
     people: renderPeople, research: renderResearch,
-    publications: renderPublications, achievements: renderAchievements,
+    publications: renderPublications, conferences: renderConferences,
+    patents: renderPatents, awards: renderAwards,
   };
 
   document.addEventListener("DOMContentLoaded", function () {
