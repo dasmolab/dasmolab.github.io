@@ -31,7 +31,7 @@
   --radius-sm: 9px;
   --shadow: 0 6px 24px rgba(11, 31, 58, .08);
   --shadow-lg: 0 14px 40px rgba(11, 31, 58, .14);
-  --header-h: 68px;
+  --header-h: 110px; /* two-deck desktop header; the ≤1080px block drops it back to 68px */
 }
 
 /* ----- Reset ----- */
@@ -82,16 +82,25 @@ ul { margin: 0; padding: 0; }
 }
 .nav {
   display: flex; align-items: center; justify-content: space-between;
-  height: var(--header-h);
+  flex-wrap: wrap; row-gap: .1rem; padding: .6rem 0 .45rem;
 }
-.brand { display: flex; align-items: center; gap: .65rem; font-weight: 800; color: var(--ink); }
+/* Two-deck header: the enlarged brand (abbr + full lab name side by side)
+   takes the whole first row; the 8 nav tabs get the second row — at this
+   size they can no longer share one 1140px row. Desktop --header-h is
+   raised accordingly (see the media override below). */
+.brand {
+  flex: 0 0 100%; display: flex; align-items: baseline; gap: .75rem;
+  font-weight: 800; color: var(--ink); white-space: nowrap;
+}
 .brand:hover { text-decoration: none; }
-.brand img { height: 34px; width: auto; }
-.brand__txt { display: flex; flex-direction: column; line-height: 1.1; }
-.brand__txt b { font-size: 1.02rem; letter-spacing: -.01em; }
-.brand__txt span { font-size: .68rem; color: var(--text-soft); font-weight: 600; letter-spacing: .04em; }
+.brand b { font-size: 2.1rem; line-height: 1.15; letter-spacing: -.02em; }
+.brand span { font-size: 1.38rem; color: var(--text-soft); font-weight: 600; letter-spacing: .01em; }
 
-.nav__links { display: flex; align-items: center; gap: .25rem; list-style: none; }
+.nav__links {
+  display: flex; align-items: center; gap: .25rem; list-style: none;
+  /* bleed by one link-padding so the tab text lines up with the brand text */
+  flex: 0 0 auto; width: calc(100% + 1.6rem); margin: 0 -.8rem;
+}
 .nav__links a {
   display: block; padding: .5rem .8rem; border-radius: 8px;
   color: var(--text); font-weight: 600; font-size: .95rem;
@@ -140,8 +149,15 @@ ul { margin: 0; padding: 0; }
 .nav__toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 @media (max-width: 1080px) {
+  :root { --header-h: 68px; }
   .nav__toggle { display: block; }
+  /* single compact row again: stacked brand + hamburger (links live in the drawer) */
+  .nav { flex-wrap: nowrap; height: var(--header-h); padding: 0; }
+  .brand { flex: 0 1 auto; flex-direction: column; align-items: flex-start; gap: .05rem; white-space: normal; }
+  .brand b { font-size: 1.5rem; line-height: 1.1; }
+  .brand span { font-size: .8rem; letter-spacing: .02em; line-height: 1.25; }
   .nav__links {
+    width: auto; margin: 0;
     position: fixed; inset: var(--header-h) 0 auto 0;
     flex-direction: column; align-items: stretch; gap: 0;
     background: #fff; border-bottom: 1px solid var(--line);
@@ -179,8 +195,8 @@ ul { margin: 0; padding: 0; }
   }
 }
 
-/* Language switch (KO ⇄ EN) — last item in the nav */
-.nav__lang { display: flex; align-items: center; }
+/* Language switch (KO ⇄ EN) — last item in the nav, pushed to the far right */
+.nav__lang { display: flex; align-items: center; margin-left: auto; }
 .nav__links a.lang-switch {
   display: inline-flex; align-items: center; gap: .3rem;
   margin-left: .5rem; padding: .34rem .72rem;
@@ -194,17 +210,8 @@ ul { margin: 0; padding: 0; }
 }
 .nav__links a.lang-switch.active::after { display: none; }
 @media (max-width: 1080px) {
-  .nav__lang { padding: .7rem .6rem; border-bottom: 1px solid var(--line); }
+  .nav__lang { margin-left: 0; padding: .7rem .6rem; border-bottom: 1px solid var(--line); }
   .nav__links a.lang-switch { margin-left: 0; width: max-content; }
-}
-
-/* 8 main tabs need more room than 6 did: just above the mobile breakpoint,
-   slim the top-level links and drop the brand subtitle so the full nav still
-   fits (the longer EN brand subtitle is the constraint). `.nav__item > a`
-   keeps dropdown sub-links and the language pill at their normal size. */
-@media (min-width: 1081px) and (max-width: 1280px) {
-  .nav__item > a { padding: .5rem .55rem; font-size: .91rem; }
-  .brand__txt span { display: none; }
 }
 
 /* ==========================================================================

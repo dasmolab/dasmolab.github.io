@@ -96,7 +96,7 @@
 
 ## 5. 데이터 스키마 (`data/*.json` — 영문판은 `data/en/` 동일 구조)
 
-- **`site.json`** — `lab_abbr`, `lab_name_ko/en`, `tagline_en`, `intro1/2`, `about_photo`(선택), `research_topics[]`{icon,title,desc,tags[]}, `classes_undergrad/grad[]`(**`{name, link?}` 객체** — 문자열도 하위호환), `address`, `phone`, `email`, `office`, `transit_info`, `map_kakao/naver/google`, `logo`.
+- **`site.json`** — `lab_abbr`, `lab_name_ko/en`, `tagline_en`, `intro1/2`, `about_photo`(선택), `research_topics[]`{icon,title,desc,tags[]}, `classes_undergrad/grad[]`(**`{name, link?}` 객체** — 문자열도 하위호환), `address`, `phone`, `email`, `office`, `transit_info`, `map_kakao/naver/google`.
 - **`apply.json`** — `intro`, `items[]`{label,hint}, `faq[]`{q,a} — People→지원 탭 내용(CMS 편집 가능).
 - **`professor.json`** — 기본 정보 + `links[]`{label,url}(Google Scholar 등) + `education[]`, `careers[]`, `societies[]`, `media[]`{**date, source**, title, url}, `committees[]`.
 - **`members.json`** — `members[]`{name_ko, name_en, group("current"|"alumni"), level("PhD"|"Master"|"Undergraduate"|"Bachelor"), photo, email(재학생만 표시·졸업생은 저장도 하지 않음), affiliation, period, grad_year, degree, thesis, `interests[]`}.
@@ -124,7 +124,7 @@
 - 디자인 토큰 `:root` — 네이비 `--navy` + 틸 액센트. **`--teal-dark`(#0B7568)는 흰 배경 텍스트용으로 WCAG AA(5.6:1)를 맞춘 값** — 밝게 되돌리지 말 것.
 - 주요 컴포넌트: `.site-header/.nav/.nav__sub/.nav__subtoggle`(모바일 아코디언), `.subnav`, `.fbar/.fchip/.fyear/.fsearch`(필터+검색), `.hero`, `.card/.grid`, `.people-grid/.person`, `.prof-*/.prof-links`, `.ref-list`, `table.data`, `.news-card/.news-modal`, `.recruit/.recruit-bar`, `.apply-cta/.collapse--faq`, `.loc-box/.btn--map`, `.about-photo`, `.tags--sm`.
 - 썸네일·인물 사진은 `<img loading="lazy">`로 렌더(placeholder만 div/span). `@media print` 블록 있음.
-- 반응형 분기: `max-width: 1080px`(모바일 nav — 메인탭 8개가 그 아래에선 넘침), `1081~1280px`(nav 링크 슬림 + 브랜드 부제 숨김), `560px`(카드 세로 쌓기).
+- 반응형 분기: 기본(데스크톱 1081px~)은 **2단 헤더**(1행 대형 브랜드 텍스트 좌우 병기, 2행 메인탭 — `--header-h: 110px`), `max-width: 1080px`(모바일 nav — 68px 단일 행·브랜드 세로 스택·햄버거, `--header-h`도 68px로 복귀), `560px`(카드 세로 쌓기). `scrollToHash()`는 `--header-h` 대신 헤더 실제 높이(offsetHeight)를 측정한다.
 
 ---
 

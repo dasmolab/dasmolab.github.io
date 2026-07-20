@@ -103,9 +103,7 @@
   "address": "Room 1404, Engineering Building 1, Seunghak Campus, Dong-A University, Hadan-dong, Saha-gu, Busan",
   "phone": "051-200-7665",
   "email": "hoekim@dau.ac.kr",
-  "office": "Room 1404 (S03-0404), Engineering Building 1, Seunghak Campus, Dong-A University",
-  "logo": "assets/img/logo_231027.jpg",
-  "transit_info": "Take Busan Metro Line 1 to Hadan Station, then the Dong-A University shuttle bus or a local bus to Seunghak Campus.",
+  "office": "Room 1404 (S03-0404), Engineering Building 1, Seunghak Campus, Dong-A University",  "transit_info": "Take Busan Metro Line 1 to Hadan Station, then the Dong-A University shuttle bus or a local bus to Seunghak Campus.",
   "map_kakao": "https://map.kakao.com/link/search/동아대학교%20승학캠퍼스",
   "map_naver": "https://map.naver.com/p/search/동아대학교%20승학캠퍼스",
   "map_google": "https://www.google.com/maps/search/?api=1&query=Dong-A%20University%20Seunghak%20Campus"

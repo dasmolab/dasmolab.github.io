@@ -52,7 +52,7 @@ collections:
         label: 기본 정보 · 소개 · 연구분야
         file: data/site.json
         fields:
-          - { name: lab_abbr,    label: 약칭(로고 옆 표시), widget: string, default: DASMOLabs }
+          - { name: lab_abbr,    label: 약칭(헤더 대형 표기), widget: string, default: DASMOLabs }
           - { name: lab_name_ko, label: 연구실명(국문), widget: string }
           - { name: lab_name_en, label: 연구실명(영문), widget: string }
           - { name: tagline_en,  label: 태그라인(영문), widget: string, required: false }
@@ -101,7 +101,6 @@ collections:
           - { name: map_kakao,  label: 카카오맵 링크(선택), widget: string, required: false, hint: "카카오맵에서 위치 검색 후 '공유 > URL 복사'한 주소" }
           - { name: map_naver,  label: 네이버지도 링크(선택), widget: string, required: false }
           - { name: map_google, label: 구글지도 링크(선택), widget: string, required: false }
-          - { name: logo, label: 로고 이미지(선택), widget: image, required: false }
 
       - name: apply
         label: 지원 안내 (People → 지원 탭)
@@ -511,7 +510,6 @@ collections:
           - { name: map_kakao,  label: 카카오맵 링크(선택), widget: string, required: false }
           - { name: map_naver,  label: 네이버지도 링크(선택), widget: string, required: false }
           - { name: map_google, label: 구글지도 링크(선택), widget: string, required: false }
-          - { name: logo, label: 로고 이미지(선택), widget: image, required: false }
 
       - name: apply_en
         label: "[영문] 지원 안내"

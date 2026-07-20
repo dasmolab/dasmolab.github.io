@@ -328,14 +328,12 @@
       ` hreflang="${T.langHref}" lang="${T.langHref}" aria-label="${esc(T.langAria)}">${esc(T.langLabel)}</a></li>`;
     const abbr = (site && site.lab_abbr) || "DASMOLabs";
     const name = (site && (EN ? site.lab_name_en : site.lab_name_ko)) || T.labNameFallback;
-    const logo = (site && site.logo) ? imgSrc(site.logo) : BASE + "assets/img/logo_231027.jpg";
     return `
       <a class="skip-link" href="#main">${esc(T.skip)}</a>
       <header class="site-header">
         <nav class="nav wrap" aria-label="${esc(T.navLabel)}">
           <a class="brand" href="index.html">
-            <img src="${cssUrl(logo)}" alt="${esc(abbr)} logo" onerror="this.style.display='none'">
-            <span class="brand__txt"><b>${esc(abbr)}</b><span>${esc(name)}</span></span>
+            <b>${esc(abbr)}</b><span>${esc(name)}</span>
           </a>
           <button class="nav__toggle" aria-label="${esc(T.menuOpen)}" aria-expanded="false" aria-controls="navmenu">
             <span></span><span></span><span></span>
@@ -1003,7 +1001,10 @@
     if (!id) return;
     const el = document.getElementById(id);
     if (!el) return;
-    const offset = (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--header-h"), 10) || 68) + 12;
+    // measure the real header: its height is content-driven on desktop, so
+    // the --header-h token can drift from reality under text-only zoom
+    const header = document.querySelector(".site-header");
+    const offset = ((header && header.offsetHeight) || 68) + 12;
     const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
     window.scrollTo({ top: y, behavior: "smooth" });
   }
