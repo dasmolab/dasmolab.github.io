@@ -3,10 +3,10 @@
 동아대학교 도시공학과 교통공학연구실 홈페이지입니다.
 빌드 과정 없는 정적 사이트(HTML/CSS/JS) + GitHub Pages(무료 호스팅) + Sveltia CMS(로그인 편집)로 구성됩니다.
 
-- **사이트**: https://dasmolab.github.io/  (무료 GitHub 조직 계정으로 호스팅 — 닉네임 없는 브랜드 주소)
-- **편집(관리자)**: https://dasmolab.github.io/admin/ — 승인된(저장소 쓰기권한) 사용자만 로그인 후 편집
+- **사이트**: https://dasmolabs.github.io/  (무료 GitHub 조직 계정으로 호스팅 — 닉네임 없는 브랜드 주소)
+- **편집(관리자)**: https://dasmolabs.github.io/admin/ — 승인된(저장소 쓰기권한) 사용자만 로그인 후 편집
 
-> 조직 이름을 `dasmolab`이 아닌 다른 이름으로 만들면 위 주소와 `admin/config.yml`의 `repo:`를 그 이름으로 맞추세요.
+> 조직 이름을 `dasmolabs`이 아닌 다른 이름으로 만들면 위 주소와 `admin/config.yml`의 `repo:`를 그 이름으로 맞추세요.
 
 ## 처음 배포하거나 운영하는 분께
 

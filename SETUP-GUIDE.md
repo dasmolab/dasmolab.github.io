@@ -21,12 +21,12 @@
 
 | 항목 | 값 |
 |---|---|
-| GitHub 조직 이름 | **dasmolab** (이미 사용 중이면 `dasmolabs`, `dau-dasmolab` 등으로) |
-| 저장소(repository) 이름 | **`dasmolab.github.io`** ← 조직이름과 똑같이 `.github.io`를 붙인 이름이어야 루트 주소가 됩니다 |
-| 최종 사이트 주소 | **`https://dasmolab.github.io/`** (닉네임 없음 ✅) |
-| 편집(관리자) 주소 | **`https://dasmolab.github.io/admin/`** |
+| GitHub 조직 이름 | **dasmolabs** (이미 사용 중이면 `dau-dasmolabs` 등 다른 이름으로) |
+| 저장소(repository) 이름 | **`dasmolabs.github.io`** ← 조직이름과 똑같이 `.github.io`를 붙인 이름이어야 루트 주소가 됩니다 |
+| 최종 사이트 주소 | **`https://dasmolabs.github.io/`** (닉네임 없음 ✅) |
+| 편집(관리자) 주소 | **`https://dasmolabs.github.io/admin/`** |
 
-> 조직 이름을 `dasmolab`이 아닌 다른 이름으로 만들었다면, 이 문서의 모든 `dasmolab` 을 그 이름으로 바꿔 읽으세요.
+> 조직 이름을 `dasmolabs`이 아닌 다른 이름으로 만들었다면, 이 문서의 모든 `dasmolabs` 을 그 이름으로 바꿔 읽으세요.
 > 그리고 `admin/config.yml` 파일의 `repo:` 줄도 `조직이름/조직이름.github.io` 로 맞춰주세요.
 > 담당 직원에게는 마지막에 **최종 사이트 주소** 하나만 전달하면 됩니다.
 
@@ -37,19 +37,19 @@
 ### 1-0. GitHub 무료 조직(Organization) 만들기
 1. https://github.com 에 로그인(기존 jihyo1541 계정 사용).
 2. 오른쪽 위 `+` ▸ **New organization** ▸ **Free**(무료) 플랜 선택.
-3. **Organization name**: `dasmolab` 입력(이미 있으면 `dasmolabs` 등 가능한 이름으로). 이메일 입력 후 생성.
+3. **Organization name**: `dasmolabs` 입력(이미 있으면 `dau-dasmolabs` 등 가능한 이름으로). 이메일 입력 후 생성.
    - (멤버 초대 단계는 건너뛰어도 됩니다. 나중에 추가 가능.)
 
 ### 1-1. 저장소(repository) 만들기
-1. 방금 만든 **dasmolab 조직** 화면에서 **New repository** 클릭(또는 `+` ▸ New repository ▸ Owner를 dasmolab으로).
-2. **Repository name**: `dasmolab.github.io` 입력 (★ 조직이름과 동일 + `.github.io`).
+1. 방금 만든 **dasmolabs 조직** 화면에서 **New repository** 클릭(또는 `+` ▸ New repository ▸ Owner를 dasmolabs으로).
+2. **Repository name**: `dasmolabs.github.io` 입력 (★ 조직이름과 동일 + `.github.io`).
 3. 공개 범위: **Public** 선택. (무료 GitHub Pages는 저장소가 Public이어야 합니다. ⚠️ 비밀번호·개인정보 등 민감정보는 올리지 마세요.)
 4. **Create repository** 클릭.
 
 ### 1-2. 홈페이지 파일 업로드
 > 💡 방금 만든 저장소가 **비어 있으면** GitHub가 "Quick setup" 안내 화면(회색 명령어 박스)을 보여주며, 이때는 `Add file` 버튼이 없습니다.
 > 그 화면 아래의 문장 *"…uploading an existing file(기존 파일 업로드)"* 의 **파란색 링크를 클릭**하면 업로드 화면으로 갑니다.
-> (바로가기: `https://github.com/dasmolab/dasmolab.github.io/upload/main` — 조직명은 본인 것으로)
+> (바로가기: `https://github.com/dasmolabs/dasmolabs.github.io/upload/main` — 조직명은 본인 것으로)
 > 첫 업로드 이후부터는 일반 화면에서 초록색 `Code` 버튼 옆의 **`Add file ▾`** 버튼이 나타납니다.
 
 1. 저장소 화면에서 **Add file ▸ Upload files** 클릭. (빈 저장소면 위 안내처럼 "uploading an existing file" 링크 사용.)
@@ -63,7 +63,7 @@
 - `이름.github.io` 저장소는 보통 **자동으로** Pages가 켜집니다.
 1. 저장소 **Settings ▸ Pages** 로 들어가 확인.
 2. 만약 꺼져 있으면 **Source**: **Deploy from a branch**, **Branch**: `main`, 폴더 **`/ (root)`** → **Save**.
-3. 1~10분 뒤 새로고침하면 **"Your site is live at https://dasmolab.github.io/"** 가 뜹니다.
+3. 1~10분 뒤 새로고침하면 **"Your site is live at https://dasmolabs.github.io/"** 가 뜹니다.
 4. 그 주소로 들어가 홈페이지가 보이는지 확인하세요. (HTTPS 자물쇠 자동 적용)
 
 > 이후 내용을 바꾸면(아래 PART 5 편집 또는 파일 재업로드) **자동으로 다시 게시**됩니다.
@@ -74,7 +74,7 @@
 
 OAuth(팀 로그인) 설정 없이 **GitHub만으로** 바로 편집하는 방법입니다. **혼자 또는 1~2명**이 쓸 때 가장 단순합니다.
 
-1. 브라우저에서 `https://dasmolab.github.io/admin/` 접속.
+1. 브라우저에서 `https://dasmolabs.github.io/admin/` 접속.
 2. **"Sign in with Token"** 버튼 클릭.
 3. 안내 링크에서 GitHub **Personal Access Token** 생성:
    - 권한(scope)은 **repo** 체크(또는 이 저장소만 허용하는 fine-grained 토큰)하고 생성.
@@ -95,11 +95,11 @@ GitHub Pages엔 서버가 없어서, "GitHub으로 로그인"을 처리할 작�
 3. 배포 후 생기는 Worker 주소를 **복사**: 예) `https://sveltia-cms-auth.<본인서브도메인>.workers.dev`
 
 ### 3-2. GitHub OAuth App 등록 (조직 소유로)
-1. **dasmolab 조직** ▸ Settings ▸ Developer settings ▸ **OAuth Apps** ▸ **New OAuth App**.
+1. **dasmolabs 조직** ▸ Settings ▸ Developer settings ▸ **OAuth Apps** ▸ **New OAuth App**.
    (조직 소유로 만들면 담당자가 바뀌어도 유지됩니다.)
 2. 입력값:
    - **Application name**: `DASMOLabs CMS`
-   - **Homepage URL**: `https://dasmolab.github.io/`
+   - **Homepage URL**: `https://dasmolabs.github.io/`
    - **Authorization callback URL**: `https://sveltia-cms-auth.<본인서브도메인>.workers.dev/callback`
      ⚠️ **반드시 끝에 `/callback`** (가장 흔한 실수 1순위)
 3. **Register application** → **Client ID** 복사, **Generate a new client secret** → **Client Secret** 즉시 복사
@@ -110,7 +110,7 @@ GitHub Pages엔 서버가 없어서, "GitHub으로 로그인"을 처리할 작�
 2. 추가:
    - `GITHUB_CLIENT_ID` = (Client ID) — 일반 텍스트
    - `GITHUB_CLIENT_SECRET` = (Client Secret) — **Encrypt(암호화)** 로 저장
-   - `ALLOWED_DOMAINS` = `dasmolab.github.io` — (권장: 도용 방지)
+   - `ALLOWED_DOMAINS` = `dasmolabs.github.io` — (권장: 도용 방지)
 3. 저장(필요 시 redeploy).
 
 ### 3-4. 설정파일에 Worker 주소 연결
@@ -123,7 +123,7 @@ GitHub Pages엔 서버가 없어서, "GitHub으로 로그인"을 처리할 작�
 3. **Commit changes** 저장.
 
 ### 3-5. 로그인 테스트
-1. `https://dasmolab.github.io/admin/` 새로고침 → **"Sign in with GitHub"** → 승인 → 편집 화면. 끝!
+1. `https://dasmolabs.github.io/admin/` 새로고침 → **"Sign in with GitHub"** → 승인 → 편집 화면. 끝!
 
 ---
 
@@ -142,7 +142,7 @@ GitHub Pages엔 서버가 없어서, "GitHub으로 로그인"을 처리할 작�
 
 ## PART 5. 평소 내용 수정하는 법 (가장 자주 쓰는 부분)
 
-1. `https://dasmolab.github.io/admin/` 접속 → 로그인.
+1. `https://dasmolabs.github.io/admin/` 접속 → 로그인.
 2. 왼쪽 메뉴에서 고칠 항목 선택:
    - **⚙️ 사이트 기본정보** — 소개글, 연구분야 카드, 강의, 연락처
    - **👤 교수 소개** — 학력·경력·학회·언론·위원회
@@ -157,11 +157,11 @@ GitHub Pages엔 서버가 없어서, "GitHub으로 로그인"을 처리할 작�
 
 ## PART 6. (선택) 우리 도메인 연결하기 — 유료
 
-기본 주소(`dasmolab.github.io`)로 충분합니다. 굳이 별도 도메인을 원하면:
+기본 주소(`dasmolabs.github.io`)로 충분합니다. 굳이 별도 도메인을 원하면:
 
 1. 도메인 구입(가비아·Cloudflare 등, **도메인 비용만 유료** / GitHub 호스팅은 무료).
 2. 저장소 ▸ Settings ▸ Pages ▸ **Custom domain** 입력 → Save.
-3. 등록업체 DNS: `www`는 **CNAME → dasmolab.github.io** / 루트도메인은 **A 레코드 4개** → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`.
+3. 등록업체 DNS: `www`는 **CNAME → dasmolabs.github.io** / 루트도메인은 **A 레코드 4개** → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`.
 4. DNS 초록 체크 후 **Enforce HTTPS** 체크(인증서 최대 24h).
 5. ⚠️ 도메인 변경 시 PART 3의 **OAuth Homepage URL / ALLOWED_DOMAINS / 편집 주소**도 새 도메인으로 업데이트.
 
@@ -173,9 +173,9 @@ GitHub Pages엔 서버가 없어서, "GitHub으로 로그인"을 처리할 작�
 |---|---|
 | 사이트가 404 | `index.html`이 저장소 최상위에 없음 → 최상위로 옮겨 재업로드. 게시까지 ~10분 대기. |
 | 한글 깨짐 | 거의 없음(UTF-8). 강력 새로고침(Ctrl+F5). |
-| "Sign in with GitHub" 오류 | ① callback이 `…workers.dev/callback`로 정확히 끝나는지 ② config.yml `base_url`은 `/callback` 없이 Worker 루트인지 ③ `ALLOWED_DOMAINS`에 `dasmolab.github.io` 포함됐는지. |
+| "Sign in with GitHub" 오류 | ① callback이 `…workers.dev/callback`로 정확히 끝나는지 ② config.yml `base_url`은 `/callback` 없이 Worker 루트인지 ③ `ALLOWED_DOMAINS`에 `dasmolabs.github.io` 포함됐는지. |
 | 로그인은 되는데 **저장 안 됨** | 그 사람이 저장소 **협업자(Write)** 가 아님 → PART 4. |
-| 편집 메뉴가 안 보임 | `admin/config.yml`의 `repo:`가 `dasmolab/dasmolab.github.io`(본인 조직/저장소)와 일치하는지, `branch: main` 인지 확인. |
+| 편집 메뉴가 안 보임 | `admin/config.yml`의 `repo:`가 `dasmolabs/dasmolabs.github.io`(본인 조직/저장소)와 일치하는지, `branch: main` 인지 확인. |
 | 사진 올렸는데 안 보임 | 저장 후 1~2분 대기, 강력 새로고침. 이미지가 `assets/uploads/`에 커밋됐는지 확인. |
 
 ---
@@ -183,7 +183,7 @@ GitHub Pages엔 서버가 없어서, "GitHub으로 로그인"을 처리할 작�
 ## 폴더 구조 (참고)
 
 ```
-dasmolab.github.io/         (= 업로드하는 내용물의 최상위)
+dasmolabs.github.io/         (= 업로드하는 내용물의 최상위)
 ├─ index.html               # Home
 ├─ professor.html · members.html · projects.html
 ├─ publications.html · conferences.html · patents.html · awards.html

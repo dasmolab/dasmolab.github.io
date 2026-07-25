@@ -9,7 +9,7 @@
 
 ## 0. 30초 요약
 
-- 편집 주소: **https://dasmolab.github.io/admin/**
+- 편집 주소: **https://dasmolabs.github.io/admin/**
 - 로그인: **“Sign in with GitHub”** → 본인 GitHub 계정으로 로그인 → 편집.
 - **저장소에 쓰기(Write) 권한이 있는 사람만** 편집·저장 가능. (= 협업자 등록이 곧 편집 권한)
 - 로그인 처리는 무료 **Cloudflare Worker**가 담당. (토큰을 나눠 쓰는 방식이 아니라, 각자 본인 계정으로 들어옴)
@@ -21,20 +21,25 @@
 
 | 항목 | 값 |
 |---|---|
-| 공개 사이트 | https://dasmolab.github.io/ |
-| 편집(관리자) 주소 | https://dasmolab.github.io/admin/ |
-| GitHub 저장소 | `dasmolab/dasmolab.github.io` (브랜치 `main`) |
+| 공개 사이트 | https://dasmolabs.github.io/ |
+| 편집(관리자) 주소 | https://dasmolabs.github.io/admin/ |
+| GitHub 저장소 | `dasmolabs/dasmolabs.github.io` (브랜치 `main`) |
 | 로그인 도우미(Cloudflare Worker) | `https://sveltia-cms-auth.gihyo123450.workers.dev` |
-| GitHub OAuth App | 이름 `DASMOLabs CMS` (dasmolab 조직 소유) |
+| GitHub OAuth App | 이름 `DASMOLabs CMS` (dasmolabs 조직 소유) |
 | CMS | Sveltia CMS (`admin/index.html` + `admin/config.yml`) |
 
 > ⚠️ **Client Secret**(OAuth 비밀값)은 어디에도 기록하지 않음. Cloudflare Worker의 암호화 변수(`GITHUB_CLIENT_SECRET`)에만 저장됨.
+
+> 📌 **2026-07-25 주소 변경**: 조직명 `dasmolab` → `dasmolabs`, 저장소 `dasmolab.github.io` → `dasmolabs.github.io`.
+> OAuth 앱은 조직 소유라 **Client ID/Secret은 그대로**이며, Worker 변수 `ALLOWED_DOMAINS`에 새·옛 도메인을 함께 넣어 둠.
+> GitHub은 **Pages 사이트 주소는 리다이렉트해 주지 않으므로**, 옛 주소 `dasmolab.github.io`는 같은 이름의 별도 조직에
+> 리다이렉트용 저장소를 두어 새 주소로 넘김(안 해두면 옛 링크·QR은 404).
 
 ---
 
 ## 2. 멤버가 홈페이지를 편집하는 법 (가장 자주 쓰는 부분)
 
-1. **https://dasmolab.github.io/admin/** 접속.
+1. **https://dasmolabs.github.io/admin/** 접속.
 2. **“Sign in with GitHub”** 클릭 → 본인 GitHub 로그인 → **Authorize(승인)**.
 3. 왼쪽 메뉴에서 고칠 항목 선택:
    - ⚙️ 사이트 기본정보(+ 지원 안내) / 📰 소식 / 👤 교수 소개 / 👥 구성원 / 📁 프로젝트 / 📄 논문 / 🎤 학술대회 / 🔖 특허 / 🏆 수상
@@ -77,7 +82,7 @@
 CMS 저장 = 즉시 실제 사이트 반영이므로, 목록을 통째로 지우는 등 큰 실수를 하면 아래 절차로 되돌립니다.
 **비전공자도 GitHub 웹 화면만으로 가능** (설치·명령어 불필요):
 
-1. https://github.com/dasmolab/dasmolab.github.io 접속 → 로그인.
+1. https://github.com/dasmolabs/dasmolabs.github.io 접속 → 로그인.
 2. 잘못 저장된 파일로 이동 — 예: 구성원이면 `data/members.json` 클릭.
 3. 오른쪽 위 **History**(시계 아이콘) 클릭 → 커밋 목록에서 **사고 이전 시점**의 커밋 클릭.
 4. 그 시점의 파일 내용이 보이면 **Raw** 버튼 → 전체 선택(Ctrl+A) → 복사(Ctrl+C).
@@ -96,18 +101,18 @@ CMS 저장 = 즉시 실제 사이트 반영이므로, 목록을 통째로 지우
 
 ### 추가 (관리자가 하는 일)
 1. 추가할 멤버에게 **GitHub 계정**을 만들어 오라고 하고 **GitHub 사용자명**을 받음.
-2. https://github.com/dasmolab/dasmolab.github.io/settings/access 접속
+2. https://github.com/dasmolabs/dasmolabs.github.io/settings/access 접속
    (또는 저장소 ▸ Settings ▸ **Collaborators and teams**).
 3. **Add people** → 멤버 GitHub 사용자명/이메일 입력 → 권한 **Write** → 추가.
 4. 멤버는 **GitHub 초대 메일의 Accept** 클릭 후부터 로그인·편집 가능.
 
 ### 멤버가 첫 로그인
-- https://dasmolab.github.io/admin/ → **Sign in with GitHub** → Authorize → 편집.
+- https://dasmolabs.github.io/admin/ → **Sign in with GitHub** → Authorize → 편집.
 
 ### 권한 회수 (졸업 등)
 - 같은 Collaborators 화면에서 그 사람 옆 **Remove**. 그 사람만 즉시 편집 불가. (나머지는 영향 없음)
 
-> 💡 조직(dasmolab)에 “OAuth App 접근 제한”이 켜져 있으면, 멤버 첫 로그인 시 조직 소유자의 승인이 필요할 수 있음.
+> 💡 조직(dasmolabs)에 “OAuth App 접근 제한”이 켜져 있으면, 멤버 첫 로그인 시 조직 소유자의 승인이 필요할 수 있음.
 > 그 경우 조직 ▸ Settings ▸ Third-party access(또는 OAuth app policy)에서 `DASMOLabs CMS` 앱을 승인.
 
 ---
@@ -115,7 +120,7 @@ CMS 저장 = 즉시 실제 사이트 반영이므로, 목록을 통째로 지우
 ## 4. 이 로그인은 어떻게 동작하나 (구조)
 
 ```
-방문자/멤버 ── https://dasmolab.github.io/admin/ (Sveltia CMS)
+방문자/멤버 ── https://dasmolabs.github.io/admin/ (Sveltia CMS)
                       │  "Sign in with GitHub"
                       ▼
    Cloudflare Worker (sveltia-cms-auth.gihyo123450.workers.dev)  ← 로그인 중계
@@ -141,7 +146,7 @@ Cloudflare ▸ Workers & Pages ▸ `sveltia-cms-auth` ▸ Settings ▸ Variables
 |---|---|---|
 | `GITHUB_CLIENT_ID` | Text | (OAuth App의 Client ID) |
 | `GITHUB_CLIENT_SECRET` | Secret(암호화) | (OAuth App의 Client Secret) — 비공개 |
-| `ALLOWED_DOMAINS` | Text | `dasmolab.github.io` |
+| `ALLOWED_DOMAINS` | Text | `dasmolabs.github.io,dasmolab.github.io` (옛 주소 포함 — 쉼표 구분) |
 
 ---
 
@@ -150,10 +155,10 @@ Cloudflare ▸ Workers & Pages ▸ `sveltia-cms-auth` ▸ Settings ▸ Variables
 | 증상 | 원인 / 해결 |
 |---|---|
 | “Sign in with GitHub”이 아니라 “Sign in with Token”만 보임 | `admin/config.yml`의 `base_url` 주석이 안 풀렸거나 배포 전. Ctrl+F5 강력 새로고침, 1~2분 대기. |
-| “Sign in with GitHub” 클릭 시 오류 | ① OAuth callback이 `…workers.dev/callback`로 정확히 끝나는지 ② config.yml `base_url`은 `/callback` 없이 Worker 루트인지 ③ Worker 변수 `ALLOWED_DOMAINS`에 `dasmolab.github.io` 포함됐는지 ④ `GITHUB_CLIENT_ID`/`SECRET` 오타 없는지. |
+| “Sign in with GitHub” 클릭 시 오류 | ① OAuth callback이 `…workers.dev/callback`로 정확히 끝나는지 ② config.yml `base_url`은 `/callback` 없이 Worker 루트인지 ③ Worker 변수 `ALLOWED_DOMAINS`에 `dasmolabs.github.io` 포함됐는지 ④ `GITHUB_CLIENT_ID`/`SECRET` 오타 없는지. |
 | 로그인은 되는데 **저장 안 됨** | 그 사람이 저장소 **협업자(Write)**가 아님 → §3에서 추가. |
 | 멤버 로그인 시 “조직 승인 필요” | 조직 OAuth 앱 정책 → 소유자가 `DASMOLabs CMS` 앱 승인(§3 메모). |
-| 편집 메뉴가 안 보임 | `admin/config.yml`의 `repo:`가 `dasmolab/dasmolab.github.io`인지, `branch: main`인지 확인. |
+| 편집 메뉴가 안 보임 | `admin/config.yml`의 `repo:`가 `dasmolabs/dasmolabs.github.io`인지, `branch: main`인지 확인. |
 | 사진 올렸는데 안 보임 | 저장 후 1~2분 대기 + 강력 새로고침. `assets/uploads/`에 커밋됐는지 확인. |
 | 잘못 저장/삭제해서 되돌리고 싶음 | **§2-2 복구** 절차대로 GitHub History에서 이전 내용을 복사해 다시 저장. |
 | 어느 날 갑자기 편집 화면이 이상함 | `admin/index.html`이 Sveltia CMS 버전을 고정(`@버전`)하고 있으므로 드묾. 반년에 한 번쯤 그 버전 숫자를 [최신 릴리스](https://github.com/sveltia/sveltia-cms/releases)로 올려 주면 좋음. |
@@ -166,17 +171,17 @@ Cloudflare ▸ Workers & Pages ▸ `sveltia-cms-auth` ▸ Settings ▸ Variables
 2. 로그인 중계용 **Cloudflare Worker 배포**:
    - `sveltia/sveltia-cms-auth` 레포를 받아 `wrangler`로 배포 → `https://sveltia-cms-auth.gihyo123450.workers.dev`.
    - (Cloudflare “Deploy” 버튼은 Workers Builds 권한 오류로 막혀서, `wrangler deploy`로 직접 배포함.)
-3. **GitHub OAuth App `DASMOLabs CMS`** 등록(dasmolab 조직 소유). callback = Worker 주소 + `/callback`.
-4. Worker에 변수 3개 입력: `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`(암호화), `ALLOWED_DOMAINS=dasmolab.github.io`.
+3. **GitHub OAuth App `DASMOLabs CMS`** 등록(dasmolabs 조직 소유). callback = Worker 주소 + `/callback`.
+4. Worker에 변수 3개 입력: `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`(암호화), `ALLOWED_DOMAINS=dasmolabs.github.io`.
 5. `admin/config.yml`의 `base_url` 주석 해제 → Worker 주소 연결 → commit & push(배포).
-6. https://dasmolab.github.io/admin/ 에서 **“Sign in with GitHub” 로그인 → 편집 메뉴 표시 확인 → 성공.**
+6. https://dasmolabs.github.io/admin/ 에서 **“Sign in with GitHub” 로그인 → 편집 메뉴 표시 확인 → 성공.**
 
 ---
 
 ## 8. 남은 일 (선택)
 
 - 편집할 연구실 멤버를 **저장소 협업자(Write)로 추가**(§3).
-- 담당직원에게 **https://dasmolab.github.io/** 전달 → 기존 학교 페이지에 링크.
+- 담당직원에게 **https://dasmolabs.github.io/** 전달 → 기존 학교 페이지에 링크.
 - (선택) 커스텀 도메인 연결(유료) — 연결 시 OAuth Homepage URL / callback / `ALLOWED_DOMAINS` 도 새 도메인으로 갱신 필요.
 
 ---
@@ -188,19 +193,19 @@ Cloudflare ▸ Workers & Pages ▸ `sveltia-cms-auth` ▸ Settings ▸ Variables
 ### 지금 개인 계정에 묶여 있는 것
 | 항목 | 소유 | 위험도 |
 |---|---|---|
-| GitHub 조직 `dasmolab` | 만든 사람(현재 jihyo1541) | ⚠️ 소유권 이전 필요 |
+| GitHub 조직 `dasmolabs` | 만든 사람(현재 jihyo1541) | ⚠️ 소유권 이전 필요 |
 | **Cloudflare Worker**(로그인 도우미) | **개인 Cloudflare 계정**(현재 gihyo123450) | 🔴 **가장 중요** — 계정 사라지면 로그인 전체 중단 |
-| GitHub OAuth 앱 `DASMOLabs CMS` | 조직(dasmolab) 소유 | ✅ 조직만 유지되면 안전 |
+| GitHub OAuth 앱 `DASMOLabs CMS` | 조직(dasmolabs) 소유 | ✅ 조직만 유지되면 안전 |
 | 저장소 콘텐츠 | 조직 소유 | ✅ 안전 |
 
 ### 💡 가장 좋은 방향: “연구실 공용 계정”으로 묶기
-사람(학생)이 아니라 **연구실에 남는 주체**(교수님 계정 또는 연구실 공용 이메일, 예: `dasmolab@gmail.com`)가
+사람(학생)이 아니라 **연구실에 남는 주체**(교수님 계정 또는 연구실 공용 이메일, 예: `dasmolabs@gmail.com`)가
 **GitHub 조직 소유권**과 **Cloudflare 계정**을 갖게 하면, 이후엔 그 계정 로그인 정보만 후임에게 넘기면 끝. 재설정 불필요.
 
 ### ✅ 졸업 전 인수인계 4단계
 
 **1) GitHub 조직 소유권 넘기기**
-- 조직 `dasmolab` ▸ People ▸ 후임을 **Owner(소유자)** 로 지정.
+- 조직 `dasmolabs` ▸ People ▸ 후임을 **Owner(소유자)** 로 지정.
 - 항상 **안정적인 소유자 최소 1명**(교수님/연구실 공용 계정)을 남겨둘 것.
 
 **2) Cloudflare Worker 넘기기 🔴 (제일 중요)**

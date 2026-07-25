@@ -11,7 +11,7 @@
 - 콘텐츠 데이터는 **`data/*.json`**(국문) / **`data/en/*.json`**(영문 번역본)에 있고,
   **단일 `assets/js/app.js`가 한/영 페이지를 모두** 렌더링한다(`<html lang>`으로 언어 감지).
 - 헤더/푸터는 `data/site.json` 기반으로 JS가 주입(연구실명·연락처를 한 곳에서 관리).
-- 호스팅: **GitHub Pages**, repo `dasmolab/dasmolab.github.io`, 공개 URL **https://dasmolab.github.io/** (기본 브랜치 `main` 루트 서빙).
+- 호스팅: **GitHub Pages**, repo `dasmolabs/dasmolabs.github.io`, 공개 URL **https://dasmolabs.github.io/** (기본 브랜치 `main` 루트 서빙).
 - 편집(CMS): `/admin` Sveltia CMS(버전 고정 로드), GitHub OAuth(Cloudflare Worker). → `EDIT-LOGIN-GUIDE.md`.
 
 ---

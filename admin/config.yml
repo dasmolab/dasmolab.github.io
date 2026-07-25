@@ -12,14 +12,14 @@
 
 backend:
   name: github
-  repo: dasmolab/dasmolab.github.io   # ★ 조직명/저장소명
+  repo: dasmolabs/dasmolabs.github.io   # ★ 조직명/저장소명
   branch: main                 # GitHub Pages가 배포하는 브랜치 (항상 명시)
   # ── 아래 base_url은 "GitHub으로 로그인" 버튼용 (Cloudflare Worker OAuth) ──
   base_url: https://sveltia-cms-auth.gihyo123450.workers.dev
 
 # 편집 화면 상단에 "사이트 보기" 링크를 띄워줍니다.
-site_url: https://dasmolab.github.io
-display_url: https://dasmolab.github.io
+site_url: https://dasmolabs.github.io
+display_url: https://dasmolabs.github.io
 
 # 업로드한 이미지가 저장되는 위치(기본값). 구성원·소식 사진은 필드별로
 # 하위 폴더(assets/uploads/members, assets/uploads/news)에 따로 저장됩니다.
