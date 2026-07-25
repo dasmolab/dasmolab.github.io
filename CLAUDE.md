@@ -45,17 +45,23 @@
 
 ## 3. 네비게이션 (7탭 — 앞 3개만 소탭/호버 드롭다운)
 
-헤더는 **메인탭 한 줄뿐**이다(브랜드 줄은 2026-07 삭제). Home/People/Research는 데스크톱 호버 드롭다운(모바일은 ▾ 아코디언), 소탭 클릭 = URL 해시 딥링크. Papers/Conferences/Patents/Awards는 **소탭 없는 단일 페이지**(구분 칩·연도·검색 필터만)지만, **메뉴 모양을 통일하려고 ▾ 표시는 7개 탭 전부에 붙는다**(드롭다운은 열리지 않음 — `buildHeader`의 `caret`). KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전환된다.
+헤더는 **메인탭 한 줄뿐**이다(브랜드 줄은 2026-07 삭제, 메뉴 줄은 `.nav`의 `padding-left: 7rem`으로 홈 히어로 열에 맞춰 들여씀). **7개 탭 모두 ▾ + 호버 드롭다운**을 갖는다(모바일은 ▾ 아코디언), 소탭 클릭 = URL 해시 딥링크.
+
+- Home/People/Research: 소탭 = 섹션/탭 (기존과 동일).
+- Papers/Conferences/Patents: 단일 페이지지만 소탭이 **페이지 필터를 딥링크**한다 — `publications.html#Domestic` → Domestic 칩 자동 선택(`applyHashToFilters`).
+- Awards만 분류 축이 없어, `awards.json`에 **실제로 있는 연도**로 소탭을 만든다(`awardsSubnav()` — 빈 연도가 메뉴에 안 뜨게).
+
+KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전환된다.
 
 | 메인탭 | data-page | 소탭 (URL 해시 key) | 소탭 동작 | 데이터 소스 |
 |---|---|---|---|---|
 | **Home** | home | 소개(`about`) / 연구 분야(`research`) / 강의(`classes`) / **오시는 길(`location`)** | 섹션 스크롤 | `site.json` |
 | **People** | people | 지도교수(`professor`) / 현재 구성원(`current`) / 졸업생(`alumni`) / 지원(`apply`) | 탭 전환 | `professor.json`, `members.json`, `apply.json` |
 | **Research** | research | 연구 분야(`areas`) / 연구 과제(`projects`) | 탭 전환 | `site.research_topics`, `projects.json` |
-| **Papers** | publications | (없음) | — | `publications.json` |
-| **Conferences** | conferences | (없음) | — | `conferences.json` |
-| **Patents** | patents | (없음) | — | `patents.json` |
-| **Awards** | awards | (없음) | — | `awards.json` |
+| **Papers** | publications | 전체(`all`) / `International` / `Domestic` / 기타(`Other`) / 저서(`Books`) | 구분 칩 자동 선택 | `publications.json` |
+| **Conferences** | conferences | 전체(`all`) / `International` / `Domestic` | 구분 칩 자동 선택 | `conferences.json` |
+| **Patents** | patents | 전체(`all`) / 출원(`Application`) / 등록(`Registration`) / 프로그램(`Software`) | 구분 칩 자동 선택 | `patents.json` |
+| **Awards** | awards | 전체(`all`) / 연도(`2026`·`2025`… 데이터 기준 최대 6개) | 연도 드롭다운 자동 선택 | `awards.json` |
 
 - 드롭다운과 페이지 내 소탭은 **`SUBNAV` 맵 하나**(언어별 2벌)로 정의. 소탭 추가 시 `SUBNAV`와 해당 `render*`의 탭 배열 **둘 다** 같은 `key`로 맞출 것.
 - **News 탭은 2026-07 폐지** — `news.html`·`en/news.html` 삭제, 홈 최신소식·모집 배너·통계 스트립도 제거. `data/news.json`은 남아 있고 **`category:"모집"`(EN `Recruiting`) 항목만** People→지원 탭 콜아웃으로 쓰인다(그 외 분류는 사이트에 표시되지 않음).
@@ -72,13 +78,14 @@
 - `T` — **모든 UI 문자열의 I18N 테이블**(KO/EN 2벌). 새 UI 문자열은 반드시 T에 추가.
 - `EN_DATA` — 영문 번역 파일이 존재하는 데이터 이름 화이트리스트(`site, news, professor, members, projects, apply`).
   `fetchData()`는 EN에서 이 목록에 있으면 `data/en/`을 먼저, 아니면 바로 국문 `data/`를 읽는다(불필요한 404 없음).
-- `SUBNAV`, `RECRUIT_CAT`("모집"/"Recruiting") — 언어별 상수.
+- `SUBNAV`, `RECRUIT_CAT`("모집"/"Recruiting") — 언어별 상수. Papers/Conferences/Patents의 `SUBNAV` 항목은 `T.pubChips`·`T.confLabels`·`T.patChips`를 그대로 쓰고 **key는 데이터의 category 코드와 반드시 같아야 한다**(딥링크가 칩을 찾는 기준).
+- `fetchData`는 **페이지당 파일별 1회만** 요청(`_dataCache`) — 헤더의 Awards 연도 메뉴와 Awards 페이지가 같은 파일을 두 번 받지 않도록.
 
 **공통 크롬** — `buildHeader`(**브랜드 줄 없음 — 메뉴 한 줄**, 전 탭 ▾ + 드롭다운 + 모바일 아코디언 토글 버튼 + 언어 전환), `buildFooter`(연도 자동, 주소는 지도 링크), `mountChrome`, `initNav`(햄버거 + 아코디언 + Esc 닫기 + 언어 전환 시 해시 유지).
 
 **소탭 엔진** — `mountSubnav`(해시 딥링크·hashchange 반응), `scrollToHash`.
 
-**필터 엔진** — `filterBlock(cfg)`: 구분 칩 + 연도 드롭다운 + **텍스트 검색(`getText`)**. `applyFilter`/`wireFilters`(위임 핸들러). Publications/Conferences/Patents/Awards/Projects가 사용. 목록은 렌더 전에 `sortByDateDesc`로 날짜 내림차순 정렬(편집 순서 실수를 코드가 흡수).
+**필터 엔진** — `filterBlock(cfg)`: 구분 칩 + 연도 드롭다운 + **텍스트 검색(`getText`)**. `applyFilter`/`wireFilters`(위임 핸들러) + **`applyHashToFilters`**(URL 해시 → 칩/연도 자동 선택 — 헤더 드롭다운 딥링크의 핵심. `wireFilters`는 호출될 때마다 이걸 다시 적용한다). Publications/Conferences/Patents/Awards/Projects가 사용. 목록은 렌더 전에 `sortByDateDesc`로 날짜 내림차순 정렬(편집 순서 실수를 코드가 흡수).
 
 **페이지 렌더 함수** (`PAGES` 맵 → `body[data-page]` 디스패치)
 - `renderHome` — 소개(+`about_photo`)/연구/강의(문자열·`{name,link}` 겸용)/**오시는 길(`buildLocation`)**. 히어로 바로 아래가 소개 섹션이다(통계·모집 배너·최신소식은 2026-07 삭제).

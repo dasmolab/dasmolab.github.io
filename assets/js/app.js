@@ -180,6 +180,28 @@
     ],
   };
 
+  // Papers / Conferences / Patents have no sub-pages, so their dropdown entries
+  // are the page's own filter chips: the link carries the category in the hash
+  // and the page pre-selects that chip (see applyHashToFilters).
+  SUBNAV["publications.html"] = [
+    { label: T.fbAll, key: "all" },
+    { label: T.pubChips.International, key: "International" },
+    { label: T.pubChips.Domestic, key: "Domestic" },
+    { label: T.pubChips.Other, key: "Other" },
+    { label: T.pubChips.Books, key: "Books" },
+  ];
+  SUBNAV["conferences.html"] = [
+    { label: T.fbAll, key: "all" },
+    { label: T.confLabels.International, key: "International" },
+    { label: T.confLabels.Domestic, key: "Domestic" },
+  ];
+  SUBNAV["patents.html"] = [
+    { label: T.fbAll, key: "all" },
+    { label: T.patChips.Application, key: "Application" },
+    { label: T.patChips.Registration, key: "Registration" },
+    { label: T.patChips.Software, key: "Software" },
+  ];
+
   // The News page was retired (2026-07); news.json now feeds only the
   // recruiting notice shown on People → 지원.
   const RECRUIT_CAT = EN ? "Recruiting" : "모집";
@@ -244,7 +266,15 @@
     return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
   }
 
-  async function fetchData(name) {
+  // one request per data file per page load — the Awards dropdown and the
+  // Awards page itself would otherwise both fetch awards.json
+  const _dataCache = {};
+  function fetchData(name) {
+    if (!_dataCache[name]) _dataCache[name] = loadData(name);
+    return _dataCache[name];
+  }
+
+  async function loadData(name) {
     const paths = (EN && EN_DATA.indexOf(name) !== -1)
       ? [BASE + "data/en/" + name + ".json", BASE + "data/" + name + ".json"]
       : [BASE + "data/" + name + ".json"];
@@ -344,7 +374,22 @@
       </footer>`;
   }
 
-  function mountChrome(site) {
+  // Awards is the one filter page with no category axis, so its sub-tabs are
+  // the years that actually appear in awards.json — that way no dropdown entry
+  // lands on an empty list. (fetchData is memoised, so this costs one small
+  // request per page load and none at all on awards.html itself.)
+  async function awardsSubnav() {
+    const awd = await fetchData("awards");
+    const list = (awd && Array.isArray(awd.awards)) ? awd.awards : [];
+    const years = Array.from(new Set(list.map(a => yearIn(a.date)).filter(Boolean)))
+      .sort((a, b) => Number(b) - Number(a)).slice(0, 6);
+    if (!years.length) return;
+    SUBNAV["awards.html"] = [{ label: T.fbAll, key: "all" }]
+      .concat(years.map(y => ({ label: EN ? y : y + "년", key: y })));
+  }
+
+  async function mountChrome(site) {
+    await awardsSubnav();
     const h = $("[data-header]"); if (h) h.outerHTML = buildHeader();
     const f = $("[data-footer]"); if (f) f.outerHTML = buildFooter(site);
     initNav();
@@ -748,26 +793,58 @@
       : '<div class="state">' + esc(T.fbNone) + "</div>";
   }
 
+  // Apply the URL hash to a page's filter bars — this is what makes the header
+  // dropdowns of Papers / Conferences / Patents / Awards work: a category key
+  // selects that chip, a 4-digit key selects that year, "all"/no hash resets.
+  function applyHashToFilters(root) {
+    if (!root) return;
+    const h = hashKey();
+    $$(".fbar", root).forEach(bar => {
+      const chips = $$(".fchip", bar);
+      const sel = bar.querySelector(".fyear");
+      let hit = false;
+      if (chips.length) {
+        const match = chips.filter(c => (c.dataset.cat || "") === h)[0];
+        const all = chips.filter(c => !(c.dataset.cat || ""))[0];
+        const target = match || ((!h || h === "all") ? all : null);
+        if (target) { chips.forEach(c => c.classList.toggle("active", c === target)); hit = true; }
+      }
+      if (sel) {
+        if (/^(19|20)\d{2}$/.test(h) && $$("option", sel).some(o => o.value === h)) { sel.value = h; hit = true; }
+        else if (!h || h === "all") { if (sel.value) { sel.value = ""; hit = true; } }
+      }
+      if (hit) applyFilter(bar.dataset.fb);
+    });
+  }
+
   // One delegated handler per root (chip clicks / select / search input bubble).
   function wireFilters(root) {
-    if (!root || root._fbWired) return;
-    root._fbWired = true;
-    root.addEventListener("click", (e) => {
-      const chip = e.target.closest(".fchip"); if (!chip || !root.contains(chip)) return;
-      const bar = chip.closest(".fbar"); if (!bar) return;
-      $$(".fchip", bar).forEach(c => c.classList.toggle("active", c === chip));
-      applyFilter(bar.dataset.fb);
-    });
-    root.addEventListener("change", (e) => {
-      const sel = e.target.closest(".fyear"); if (!sel || !root.contains(sel)) return;
-      const bar = sel.closest(".fbar"); if (!bar) return;
-      applyFilter(bar.dataset.fb);
-    });
-    root.addEventListener("input", (e) => {
-      const inp = e.target.closest(".fsearch"); if (!inp || !root.contains(inp)) return;
-      const bar = inp.closest(".fbar"); if (!bar) return;
-      applyFilter(bar.dataset.fb);
-    });
+    if (!root) return;
+    // The handlers are delegated, so they only need wiring once…
+    if (!root._fbWired) {
+      root._fbWired = true;
+      // deep links from the header dropdown, plus Back/Forward between them
+      window.addEventListener("hashchange", () => applyHashToFilters(root));
+      root.addEventListener("click", (e) => {
+        const chip = e.target.closest(".fchip"); if (!chip || !root.contains(chip)) return;
+        const bar = chip.closest(".fbar"); if (!bar) return;
+        $$(".fchip", bar).forEach(c => c.classList.toggle("active", c === chip));
+        applyFilter(bar.dataset.fb);
+      });
+      root.addEventListener("change", (e) => {
+        const sel = e.target.closest(".fyear"); if (!sel || !root.contains(sel)) return;
+        const bar = sel.closest(".fbar"); if (!bar) return;
+        applyFilter(bar.dataset.fb);
+      });
+      root.addEventListener("input", (e) => {
+        const inp = e.target.closest(".fsearch"); if (!inp || !root.contains(inp)) return;
+        const bar = inp.closest(".fbar"); if (!bar) return;
+        applyFilter(bar.dataset.fb);
+      });
+    }
+    // …but the hash must be re-applied on every call: callers re-render the
+    // block (sub-tab switch), which would otherwise drop the deep-linked filter.
+    applyHashToFilters(root);
   }
 
   function buildProjects(projects) {
