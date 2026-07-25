@@ -81,15 +81,15 @@ ul { margin: 0; padding: 0; }
   border-bottom: 1px solid var(--line);
 }
 /* Single-row header: the brand line (abbr + lab name) was removed in 2026-07,
-   so the menu row *is* the header. The left indent (≈6cm) is a deliberate
+   so the menu row *is* the header. The left indent (≈4.4cm) is a deliberate
    request — it pulls the tabs in from the page gutter, towards the Home
    hero/intro column. clamp() gives it back on narrow desktops so the seven
-   tabs + language pill never get squeezed: below ~1200px the indent shrinks,
+   tabs + language pill never get squeezed: below ~1130px the indent shrinks,
    and the ≤1080px block drops it entirely (padding: 0). */
 .nav {
   display: flex; align-items: center; justify-content: space-between;
   min-height: var(--header-h);
-  padding: .3rem 0 .3rem clamp(0px, calc(100vw - 60rem), 14rem);
+  padding: .3rem 0 .3rem clamp(0px, calc(100vw - 60rem), 10.5rem);
 }
 .nav__links {
   display: flex; align-items: center; gap: .25rem; list-style: none;
