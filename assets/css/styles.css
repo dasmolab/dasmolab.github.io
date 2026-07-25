@@ -81,10 +81,12 @@ ul { margin: 0; padding: 0; }
   border-bottom: 1px solid var(--line);
 }
 /* Single-row header: the brand line (abbr + lab name) was removed in 2026-07,
-   so the menu row *is* the header. */
+   so the menu row *is* the header. The left indent (≈3cm) is a deliberate
+   request — it lines the tabs up with the Home hero/intro column rather than
+   with the page gutter. The ≤1080px block resets it (padding: 0). */
 .nav {
   display: flex; align-items: center; justify-content: space-between;
-  min-height: var(--header-h); padding: .3rem 0;
+  min-height: var(--header-h); padding: .3rem 0 .3rem 7rem;
 }
 .nav__links {
   display: flex; align-items: center; gap: .25rem; list-style: none;
