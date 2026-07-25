@@ -7,11 +7,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/"/>
   </url>
   <url>
-    <loc>https://dasmolabs.github.io/news.html</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolabs.github.io/news.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/news.html"/>
-  </url>
-  <url>
     <loc>https://dasmolabs.github.io/people.html</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolabs.github.io/people.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/people.html"/>
@@ -45,11 +40,6 @@
     <loc>https://dasmolabs.github.io/en/</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolabs.github.io/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/"/>
-  </url>
-  <url>
-    <loc>https://dasmolabs.github.io/en/news.html</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolabs.github.io/news.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/news.html"/>
   </url>
   <url>
     <loc>https://dasmolabs.github.io/en/people.html</loc>

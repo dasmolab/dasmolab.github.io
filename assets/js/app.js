@@ -5,11 +5,11 @@
 
    Language is detected from <html lang="...">: pages under /en/ declare
    lang="en" and this script adjusts UI strings (I18N table), data paths
-   (BASE = "../" under /en/) and News category keys. Academic records
-   without a translation file (publications / conferences / patents /
-   awards) automatically fall back to the Korean data.
+   (BASE = "../" under /en/) and the recruiting-notice category key.
+   Academic records without a translation file (publications / conferences
+   / patents / awards) automatically fall back to the Korean data.
 
-   The site shows 8 main tabs; each academic-record tab has its own page
+   The site shows 7 main tabs; each academic-record tab has its own page
    and data file:
      People       = professor.json + members.json (+ apply.json, news 모집)
      Research     = site.research_topics + projects.json
@@ -32,16 +32,12 @@
     skip: "Skip to main content", navLabel: "Main menu",
     menuOpen: "Open menu", menuClose: "Close menu", subOpen: "Open submenu",
     langLabel: "한국어", langHref: "ko", langAria: "한국어로 보기",
-    labNameFallback: "Dong-A Smart Mobility Laboratory",
     footerTagline: "Intelligent Transportation Systems (ITS) · Smart Mobility · MaaS research",
     footerQuick: "Quick Links", footerContact: "Contact",
     footerEdit: "🔒 Site admin (login)", footerEditTitle: "Only authorized administrators can log in to edit",
     addrFallback: "Room 1404, Engineering Building 1, Seunghak Campus, Dong-A University, Saha-gu, Busan",
-    statPub: "Publications", statConf: "Conference Papers", statProj: "Projects", statMem: "Current Members",
-    latestNews: "Latest News", allNews: "View all news →",
-    recruitBar: "Now recruiting", recruitCta: "Learn more →", recruitClosed: "Application deadline",
+    recruitClosed: "Application deadline",
     ugrad: "Undergraduate", grad: "Graduate",
-    catOther: "Other",
     profLoadFail: "Could not load professor information.",
     profAlt: "Professor", fField: "Field", fLab: "Lab",
     hEdu: "Education", hCareer: "Academic Careers", hSociety: "Academic Societies",
@@ -78,8 +74,6 @@
     headProfessor: ["Professor", "Professor"], headCurrent: ["Current", "Current Members"],
     headAlumni: ["Alumni", "Alumni"], headApply: ["Join Us", "Join Us"],
     tabAreas: "Research Areas", tabProjects: "Projects",
-    newsLoadFail: "Could not load news.", newsNone: "No news yet.", newsMore: "Read more →",
-    newsAria: (t) => "Read more: " + t, newsClose: "Close", newsLink: "Related link →", newsModal: "News",
     locAddress: "Address", locOffice: "Office", locTransit: "Public transit",
     mapKakao: "Kakao Map", mapNaver: "Naver Map", mapGoogle: "Google Maps",
     loading: "Loading…",
@@ -87,16 +81,12 @@
     skip: "본문 바로가기", navLabel: "주 메뉴",
     menuOpen: "메뉴 열기", menuClose: "메뉴 닫기", subOpen: "하위 메뉴 열기",
     langLabel: "EN", langHref: "en", langAria: "View in English",
-    labNameFallback: "동아대학교 교통공학연구실",
     footerTagline: "지능형 교통체계(ITS) · 스마트 모빌리티 · MaaS 연구",
     footerQuick: "바로가기", footerContact: "연락처",
     footerEdit: "🔒 사이트 관리(로그인)", footerEditTitle: "승인된 운영자만 로그인 후 편집할 수 있습니다",
     addrFallback: "부산시 사하구 하단동 동아대학교 승학캠퍼스 공대1호관 1404호",
-    statPub: "Publications", statConf: "Conference Papers", statProj: "Projects", statMem: "Current Members",
-    latestNews: "최신 소식", allNews: "전체 소식 보기 →",
-    recruitBar: "지원자 모집 중", recruitCta: "자세히 보기 →", recruitClosed: "지원 마감",
+    recruitClosed: "지원 마감",
     ugrad: "학부 (Undergraduate)", grad: "대학원 (Graduate)",
-    catOther: "기타",
     profLoadFail: "교수 정보를 불러오지 못했습니다.",
     profAlt: "교수", fField: "전공분야", fLab: "연구실",
     hEdu: "학력 (Education)", hCareer: "주요 경력 (Academic Careers)", hSociety: "학회활동 (Academic Societies)",
@@ -133,8 +123,6 @@
     headProfessor: ["Professor", "지도교수"], headCurrent: ["Current", "현재 구성원"],
     headAlumni: ["Alumni", "졸업생"], headApply: ["Join Us", "지원 안내"],
     tabAreas: "연구 분야", tabProjects: "연구 과제",
-    newsLoadFail: "소식을 불러오지 못했습니다.", newsNone: "아직 등록된 소식이 없습니다.", newsMore: "자세히 보기 →",
-    newsAria: (t) => t + " 자세히 보기", newsClose: "닫기", newsLink: "관련 링크 →", newsModal: "소식",
     locAddress: "주소", locOffice: "연구실", locTransit: "대중교통",
     mapKakao: "카카오맵", mapNaver: "네이버지도", mapGoogle: "구글지도",
     loading: "불러오는 중…",
@@ -142,7 +130,6 @@
 
   const NAV = [
     { href: "index.html",        label: "Home" },
-    { href: "news.html",         label: "News" },
     { href: "people.html",       label: "People" },
     { href: "research.html",     label: "Research" },
     { href: "publications.html", label: "Papers" },
@@ -153,22 +140,16 @@
 
   // Sub-tabs shown in each main tab's hover dropdown. Each page uses the same
   // `key` to activate the matching sub-tab / section from the URL hash.
-  // Tabs without an entry (Papers/Conferences/Patents/Awards) have no dropdown.
+  // Papers/Conferences/Patents/Awards have no entry here: they still carry the
+  // ▾ marker so the menu row reads uniformly, but they open no dropdown.
   //   tabbed pages (People/Research): key = sub-tab id
   //   scroll page  (Home):            key = on-page element id
-  //   News:                           key = category ("all" = 전체)
   const SUBNAV = EN ? {
     "index.html": [
       { label: "About the Lab", key: "about" },
       { label: "Research",      key: "research" },
       { label: "Courses",       key: "classes" },
       { label: "Location",      key: "location" },
-    ],
-    "news.html": [
-      { label: "All",         key: "all" },
-      { label: "Conference",  key: "Conference" },
-      { label: "Seminar",     key: "Seminar" },
-      { label: "Lab Meeting", key: "Lab Meeting" },
     ],
     "people.html": [
       { label: "Professor",       key: "professor" },
@@ -187,12 +168,6 @@
       { label: "강의 과목",   key: "classes" },
       { label: "오시는 길",   key: "location" },
     ],
-    "news.html": [
-      { label: "전체",     key: "all" },
-      { label: "학술대회", key: "학술대회" },
-      { label: "세미나",   key: "세미나" },
-      { label: "랩미팅",   key: "랩미팅" },
-    ],
     "people.html": [
       { label: "지도교수",    key: "professor" },
       { label: "현재 구성원", key: "current" },
@@ -205,16 +180,9 @@
     ],
   };
 
-  // News category: emoji / recruit key / KO⇄EN hash mapping (for the language toggle)
-  const CAT_EMOJI = EN
-    ? { "Conference": "🎤", "Seminar": "🧑‍🏫", "Lab Meeting": "👥", "Recruiting": "🙋", "Other": "🗒️" }
-    : { "학술대회": "🎤", "세미나": "🧑‍🏫", "랩미팅": "👥", "모집": "🙋", "기타": "🗒️" };
+  // The News page was retired (2026-07); news.json now feeds only the
+  // recruiting notice shown on People → 지원.
   const RECRUIT_CAT = EN ? "Recruiting" : "모집";
-  const NEWS_CAT_ORDER = EN ? ["Conference", "Seminar", "Lab Meeting", "Other"] : ["학술대회", "세미나", "랩미팅", "기타"];
-  // current-language key → other-language key (used when switching KO⇄EN on News)
-  const NEWS_KEY_MAP = EN
-    ? { "Conference": "학술대회", "Seminar": "세미나", "Lab Meeting": "랩미팅", "Other": "기타" }
-    : { "학술대회": "Conference", "세미나": "Seminar", "랩미팅": "Lab Meeting", "기타": "Other" };
 
   /* ----- utilities ----- */
   const $  = (s, r = document) => r.querySelector(s);
@@ -276,10 +244,6 @@
     return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
   }
 
-  // a photo entry may be a plain path string or an object { image }
-  function photoSrc(p) { return imgSrc(typeof p === "string" ? p : (p && (p.image || p.src)) || ""); }
-  function firstPhoto(arr) { return Array.isArray(arr) && arr.length ? photoSrc(arr[0]) : ""; }
-
   async function fetchData(name) {
     const paths = (EN && EN_DATA.indexOf(name) !== -1)
       ? [BASE + "data/en/" + name + ".json", BASE + "data/" + name + ".json"]
@@ -306,12 +270,14 @@
     return (!p || p === "") ? "index.html" : p;
   }
 
-  function buildHeader(site) {
+  function buildHeader() {
     const here = currentPage();
     const links = NAV.map(n => {
       const subs = SUBNAV[n.href] || [];
       const active = n.href === here ? "active" : "";
-      const caret = subs.length ? `<span class="nav__caret" aria-hidden="true">▾</span>` : "";
+      // every tab carries the ▾ marker so the menu row reads uniformly;
+      // only the tabs listed in SUBNAV actually open a dropdown
+      const caret = `<span class="nav__caret" aria-hidden="true">▾</span>`;
       const subBtn = subs.length
         ? `<button class="nav__subtoggle" type="button" aria-expanded="false" aria-label="${esc(n.label)} ${esc(T.subOpen)}">▾</button>` : "";
       const menu = subs.length
@@ -326,15 +292,11 @@
     const otherBase = EN ? "../" : "en/";
     const langItem = `<li class="nav__lang"><a class="lang-switch" href="${otherBase}${target}"` +
       ` hreflang="${T.langHref}" lang="${T.langHref}" aria-label="${esc(T.langAria)}">${esc(T.langLabel)}</a></li>`;
-    const abbr = (site && site.lab_abbr) || "DASMOLabs";
-    const name = (site && (EN ? site.lab_name_en : site.lab_name_ko)) || T.labNameFallback;
+    // The brand line was removed (2026-07): the header is the menu row only.
     return `
       <a class="skip-link" href="#main">${esc(T.skip)}</a>
       <header class="site-header">
         <nav class="nav wrap" aria-label="${esc(T.navLabel)}">
-          <a class="brand" href="index.html">
-            <b>${esc(abbr)}</b><span>${esc(name)}</span>
-          </a>
           <button class="nav__toggle" aria-label="${esc(T.menuOpen)}" aria-expanded="false" aria-controls="navmenu">
             <span></span><span></span><span></span>
           </button>
@@ -383,7 +345,7 @@
   }
 
   function mountChrome(site) {
-    const h = $("[data-header]"); if (h) h.outerHTML = buildHeader(site);
+    const h = $("[data-header]"); if (h) h.outerHTML = buildHeader();
     const f = $("[data-footer]"); if (f) f.outerHTML = buildFooter(site);
     initNav();
   }
@@ -427,8 +389,7 @@
     if (lang) lang.addEventListener("click", function () {
       const h = hashKey();
       if (!h) return;
-      const key = currentPage() === "news.html" ? (NEWS_KEY_MAP[h] || h) : h;
-      this.href = this.getAttribute("href").split("#")[0] + "#" + encodeURIComponent(key);
+      this.href = this.getAttribute("href").split("#")[0] + "#" + encodeURIComponent(h);
     });
   }
 
@@ -473,67 +434,6 @@
     // location / directions
     const locEl = $("#home-location");
     if (locEl) locEl.innerHTML = buildLocation(site);
-
-    // live stats
-    const statsEl = $("#home-stats");
-    if (statsEl) {
-      const [pubs, projs, mem, conf] = await Promise.all(
-        ["publications", "projects", "members", "conferences"].map(fetchData)
-      );
-      const nPub = pubs && pubs.publications ? pubs.publications.length : 0;
-      const nProj = projs && projs.projects ? projs.projects.length : 0;
-      const nConf = conf && conf.conferences ? conf.conferences.length : 0;
-      const nMem = mem && mem.members ? mem.members.filter(m => m.group === "current").length : 0;
-      const stat = (num, label) => `<div class="stats__item"><div class="stats__num">${num}<span>+</span></div><div class="stats__label">${esc(label)}</div></div>`;
-      statsEl.innerHTML = stat(nPub, T.statPub) + stat(nConf, T.statConf) + stat(nProj, T.statProj) + stat(nMem, T.statMem);
-    }
-
-    // recruit banner + latest news (only render if there is content)
-    const news = await fetchData("news");
-    if (news && Array.isArray(news.news)) {
-      const sorted = news.news.slice().sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
-      const recruits = sorted.filter(n => n.category === RECRUIT_CAT && recruitOpen(n));
-      const posts = sorted.filter(n => n.category !== RECRUIT_CAT);
-
-      const recEl = $("#home-recruit");
-      if (recEl && recruits.length) {
-        const r = recruits[0];
-        recEl.innerHTML = `<div class="wrap" style="margin-top:1.6rem">
-          <a class="recruit-bar" href="people.html#apply">
-            <span class="recruit-bar__icon">👩‍🎓</span>
-            <span class="recruit-bar__txt"><b>${esc(T.recruitBar)}</b> — ${esc(r.title || "")}</span>
-            <span class="recruit-bar__cta">${esc(T.recruitCta)}</span>
-          </a></div>`;
-      }
-
-      const newsEl = $("#home-news");
-      if (newsEl && posts.length) {
-        const cards = posts.slice(0, 3).map(n => {
-          const photo = firstPhoto(n.photos);
-          const thumb = photo
-            ? `<img class="newscard__thumb" src="${cssUrl(photo)}" alt="" loading="lazy">`
-            : `<div class="newscard__thumb newscard__thumb--ph">${catEmoji(n.category)}</div>`;
-          return `<a class="newscard" href="news.html">
-            ${thumb}
-            <div class="newscard__body">
-              <div class="newscard__meta"><span class="news-date">${esc(fmtDate(n.date))}</span> · ${esc(n.category || T.catOther)}</div>
-              <div class="newscard__title">${esc(n.title || "")}</div>
-            </div></a>`;
-        }).join("");
-        newsEl.innerHTML = `<section class="section" style="padding-bottom:0">
-          <div class="wrap">
-            <div class="section__head" style="margin-bottom:1.6rem">
-              <span class="section__eyebrow">News</span>
-              <h2 class="section__title">${esc(T.latestNews)}</h2>
-            </div>
-            <div class="grid grid--3">${cards}</div>
-            <div style="text-align:center;margin-top:1.8rem">
-              <a class="btn btn--primary" href="news.html">${esc(T.allNews)}</a>
-            </div>
-          </div>
-        </section>`;
-      }
-    }
 
     scrollToHash(); // deep-link from the Home dropdown (#about / #research / #classes / #location)
   }
@@ -1155,167 +1055,10 @@
   }
 
   /* ====================================================================
-     NEWS / 소식 (학술대회·세미나·랩미팅 일지 + 모집 공고)
-     ==================================================================== */
-  function catEmoji(c) { return CAT_EMOJI[c] || "🗒️"; }
-  function newsPhotos(arr) {
-    if (!Array.isArray(arr) || !arr.length) return "";
-    const items = arr.map(p => {
-      const src = photoSrc(p);
-      if (!src) return "";
-      return `<a class="news-photo" href="${cssUrl(src)}" target="_blank" rel="noopener">` +
-        `<img src="${cssUrl(src)}" alt="" loading="lazy" onerror="this.parentNode.style.display='none'"></a>`;
-    }).join("");
-    return items ? `<div class="news-photos">${items}</div>` : "";
-  }
-  // short single-line preview of the body for the feed cards
-  function newsExcerpt(s, max) {
-    const t = String(s == null ? "" : s).replace(/\s+/g, " ").trim();
-    const n = max || 90;
-    return t.length > n ? t.slice(0, n).trim() + "…" : t;
-  }
-  function newsThumb(n) {
-    const photo = firstPhoto(n.photos);
-    return photo
-      ? `<img class="news-card__thumb" src="${cssUrl(photo)}" alt="" loading="lazy">`
-      : `<span class="news-card__thumb news-card__thumb--ph" aria-hidden="true">${catEmoji(n.category)}</span>`;
-  }
-  // compact, clickable feed card (opens the detail modal). idx → index in `posts`.
-  function newsCard(n, idx) {
-    return `<button class="news-card" type="button" data-idx="${idx}" aria-label="${esc(T.newsAria(n.title || ""))}">
-      ${newsThumb(n)}
-      <span class="news-card__body">
-        <span class="news-card__meta"><span class="news-date">${esc(fmtDate(n.date))}</span> · ${esc(n.category || T.catOther)}</span>
-        <span class="news-card__title">${esc(n.title || "")}</span>
-        ${n.body ? `<span class="news-card__excerpt">${esc(newsExcerpt(n.body))}</span>` : ""}
-        <span class="news-card__more">${esc(T.newsMore)}</span>
-      </span>
-    </button>`;
-  }
-
-  // Detail modal (full title, photos, body, link) opened from a feed card.
-  // Accessible: focus is trapped inside, Esc / backdrop / ✕ / the browser
-  // back button all close it, and focus returns to the card that opened it.
-  let newsModalEl = null;
-  let newsModalTrigger = null;
-  let newsModalClosing = false;   // guard: history.back() must fire only once per close
-  function newsModalKey(e) {
-    if (e.key === "Escape") { closeNewsModal(); return; }
-    if (e.key !== "Tab" || !newsModalEl) return;
-    const f = $$(".news-modal__panel a[href], .news-modal__panel button", newsModalEl);
-    if (!f.length) return;
-    const first = f[0], last = f[f.length - 1];
-    if (!newsModalEl.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
-    else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-  }
-  function newsModalPop() { removeNewsModal(); }
-  function removeNewsModal() {
-    if (!newsModalEl) return;
-    newsModalEl.remove(); newsModalEl = null;
-    newsModalClosing = false;
-    document.body.style.overflow = "";
-    document.removeEventListener("keydown", newsModalKey);
-    window.removeEventListener("popstate", newsModalPop);
-    if (newsModalTrigger) {
-      try { newsModalTrigger.focus(); } catch (e) { /* detached */ }
-      newsModalTrigger = null;
-    }
-  }
-  function closeNewsModal() {
-    if (!newsModalEl || newsModalClosing) return;
-    // if we pushed a history entry when opening, go back so the browser's
-    // back button state stays consistent (popstate does the actual removal).
-    // The guard prevents a repeated Esc / Esc-then-backdrop from calling
-    // history.back() several times and navigating past this page.
-    if (history.state && history.state.newsModal) { newsModalClosing = true; history.back(); }
-    else removeNewsModal();
-  }
-  function openNewsModal(n, trigger) {
-    if (newsModalEl) removeNewsModal();
-    newsModalTrigger = trigger || null;
-    const wrap = document.createElement("div");
-    wrap.className = "news-modal";
-    wrap.setAttribute("role", "dialog");
-    wrap.setAttribute("aria-modal", "true");
-    wrap.setAttribute("aria-label", n.title || T.newsModal);
-    wrap.innerHTML =
-      `<div class="news-modal__backdrop" data-close></div>
-       <div class="news-modal__panel">
-         <button class="news-modal__close" type="button" data-close aria-label="${esc(T.newsClose)}">&times;</button>
-         <div class="news-modal__head">
-           <span class="news-date">${esc(fmtDate(n.date))}</span>
-           <span class="news-cat">${catEmoji(n.category)} ${esc(n.category || T.catOther)}</span>
-         </div>
-         <h2 class="news-modal__title">${esc(n.title || "")}</h2>
-         ${(Array.isArray(n.photos) && n.photos.length) ? `<div class="news-modal__photos">${newsPhotos(n.photos)}</div>` : ""}
-         ${n.body ? `<div class="news-modal__body">${richText(n.body)}</div>` : ""}
-         ${n.link ? `<p class="news-link" style="margin-top:1.1rem"><a href="${esc(n.link)}" target="_blank" rel="noopener">${esc(T.newsLink)}</a></p>` : ""}
-       </div>`;
-    wrap.addEventListener("click", (e) => { if (e.target.closest("[data-close]")) closeNewsModal(); });
-    document.body.appendChild(wrap);
-    document.body.style.overflow = "hidden";
-    document.addEventListener("keydown", newsModalKey);
-    history.pushState({ newsModal: true }, "");
-    window.addEventListener("popstate", newsModalPop);
-    const closeBtn = wrap.querySelector(".news-modal__close");
-    if (closeBtn) closeBtn.focus();
-    newsModalEl = wrap;
-  }
-
-  async function renderNews() {
-    const site = await fetchData("site"); mountChrome(site);
-    const data = await fetchData("news");
-    const root = $("#news-root"); const nav = $("#news-subnav");
-    if (!data || !Array.isArray(data.news)) { setState(root, T.newsLoadFail); return; }
-
-    // 모집(Recruiting) is intentionally NOT shown on News — prospective
-    // students are directed to People → 지원 (linked from the Home banner).
-    const posts = data.news.slice()
-      .filter(n => n.category !== RECRUIT_CAT)
-      .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
-
-    // category filter over event posts
-    const cats = NEWS_CAT_ORDER.filter(c => posts.some(p => p.category === c));
-    posts.forEach(p => { if (p.category && p.category !== RECRUIT_CAT && cats.indexOf(p.category) === -1) cats.push(p.category); });
-
-    const draw = (cat) => {
-      if (nav) $$("button", nav).forEach(x => x.classList.toggle("active", (x.dataset.cat || "") === (cat || "")));
-      const list = cat ? posts.filter(p => p.category === cat) : posts;
-      if (!list.length) { root.innerHTML = `<div class="state">${esc(T.newsNone)}</div>`; return; }
-      root.innerHTML = `<div class="news-list">${list.map(n => newsCard(n, posts.indexOf(n))).join("")}</div>`;
-    };
-    // open the detail modal when a feed card is activated (button = mouse + keyboard)
-    root.addEventListener("click", (e) => {
-      const card = e.target.closest(".news-card"); if (!card) return;
-      const idx = parseInt(card.dataset.idx, 10);
-      if (!isNaN(idx) && posts[idx]) openNewsModal(posts[idx], card);
-    });
-    // a category from the URL hash ("all"/unknown/empty → 전체)
-    const catFromHash = () => {
-      const h = hashKey();
-      return (h && h !== "all" && cats.indexOf(h) !== -1) ? h : "";
-    };
-
-    if (nav) {
-      nav.innerHTML = [T.fbAll].concat(cats).map((c, i) =>
-        `<button data-cat="${i === 0 ? "" : esc(c)}">${esc(c)}</button>`).join("");
-      nav.onclick = (e) => {
-        const b = e.target.closest("button"); if (!b) return;
-        const cat = b.dataset.cat || "";
-        history.replaceState(null, "", cat ? "#" + encodeURIComponent(cat) : location.pathname + location.search);
-        draw(cat);
-      };
-      window.addEventListener("hashchange", () => draw(catFromHash()));
-    }
-    draw(catFromHash());
-  }
-
-  /* ====================================================================
      Bootstrap by page
      ==================================================================== */
   const PAGES = {
-    home: renderHome, news: renderNews,
+    home: renderHome,
     people: renderPeople, research: renderResearch,
     publications: renderPublications, conferences: renderConferences,
     patents: renderPatents, awards: renderAwards,

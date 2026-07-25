@@ -32,8 +32,8 @@
 
 > 📌 **2026-07-25 주소 변경**: 조직명 `dasmolab` → `dasmolabs`, 저장소 `dasmolab.github.io` → `dasmolabs.github.io`.
 > OAuth 앱은 조직 소유라 **Client ID/Secret은 그대로**이며, Worker 변수 `ALLOWED_DOMAINS`에 새·옛 도메인을 함께 넣어 둠.
-> GitHub은 **Pages 사이트 주소는 리다이렉트해 주지 않으므로**, 옛 주소 `dasmolab.github.io`는 같은 이름의 별도 조직에
-> 리다이렉트용 저장소를 두어 새 주소로 넘김(안 해두면 옛 링크·QR은 404).
+> GitHub은 **Pages 사이트 주소는 리다이렉트해 주지 않으므로** 옛 주소 `dasmolab.github.io`는 **404** 상태이며,
+> 되살리지 않기로 결정함(옛 링크·QR은 폐기). 배포용 QR은 `assets/img/qr-dasmolabs.*` 로 새로 생성함.
 
 ---
 
