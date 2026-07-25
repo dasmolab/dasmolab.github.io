@@ -45,7 +45,7 @@
 
 ## 3. 네비게이션 (7탭 — 앞 3개만 소탭/호버 드롭다운)
 
-헤더는 **메인탭 한 줄뿐**이다(브랜드 줄은 2026-07 삭제, 메뉴 줄은 `.nav`의 `padding-left: 7rem`으로 홈 히어로 열에 맞춰 들여씀). **7개 탭 모두 ▾ + 호버 드롭다운**을 갖는다(모바일은 ▾ 아코디언), 소탭 클릭 = URL 해시 딥링크.
+헤더는 **메인탭 한 줄뿐**이다(브랜드 줄은 2026-07 삭제, 메뉴 줄은 `.nav`의 `padding-left: clamp(0px, calc(100vw - 60rem), 14rem)`으로 약 6cm 들여씀 — 좁은 데스크톱에서는 자동으로 줄어 탭이 눌리지 않는다). **7개 탭 모두 ▾ + 호버 드롭다운**을 갖는다(모바일은 ▾ 아코디언), 소탭 클릭 = URL 해시 딥링크.
 
 - Home/People/Research: 소탭 = 섹션/탭 (기존과 동일).
 - Papers/Conferences/Patents: 단일 페이지지만 소탭이 **페이지 필터를 딥링크**한다 — `publications.html#Domestic` → Domestic 칩 자동 선택(`applyHashToFilters`).
