@@ -23,22 +23,28 @@
     {
       "name_ko": "이은정",
       "name_en": "Lee, Eunjung",
-      "group": "current",
+      "group": "alumni",
       "level": "Master",
       "photo": "assets/uploads/20240516.webp",
       "email": "nj4444@naver.com",
       "affiliation": "동아대학교 도시공학과 대학원",
-      "period": "2024. 3. ~ 현재"
+      "period": "2024. 3. ~ 현재",
+      "grad_year": "",
+      "degree": "",
+      "thesis": ""
     },
     {
       "name_ko": "김태규",
       "name_en": "Kim, Taegyu",
-      "group": "current",
+      "group": "alumni",
       "level": "Master",
       "photo": "assets/uploads/240312_2.png",
       "email": "tae99@korea.kr",
       "affiliation": "김해시 대중교통과",
-      "period": "2024. 3. ~ 현재"
+      "period": "2024. 3. ~ 현재",
+      "grad_year": "",
+      "degree": "",
+      "thesis": ""
     },
     {
       "name_ko": "차정은",
@@ -83,22 +89,28 @@
     {
       "name_ko": "이준휘",
       "name_en": "Lee, Junhwi",
-      "group": "current",
+      "group": "alumni",
       "level": "Undergraduate",
       "photo": "assets/uploads/20250108.webp",
       "email": "junhwi01@naver.com",
       "affiliation": "동아대학교 도시공학과 학부",
-      "period": "2024. 10. ~ 현재"
+      "period": "2024. 10. ~ 현재",
+      "grad_year": "",
+      "degree": "",
+      "thesis": ""
     },
     {
       "name_ko": "안유주",
       "name_en": "Ahn, Yuju",
-      "group": "current",
+      "group": "alumni",
       "level": "Undergraduate",
       "photo": "assets/uploads/20250410.webp",
       "email": "stella1346@naver.com",
       "affiliation": "동아대학교 도시공학과 학부",
-      "period": "2025. 3. ~ 현재"
+      "period": "2025. 3. ~ 현재",
+      "grad_year": "",
+      "degree": "",
+      "thesis": ""
     },
     {
       "name_ko": "김민정",
@@ -106,6 +118,7 @@
       "group": "alumni",
       "level": "PhD",
       "photo": "assets/uploads/20230921_img.jpg",
+      "email": "",
       "affiliation": "창원시정연구원 도시공간연구실 책임연구원",
       "grad_year": "2022. 2.",
       "degree": "공학박사",
@@ -140,8 +153,8 @@
       "photo": "assets/uploads/1200002.jpg",
       "affiliation": "도로교통공단 부산광역시지부 안전시설부",
       "grad_year": "2024. 2.",
-      "thesis": "택시 교통사고 심각도 영향요인 분석에 관한 연구 : 부산광역시 교차로를 중심으로 / Analysis of Factors Influencing the Severity of Taxi Traffic Accident at the Intersection of Busan",
-      "degree": "공학석사"
+      "degree": "공학석사",
+      "thesis": "택시 교통사고 심각도 영향요인 분석에 관한 연구 : 부산광역시 교차로를 중심으로 / Analysis of Factors Influencing the Severity of Taxi Traffic Accident at the Intersection of Busan"
     },
     {
       "name_ko": "송수정",
@@ -151,8 +164,8 @@
       "photo": "assets/uploads/1200003.jpg",
       "affiliation": "도로교통공단 부산광역시지부 안전시설부",
       "grad_year": "2024. 2.",
-      "thesis": "어린이보호구역 교통안전시설물 설치 개선방안에 대한 연구 : 부산광역시를 중심으로 / A Study on the Improvement of the Safety Facility Installation in School Zone, Focused on Busan Metropolitan City",
-      "degree": "공학석사"
+      "degree": "공학석사",
+      "thesis": "어린이보호구역 교통안전시설물 설치 개선방안에 대한 연구 : 부산광역시를 중심으로 / A Study on the Improvement of the Safety Facility Installation in School Zone, Focused on Busan Metropolitan City"
     },
     {
       "name_ko": "정일근",
@@ -162,8 +175,8 @@
       "photo": "assets/uploads/1027_01.webp",
       "affiliation": "도로교통공단 부산광역시지부 안전시설부 과장",
       "grad_year": "2023. 8.",
-      "thesis": "우회전 신호 운영방식에 따른 이동성 및 안전성 평가에 관한 연구 / A Study on Efficiency and Safety Evaluation Based on Right-turn Operation",
-      "degree": "공학석사"
+      "degree": "공학석사",
+      "thesis": "우회전 신호 운영방식에 따른 이동성 및 안전성 평가에 관한 연구 / A Study on Efficiency and Safety Evaluation Based on Right-turn Operation"
     },
     {
       "name_ko": "정대한",
@@ -173,8 +186,8 @@
       "photo": "assets/uploads/0209_01.jpg",
       "affiliation": "신명이앤씨(주) 교통계획부",
       "grad_year": "2021. 2.",
-      "thesis": "ADAS 데이터 기반 자율주행자동차 모빌리티 서비스의 개발과 평가 / Development and Evaluation of Mobility Service of Autonomous Vehicles Based on ADAS Data",
-      "degree": "공학석사"
+      "degree": "공학석사",
+      "thesis": "ADAS 데이터 기반 자율주행자동차 모빌리티 서비스의 개발과 평가 / Development and Evaluation of Mobility Service of Autonomous Vehicles Based on ADAS Data"
     },
     {
       "name_ko": "우보람",
@@ -184,8 +197,8 @@
       "photo": "assets/uploads/0209_02.jpg",
       "affiliation": "한국교통연구원 종합교통연구본부 연구원",
       "grad_year": "2021. 2.",
-      "thesis": "화재 출동 지체 요인 분석에 관한 연구 : 부산광역시를 중심으로 / Analysis of Factors Associated with Fire Mobilization Delay, Focused on Busan Metropolitan City",
-      "degree": "공학석사"
+      "degree": "공학석사",
+      "thesis": "화재 출동 지체 요인 분석에 관한 연구 : 부산광역시를 중심으로 / Analysis of Factors Associated with Fire Mobilization Delay, Focused on Busan Metropolitan City"
     },
     {
       "name_ko": "김아름",
@@ -195,8 +208,8 @@
       "photo": "assets/uploads/0209_03.jpg",
       "affiliation": "한국교통연구원 광역·도시교통연구본부 연구원",
       "grad_year": "2021. 2.",
-      "thesis": "경사를 고려한 마이크로 모빌리티 수단의 대중교통 서비스 개선에 대한 평가 : 부산광역시를 중심으로 / An Evaluation of Micro Mobility Modes on the Improvement of Public Transit Service Considering Slope, Focused on Busan Metropolitan City",
-      "degree": "공학석사"
+      "degree": "공학석사",
+      "thesis": "경사를 고려한 마이크로 모빌리티 수단의 대중교통 서비스 개선에 대한 평가 : 부산광역시를 중심으로 / An Evaluation of Micro Mobility Modes on the Improvement of Public Transit Service Considering Slope, Focused on Busan Metropolitan City"
     },
     {
       "name_ko": "안우성",
