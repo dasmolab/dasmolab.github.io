@@ -148,7 +148,7 @@
     "index.html": [
       { label: "About the Lab", key: "about" },
       { label: "Research",      key: "research" },
-      { label: "Courses",       key: "classes" },
+      { label: "Classes",       key: "classes" },
       { label: "Location",      key: "location" },
     ],
     "people.html": [

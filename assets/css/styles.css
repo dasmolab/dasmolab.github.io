@@ -68,6 +68,9 @@ ul { margin: 0; padding: 0; }
   text-transform: uppercase; color: var(--teal-dark); margin-bottom: .6rem;
 }
 .section__title { font-size: clamp(1.6rem, 3.4vw, 2.1rem); }
+/* 2026-07 Home 전용: 한글 제목을 없애고 영문만 제목 크기로 키운 형태
+   (RESEARCH / CLASSES / LOCATION). People 페이지 제목은 기존 구조 유지. */
+.section__title--en { text-transform: uppercase; letter-spacing: .05em; margin-bottom: 0; }
 .section__desc { color: var(--text-soft); font-size: 1.05rem; }
 .text-center { text-align: center; }
 
@@ -231,7 +234,16 @@ ul { margin: 0; padding: 0; }
 .hero__ko { font-size: clamp(1.05rem, 2.2vw, 1.35rem); color: #cfe0f5; font-weight: 600; }
 .hero__en { margin-bottom: .15rem; }
 .hero__ko { margin-bottom: 1.4rem; }
-.hero__lead { color: #b9c7dd; font-size: 1.06rem; max-width: 620px; margin-bottom: 2rem; }
+/* 2026-07: 연구실 소개(intro1/intro2 두 문단)가 히어로 안으로 들어왔다.
+   글자 크기는 기존(1.06rem) 그대로 두고, 줄 수를 줄이려고 글 폭만 넓혔다.
+   되돌릴 때 원래 값 → color:#b9c7dd; max-width:620px; margin-bottom:2rem; */
+.hero__lead { color: #c8d6ea; font-size: 1.06rem; max-width: 760px; margin-bottom: 0; }
+.hero__lead p { margin-bottom: .9rem; }
+.hero__lead p:last-child { margin-bottom: 0; }
+.hero__lead .about-photo { max-width: 420px; margin-top: 1.2rem; }
+/* .state는 흰 배경용 회색이라 네이비 히어로 안에서는 안 보인다(로딩·실패 문구) */
+.hero .state { color: #b9c7dd; text-align: left; padding: 1rem 0; }
+@media (max-width: 560px) { .hero__lead { font-size: .99rem; } }
 .hero__cta { display: flex; flex-wrap: wrap; gap: .8rem; }
 
 .btn {
@@ -277,14 +289,17 @@ ul { margin: 0; padding: 0; }
    ========================================================================== */
 .people-grid { display: grid; gap: 1.25rem; grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 620px) { .people-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 980px) { .people-grid { grid-template-columns: repeat(4, 1fr); } }
+/* 2026-07: 구성원 사진 축소 요청 — 4열 → 5열(카드 폭 270→212px).
+   되돌릴 때 원래 값 → repeat(4, 1fr) */
+@media (min-width: 980px) { .people-grid { grid-template-columns: repeat(5, 1fr); } }
 
 .person {
   background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
   overflow: hidden; box-shadow: var(--shadow); transition: .18s; display: flex; flex-direction: column;
 }
 .person:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
-.person__photo { aspect-ratio: 3 / 3.6; background: var(--bg-muted) center/cover no-repeat; }
+/* 사진 세로 비율도 함께 완화 (되돌릴 때 원래 값 → 3 / 3.6) */
+.person__photo { aspect-ratio: 3 / 3.4; background: var(--bg-muted) center/cover no-repeat; }
 .person__photo--ph { display: grid; place-items: center; color: #b6c0cf; font-size: 2.4rem; font-weight: 700; }
 .person__body { padding: .9rem 1rem 1.1rem; }
 .person__name { font-weight: 700; color: var(--ink); font-size: 1.02rem; }
@@ -510,7 +525,8 @@ table.data .name { color: var(--ink); font-weight: 600; }
    추가 컴포넌트 (2026-07 개편)
    ========================================================================== */
 /* 썸네일·인물 사진을 <img loading="lazy">로 렌더링할 때의 형태 유지 */
-img.person__photo { object-fit: cover; }
+/* object-position:top — 사진을 낮은 비율로 자를 때 얼굴(윗부분)이 남도록 */
+img.person__photo { object-fit: cover; object-position: top; }
 img.person__photo { width: 100%; }
 
 /* 홈 소개 사진 */

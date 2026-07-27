@@ -55,7 +55,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 
 | 메인탭 | data-page | 소탭 (URL 해시 key) | 소탭 동작 | 데이터 소스 |
 |---|---|---|---|---|
-| **Home** | home | 소개(`about`) / 연구 분야(`research`) / 강의(`classes`) / **오시는 길(`location`)** | 섹션 스크롤 | `site.json` |
+| **Home** | home | 소개(`about` — **히어로 자체**) / 연구 분야(`research`) / 강의(`classes`) / **오시는 길(`location`)** | 섹션 스크롤 | `site.json` |
 | **People** | people | 지도교수(`professor`) / 현재 구성원(`current`) / 졸업생(`alumni`) / 지원(`apply`) | 탭 전환 | `professor.json`, `members.json`, `apply.json` |
 | **Research** | research | 연구 분야(`areas`) / 연구 과제(`projects`) | 탭 전환 | `site.research_topics`, `projects.json` |
 | **Papers** | publications | 전체(`all`) / `International` / `Domestic` / 기타(`Other`) / 저서(`Books`) | 구분 칩 자동 선택 | `publications.json` |
@@ -88,7 +88,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 **필터 엔진** — `filterBlock(cfg)`: 구분 칩 + 연도 드롭다운 + **텍스트 검색(`getText`)**. `applyFilter`/`wireFilters`(위임 핸들러) + **`applyHashToFilters`**(URL 해시 → 칩/연도 자동 선택 — 헤더 드롭다운 딥링크의 핵심. `wireFilters`는 호출될 때마다 이걸 다시 적용한다). Publications/Conferences/Patents/Awards/Projects가 사용. 목록은 렌더 전에 `sortByDateDesc`로 날짜 내림차순 정렬(편집 순서 실수를 코드가 흡수).
 
 **페이지 렌더 함수** (`PAGES` 맵 → `body[data-page]` 디스패치)
-- `renderHome` — 소개(+`about_photo`)/연구/강의(문자열·`{name,link}` 겸용)/**오시는 길(`buildLocation`)**. 히어로 바로 아래가 소개 섹션이다(통계·모집 배너·최신소식은 2026-07 삭제).
+- `renderHome` — 소개(+`about_photo`)/연구/강의(문자열·`{name,link}` 겸용)/**오시는 길(`buildLocation`)**. **2026-07-27: 별도 About 섹션을 없애고 `#home-intro`(intro1+intro2)를 히어로 안으로 넣었다** — 히어로가 곧 연구실 소개이고, `<section class="hero" id="about">`이 소탭 `about` 딥링크를 받는다. 홈의 남은 3개 섹션 제목은 한글을 지우고 영문만 제목 크기로 키운 `.section__title--en`(RESEARCH / CLASSES / LOCATION) — **People 페이지 제목은 기존 eyebrow+한글 구조 그대로**다.
 - `renderPeople` — 지도교수(`links` 연구자 프로필 버튼, media `date`+`source`)/구성원(관심분야 태그, group×level 미매칭도 '기타'로 표시)/졸업생/지원(**`apply.json` 데이터 + 현재 모집 공고 본문 + FAQ**).
 - `renderResearch` / `renderPublications`(Papers) / `renderConferences` / `renderPatents` / `renderAwards` — 뒤 4개는 소탭 없이 `filterBlock` 하나를 바로 렌더.
 
@@ -128,7 +128,9 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 
 - 디자인 토큰 `:root` — 네이비 `--navy` + 틸 액센트. **`--teal-dark`(#0B7568)는 흰 배경 텍스트용으로 WCAG AA(5.6:1)를 맞춘 값** — 밝게 되돌리지 말 것.
 - 주요 컴포넌트: `.site-header/.nav/.nav__sub/.nav__subtoggle`(모바일 아코디언), `.subnav`, `.fbar/.fchip/.fyear/.fsearch`(필터+검색), `.hero`(`.hero__en`+`.hero__ko` 같은 크기 2줄), `.card/.grid`, `.people-grid/.person`, `.prof-*/.prof-links`, `.ref-list`, `table.data`, `.recruit`(지원 탭 모집 콜아웃), `.apply-cta/.collapse--faq`, `.loc-box/.btn--map`, `.about-photo`, `.tags--sm`.
-- 썸네일·인물 사진은 `<img loading="lazy">`로 렌더(placeholder만 div/span). `@media print` 블록 있음.
+- 썸네일·인물 사진은 `<img loading="lazy">`로 렌더(placeholder만 div/span). `@media print` 블록 있음 — **`.hero`를 숨기므로 Home을 인쇄하면 연구실 소개가 빠진다**(소개가 히어로로 들어간 2026-07-27 이후).
+- **`.hero__lead`는 이제 소개 두 문단을 담는 `<div id="home-intro">`다**(폭 760px, 문단 간격 .9rem, 560px 이하에서 .99rem). `.section__title--en`은 홈 전용 대문자 영문 제목.
+- 구성원 사진 크기는 **`.people-grid`의 열 수(980px↑ 5열)와 `.person__photo`의 `aspect-ratio`(3/3.4) 두 값으로만** 결정된다 — 교수님이 크기 조정을 요청하면 이 둘만 만지면 되고, 원래 값(4열 · 3/3.6)은 주석에 적어 두었다.
 - 반응형 분기: 헤더는 **한 줄(메인탭만, `--header-h: 68px`)**, `max-width: 1080px`(햄버거 + 드로어), `560px`(카드 세로 쌓기). `scrollToHash()`는 `--header-h` 대신 헤더 실제 높이(offsetHeight)를 측정한다.
 
 ---
