@@ -444,6 +444,12 @@ ul { margin: 0; padding: 0; }
 /* 기간 칸은 절대 줄바꿈하지 않음 — 두 자리 월(예: 2025. 12. ~ 2026. 11.)도 한 줄 유지 */
 .proj-item .period { font-weight: 700; color: var(--navy); font-size: .9rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .proj-item .title { color: var(--ink); font-weight: 600; }
+/* 진행 중 표식 — 제목 뒤에 붙는 작은 배지(기간 칸은 폭이 고정이라 피한다) */
+.proj-item .badge--live {
+  display: inline-block; margin-left: .45rem; padding: .1rem .45rem; border-radius: 999px;
+  background: rgba(20,184,166,.14); color: var(--teal-dark); font-size: .72rem; font-weight: 700;
+  vertical-align: middle; white-space: nowrap;
+}
 .proj-item .org { color: var(--teal-dark); font-size: .9rem; font-weight: 600; margin-top: .15rem; }
 @media (max-width: 620px) { .proj-item { grid-template-columns: 1fr; gap: .2rem; } }
 

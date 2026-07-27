@@ -12,7 +12,7 @@
    The site shows 7 main tabs; each academic-record tab has its own page
    and data file:
      People       = professor.json + members.json (+ apply.json, news 모집)
-     Research     = site.research_topics + projects.json
+     Research     = projects.json  (research areas live on Home only)
      Papers       = publications.json   (publications.html)
      Conferences  = conferences.json
      Patents      = patents.json
@@ -59,7 +59,9 @@
     fbAll: "All", fbAllYears: "All Years", fbCat: "Category", fbYear: "Year",
     fbYearAria: "Filter by year", fbSearchPh: "Search by keyword or author",
     fbNone: "No items match the selected filters.",
-    hAreas: "Research Areas", hProjects: "Projects", noAreas: "No research areas yet.",
+    hProjects: "Projects",
+    projChips: { ongoing: "Ongoing", completed: "Completed" },
+    projLive: "Ongoing",
     projLoadFail: "Could not load project information.",
     pubNone: "No publications yet.", confNone: "No conference presentations yet.",
     patNone: "No patents yet.", awdNone: "No awards yet.",
@@ -73,7 +75,6 @@
     tabProfessor: "Professor", tabCurrent: "Current Members", tabAlumni: "Alumni", tabApply: "Join Us",
     headProfessor: ["Professor", "Professor"], headCurrent: ["Current", "Current Members"],
     headAlumni: ["Alumni", "Alumni"], headApply: ["Join Us", "Join Us"],
-    tabAreas: "Research Areas", tabProjects: "Projects",
     locAddress: "Address", locOffice: "Office", locTransit: "Public transit",
     mapKakao: "Kakao Map", mapNaver: "Naver Map", mapGoogle: "Google Maps",
     loading: "Loading…",
@@ -108,7 +109,9 @@
     fbAll: "전체", fbAllYears: "전체 연도", fbCat: "구분", fbYear: "연도",
     fbYearAria: "연도로 필터링", fbSearchPh: "키워드·저자로 검색",
     fbNone: "선택한 조건에 맞는 항목이 없습니다.",
-    hAreas: "연구 분야 (Research Areas)", hProjects: "연구 과제 (Projects)", noAreas: "등록된 연구 분야가 없습니다.",
+    hProjects: "연구 과제 (Projects)",
+    projChips: { ongoing: "진행 중", completed: "완료" },
+    projLive: "진행 중",
     projLoadFail: "프로젝트 정보를 불러오지 못했습니다.",
     pubNone: "등록된 논문이 없습니다.", confNone: "등록된 학술대회 발표가 없습니다.",
     patNone: "등록된 특허가 없습니다.", awdNone: "등록된 수상 실적이 없습니다.",
@@ -122,7 +125,6 @@
     tabProfessor: "지도교수", tabCurrent: "현재 구성원", tabAlumni: "졸업생", tabApply: "지원",
     headProfessor: ["Professor", "지도교수"], headCurrent: ["Current", "현재 구성원"],
     headAlumni: ["Alumni", "졸업생"], headApply: ["Join Us", "지원 안내"],
-    tabAreas: "연구 분야", tabProjects: "연구 과제",
     locAddress: "주소", locOffice: "연구실", locTransit: "대중교통",
     mapKakao: "카카오맵", mapNaver: "네이버지도", mapGoogle: "구글지도",
     loading: "불러오는 중…",
@@ -139,11 +141,11 @@
   ];
 
   // Sub-tabs shown in each main tab's hover dropdown. Each page uses the same
-  // `key` to activate the matching sub-tab / section from the URL hash.
-  // Papers/Conferences/Patents/Awards have no entry here: they still carry the
-  // ▾ marker so the menu row reads uniformly, but they open no dropdown.
-  //   tabbed pages (People/Research): key = sub-tab id
-  //   scroll page  (Home):            key = on-page element id
+  // `key` to activate the matching sub-tab / section / filter from the URL hash.
+  //   tabbed page (People): key = sub-tab id
+  //   scroll page (Home):   key = on-page element id
+  // The list pages (Papers / Conferences / Patents / Research / Awards) are
+  // filled in below — there the key is a filter value, not a sub-tab.
   const SUBNAV = EN ? {
     "index.html": [
       { label: "About the Lab", key: "about" },
@@ -157,10 +159,6 @@
       { label: "Alumni",          key: "alumni" },
       { label: "Join Us",         key: "apply" },
     ],
-    "research.html": [
-      { label: "Research Areas", key: "areas" },
-      { label: "Projects",       key: "projects" },
-    ],
   } : {
     "index.html": [
       { label: "연구실 소개", key: "about" },
@@ -173,10 +171,6 @@
       { label: "현재 구성원", key: "current" },
       { label: "졸업생",      key: "alumni" },
       { label: "지원",        key: "apply" },
-    ],
-    "research.html": [
-      { label: "연구 분야", key: "areas" },
-      { label: "연구 과제", key: "projects" },
     ],
   };
 
@@ -200,6 +194,14 @@
     { label: T.patChips.Application, key: "Application" },
     { label: T.patChips.Registration, key: "Registration" },
     { label: T.patChips.Software, key: "Software" },
+  ];
+  // Research has no category field in the data: the chips are the project
+  // status derived from the period's end date (projStatus). Picking 완료 then
+  // narrows further by year — that year list follows the chip (yearsFollowCat).
+  SUBNAV["research.html"] = [
+    { label: T.fbAll, key: "all" },
+    { label: T.projChips.ongoing, key: "ongoing" },
+    { label: T.projChips.completed, key: "completed" },
   ];
 
   // The News page was retired (2026-07); news.json now feeds only the
@@ -493,7 +495,7 @@
      Content builders — pure (data → HTML string), reused by merged pages.
      ==================================================================== */
 
-  // Research-area cards (Home + Research page)
+  // Research-area cards (Home — the Research page no longer repeats them)
   function buildResearchTopics(site) {
     if (!site || !Array.isArray(site.research_topics)) return "";
     return site.research_topics.map(t => {
@@ -737,6 +739,37 @@
   function sortByDateDesc(items, get) {
     return items.slice().sort((a, b) => dateKey(get(b)) - dateKey(get(a)));
   }
+
+  // Project period → end month as YYYYMM, for the 진행 중 / 완료 split.
+  // The two languages write the period differently, so read both:
+  //   KO "2026. 7. ~ 2027. 3."   EN "Apr 2026 – Mar 2027"
+  // Only the part after the range separator matters. A period with no month
+  // (or no readable end at all) counts as running to the end of that year, so
+  // an ambiguous entry stays 진행 중 rather than being buried under 완료.
+  const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+  function periodEnd(period) {
+    const s = String(period == null ? "" : period);
+    const parts = s.split(/[~–—-]/);           // ~ – — -
+    const tail = parts.length > 1 ? parts[parts.length - 1] : s;
+    const y = tail.match(/(?:19|20)\d{2}/);
+    if (!y) return 0;
+    let month = 0;
+    const ko = tail.match(/(?:19|20)\d{2}\s*[.\/년]\s*(\d{1,2})/);   // 2027. 3.
+    if (ko) month = Number(ko[1]);
+    else {
+      const en = tail.toLowerCase().match(/[a-z]{3,}/);              // Mar 2027
+      if (en) month = MONTHS.indexOf(en[0].slice(0, 3)) + 1;
+    }
+    if (month < 1 || month > 12) month = 12;
+    return Number(y[0]) * 100 + month;
+  }
+  // "ongoing" while the end month has not passed yet, else "completed"
+  function projStatus(p) {
+    const end = periodEnd(p && p.period);
+    if (!end) return "ongoing";                          // unreadable → keep visible
+    const now = todayStr();
+    return end < Number(now.slice(0, 4) + now.slice(5, 7)) ? "completed" : "ongoing";
+  }
   // categories actually present in `items`, in canonical order, with labels
   function presentCats(items, order, labels) {
     return order.filter(k => items.some(i => i.category === k))
@@ -746,6 +779,15 @@
   // Render a filter bar + list container for one tab. cfg:
   //   items, cats:[{key,label}]|null, getCat(item), getYear(item)→"YYYY",
   //   getText(item)→string|null, render(list)→HTML
+  // <option> list for a year <select>, newest first (rebuilt by applyFilter
+  // when cfg.yearsFollowCat ties the year list to the active category chip)
+  function yearOptions(items, getYear) {
+    const years = Array.from(new Set(items.map(getYear).filter(Boolean)))
+      .sort((a, b) => Number(b) - Number(a));
+    return `<option value="">${esc(T.fbAllYears)}</option>` +
+      years.map(y => `<option value="${esc(y)}">${esc(y)}</option>`).join("");
+  }
+
   function filterBlock(cfg) {
     const id = "fb" + (++_fbSeq);
     FILTERS[id] = cfg;
@@ -760,8 +802,7 @@
     }
     const controls = [];
     if (years.length) {
-      const opts = `<option value="">${esc(T.fbAllYears)}</option>` +
-        years.map(y => `<option value="${esc(y)}">${esc(y)}</option>`).join("");
+      const opts = yearOptions(cfg.items, cfg.getYear);
       controls.push(`<span class="fbar__label">${esc(T.fbYear)}</span>` +
         `<select class="fyear" aria-label="${esc(T.fbYearAria)}">${opts}</select>`);
     }
@@ -782,7 +823,18 @@
     const chip = bar ? bar.querySelector(".fchip.active") : null;
     const cat = chip ? (chip.dataset.cat || "") : "";
     const sel = bar ? bar.querySelector(".fyear") : null;
-    const year = sel ? sel.value : "";
+    let year = sel ? sel.value : "";
+    // Research: after picking 진행 중 / 완료 the year list must offer only the
+    // years that chip actually has, so 완료 → 연도 never lands on an empty list.
+    if (cfg.yearsFollowCat && sel) {
+      const pool = cat ? cfg.items.filter(i => cfg.getCat(i) === cat) : cfg.items;
+      const opts = yearOptions(pool, cfg.getYear);
+      if (sel.innerHTML !== opts) {
+        sel.innerHTML = opts;
+        if (!$$("option", sel).some(o => o.value === year)) year = "";  // dropped year → 전체 연도
+        sel.value = year;
+      }
+    }
     const inp = bar ? bar.querySelector(".fsearch") : null;
     const q = inp ? inp.value.trim().toLowerCase() : "";
     let list = cfg.items;
@@ -847,12 +899,18 @@
     applyHashToFilters(root);
   }
 
+  // Project rows. Running projects carry a 진행 중 badge so the mixed 전체 view
+  // still tells the two apart (the chips filter on the same projStatus).
   function buildProjects(projects) {
     if (!Array.isArray(projects)) return "";
-    return projects.map(p => `<div class="proj-item">
+    return projects.map(p => {
+      const live = projStatus(p) === "ongoing"
+        ? `<span class="badge badge--live">${esc(T.projLive)}</span>` : "";
+      return `<div class="proj-item">
       <div class="period">${esc(p.period || "")}</div>
-      <div><div class="title">${esc(p.title || "")}</div>${p.org ? `<div class="org">${esc(p.org)}</div>` : ""}</div>
-    </div>`).join("");
+      <div><div class="title">${esc(p.title || "")}${live}</div>${p.org ? `<div class="org">${esc(p.org)}</div>` : ""}</div>
+    </div>`;
+    }).join("");
   }
 
   // Publications grouped by category (Papers page)
@@ -941,7 +999,7 @@
     return lis || '<div class="state">' + esc(T.awdNone) + "</div>";
   }
 
-  // Generic sub-tab nav (People / Research).
+  // Generic sub-tab nav (People).
   function mountSubnav(nav, root, tabs, defaultKey) {
     if (!root || !tabs.length) return;
     const find = (k) => tabs.find(t => t.key === k);
@@ -1023,29 +1081,33 @@
   }
 
   /* ====================================================================
-     RESEARCH  (= research areas + projects)
+     RESEARCH  (research.html — projects only)
+     The research areas used to sit here as a second sub-tab, but they are
+     already on Home (#research), so the page now opens straight on the
+     project list (2026-07).
      ==================================================================== */
   async function renderResearch() {
+    // legacy deep link from the two-sub-tab era → the areas now live on Home
+    if (hashKey() === "areas") { location.replace("index.html#research"); return; }
     const site = await fetchData("site"); mountChrome(site);
     const data = await fetchData("projects");
-    const root = $("#research-root"); const nav = $("#research-subnav");
+    const root = $("#research-root");
     if (!root) return;
     const projects = (data && Array.isArray(data.projects)) ? data.projects : null;
-    const topics = buildResearchTopics(site);
-    mountSubnav(nav, root, [
-      { key: "areas", label: T.tabAreas,
-        view: () => topics
-          ? `<div class="group-head"><h3>${esc(T.hAreas)}</h3></div>
-             <div class="grid grid--3" style="margin:1.2rem 0 0">${topics}</div>`
-          : '<div class="state">' + esc(T.noAreas) + "</div>" },
-      { key: "projects", label: T.tabProjects,
-        view: () => projects ? filterBlock({
-          items: projects, cats: null,
-          getCat: () => "", getYear: i => yearIn(i.period),
-          getText: i => (i.title || "") + " " + (i.org || ""),
-          render: (list) => `<div class="group-head"><h3>${esc(T.hProjects)}</h3><span class="count">${list.length}${EN ? "" : "건"}</span></div>${buildProjects(list)}`,
-        }) : '<div class="state">' + esc(T.projLoadFail) + "</div>" },
-    ], "areas");
+    if (!projects) { setState(root, T.projLoadFail); return; }
+    // The chips are the project status (진행 중 / 완료) derived from the period,
+    // and the year list narrows whichever chip is active (yearsFollowCat).
+    // Kept in file order (the EN periods read "Apr 2026 – Mar 2028", which
+    // dateKey cannot parse), so the CMS order is what visitors see.
+    const cats = ["ongoing", "completed"]
+      .filter(k => projects.some(p => projStatus(p) === k))
+      .map(k => ({ key: k, label: T.projChips[k] }));
+    root.innerHTML = filterBlock({
+      items: projects, cats: cats, yearsFollowCat: true,
+      getCat: projStatus, getYear: i => yearIn(i.period),
+      getText: i => (i.title || "") + " " + (i.org || ""),
+      render: (list) => `<div class="group-head"><h3>${esc(T.hProjects)}</h3><span class="count">${list.length}${EN ? "" : "건"}</span></div>${buildProjects(list)}`,
+    });
     wireFilters(root);
   }
 

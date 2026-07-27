@@ -1,6 +1,16 @@
 {
   "projects": [
     {
+      "period": "Jul 2026 – Mar 2027",
+      "title": "Service for Establishing the Busan Metropolitan City Autonomous Driving Master Plan",
+      "org": "Busan Metropolitan City"
+    },
+    {
+      "period": "Apr 2026 – Jun 2026",
+      "title": "Research Support Service for Autonomous Driving Services Tailored to the Busan–Ulsan–Gyeongnam Region",
+      "org": "Smart Mobility Innovation Research Institute"
+    },
+    {
       "period": "Apr 2026 – Mar 2028",
       "title": "Development of Resident Evacuation Strategies and an AI-Based Emergency Response Model for Emergency Situations at Spent Nuclear Fuel Dry Storage Facilities",
       "org": "Korea Hydro & Nuclear Power (KHNP)"
