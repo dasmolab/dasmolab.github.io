@@ -4,37 +4,43 @@
       "category": "International",
       "citation": "Lee, S., Choi, B., Kwon, W., Cha, J., Jung, J., Kim, H. K.(2025), Optimal Traffic Signal Control for an Atypical Isolated Intersection Using Composite AI Model, International Journal of Urban Sciences, Accepted for Publication.",
       "sci": true,
-      "link": "https://doi.org/10.1080/12265934.2025.2586754"
+      "link": "https://doi.org/10.1080/12265934.2025.2586754",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Cha, J., Lee, S., Kim, H. K. (2025). Deep Learning-based Detection and Assessment of Road Damage Caused by Disaster with Satellite Imagery, Applied Sciences, 15(14):7669.",
       "sci": true,
-      "link": "https://doi.org/10.3390/app15147669"
+      "link": "https://doi.org/10.3390/app15147669",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Kim, H. K., Kim, A., Chung, Y. (2025). How Much does the Introduction of Micromobility in Hilly Cities Improve Public Transportation Services? A Case Study of Busan, Korea, Cities, 166.",
       "sci": true,
-      "link": "https://doi.org/10.1016/j.cities.2025.106192"
+      "link": "https://doi.org/10.1016/j.cities.2025.106192",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Yoon, H, Kim, H. K., Kim, S. (2025). PPDD: Egocentric Crack Segmentation in the Port Pavement with Deep Learning-Based Methods, Applied Sciences, 15(10):5446.",
       "sci": true,
-      "link": "https://doi.org/10.3390/app15105446"
+      "link": "https://doi.org/10.3390/app15105446",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Kim, H. K., (2024). The Environmental Benefit of Automatic Idling Control System of Connected and Autonomous Vehicles (CAVs), Applied Sciences, 14(11):4338.",
       "sci": true,
-      "link": "https://doi.org/10.3390/app14114338"
+      "link": "https://doi.org/10.3390/app14114338",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Kim, H. K., Chung, Y. S., Kim, M. J. (2021). Effect of Enhanced ADAS Camera Capability on Traffic State Estimation, sensors 2021, 21(6), 1996.",
       "sci": true,
-      "link": "https://doi.org/10.3390/s21061996"
+      "link": "https://doi.org/10.3390/s21061996",
+      "venue": ""
     },
     {
       "category": "International",
@@ -46,134 +52,155 @@
       "category": "International",
       "citation": "Yang, C. H., Kim, H. K., Kim, J. G., Kim, S. (2020). Impact of an automated road debris removal system on traffic flow using VISSIM. SIMULATION, 96(9), 725-735.",
       "sci": true,
-      "link": "https://doi.org/10.1177/0037549720931159"
+      "link": "https://doi.org/10.1177/0037549720931159",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Kim, M., Kim, H. K. (2020). Investigation of environmental benefits of traffic signal countdown timers. Transportation Research Part D: Transport and Environment, 85.",
       "sci": true,
-      "link": "https://doi.org/10.1016/j.trd.2020.102464"
+      "link": "https://doi.org/10.1016/j.trd.2020.102464",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Kanchanasut, K., Boonsiripant, S., Tunpan, A., Kim, H. K., Ekpanyapong, M. (2015). Internet of cars through commodity V2V and V2X mobile routers: Applications for developing countries. KSCE Journal of Civil Engineering, 19(6), 1897-1904.",
       "sci": true,
-      "link": "https://doi.org/10.1007/s12205-014-0614-z"
+      "link": "https://doi.org/10.1007/s12205-014-0614-z",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Randeniya, D., Kim, H. K. (2013). Estimation of its sensor operational states by analyzing measurements with errors using a Hidden Markov Model. KSCE Journal of Civil Engineering, 17(7), 1740-1748.",
       "sci": true,
-      "link": "https://doi.org/10.1007/s12205-013-0284-2"
+      "link": "https://doi.org/10.1007/s12205-013-0284-2",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Kao, S. C., Kim, H. K., Liu, C., Cui, X., Bhaduri, B. L. (2012). Dependence-preserving approach to synthesizing household characteristics. Transportation Research Record, 2302(1), 192-200.",
       "sci": true,
-      "link": "https://doi.org/10.3141/2302-21"
+      "link": "https://doi.org/10.3141/2302-21",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Kim, H. K. (2012). Introduction of Vehicle Miles Traveled Tax in the Developing Countries, Asian Pacific Planning Review, 8(1).",
-      "sci": false
+      "sci": false,
+      "link": "",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Cui, X., Kim, H. K., Liu, C., Kao, S. C., Bhaduri, B. L. (2012). Simulating the household plug-in hybrid electric vehicle distribution and its electric distribution network impacts. Transportation Research Part D: Transport and Environment, 17(7), 548-554.",
       "sci": true,
-      "link": "https://doi.org/10.1016/j.trd.2012.05.011"
+      "link": "https://doi.org/10.1016/j.trd.2012.05.011",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Hunter, M. P., Wu, S. K., Kim, H. K., Suh, W. (2012). A probe-vehicle-based evaluation of adaptive traffic signal control. IEEE Transactions on Intelligent Transportation Systems, 13(2), 704-713.",
       "sci": true,
-      "link": "https://doi.org/10.1109/TITS.2011.2178404"
+      "link": "https://doi.org/10.1109/TITS.2011.2178404",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Kim, H. K. (2012). Improvement of ATIS Model Performance under Connected Vehicle Environment, Journal of Korean Society of Intelligent Transport Systems, 11(4), 10-18.",
       "sci": false,
-      "link": "https://doi.org/10.12815/kits.2012.11.4.010"
+      "link": "https://doi.org/10.12815/kits.2012.11.4.010",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Kim, H. K. (2011). Development and Comparison of Centralized and Decentralized ATIS Models with Simulation Method, Journal of Korean Society of Intelligent Transport Systems, 10(2), 1-8.",
       "sci": false,
-      "link": "https://www.earticle.net/Article/A146042"
+      "link": "https://www.earticle.net/Article/A146042",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Seshasayee, B., Hunter, M., Fujimoto, R. M., Guensler, R., Schwan, K., Kim, H. K., Sirichoke, J. Suh, W. (2011). On the resilience of ad hoc distributed simulation of surface transportation systems with unreliable communications. Journal of Algorithms & Computational Technology, 5(4), 531-544.",
       "sci": false,
-      "link": "https://doi.org/10.1260/1748-3018.5.4.531"
+      "link": "https://doi.org/10.1260/1748-3018.5.4.531",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Kim, H. K., Hunter, M. P., Fujimoto, R. M. (2009). A simulation-based investigation of a dynamic advanced traveler information system. In Proceedings of the 2009 Winter Simulation Conference (WSC), 1124-1135.",
       "sci": false,
-      "link": "https://doi.org/10.1109/WSC.2009.5429311"
+      "link": "https://doi.org/10.1109/WSC.2009.5429311",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Fujimoto, R., Hunter, M., Sirichoke, J., Palekar, M., Kim, H. K., Suh, W. (2007). Ad hoc distributed simulations. In Proceedings of 21st International Workshop on Principles of Advanced and Distributed Simulation (PADS'07), 15-24.",
       "sci": false,
-      "link": "https://doi.org/10.1109/PADS.2007.10"
+      "link": "https://doi.org/10.1109/PADS.2007.10",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Fujimoto, R. M., Guensler, R., Hunter, M., Schwan, K., Kim, H. K., Seshasayee, B., Sirichoke, J. Suh, W. (2007). Ad hoc distributed simulation of surface transportation systems. In International Conference on Computational Science, 1050-1057, Springer, Berlin, Heidelberg.",
       "sci": false,
-      "link": "https://doi.org/10.1007/978-3-540-72584-8_138"
+      "link": "https://doi.org/10.1007/978-3-540-72584-8_138",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Kim, H. K., Oh, S. K., Bae, G. M. (2006). Demonstrative comparison of two traffic signal optimization programs: Synchro-6 and PASSER II. KSCE Journal of Civil Engineering, 10(1), 41-45.",
       "sci": true,
-      "link": "https://doi.org/10.1007/BF02829302"
+      "link": "https://doi.org/10.1007/BF02829302",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Hunter, M. P., Wu, S. K., Kim, H. K., (2006). Practical procedure to collect arterial travel time data using GPS-Instrumented test vehicles. Transportation Research Record, 1978(1), 160-168.",
       "sci": true,
-      "link": "https://doi.org/10.1177/0361198106197800120"
+      "link": "https://doi.org/10.1177/0361198106197800120",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Hunter, M. P., Fujimoto, R. M., Suh, W., Kim, H. K. (2006). An investigation of real-time dynamic data driven transportation simulation. In Proceedings of the 2006 Winter Simulation Conference (WSC), 1414-1421.",
       "sci": false,
-      "link": "https://doi.org/10.1109/WSC.2006.323242"
+      "link": "https://doi.org/10.1109/WSC.2006.323242",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Fujimoto, R., Guensler, R., Hunter, M., Kim, H. K., Lee, J., Leonard, J., Schwan, K. Seshasayee, B. (2006). Dynamic data driven application simulation of surface transportation systems. In International Conference on Computational Science, 425-432, Springer, Berlin, Heidelberg.",
       "sci": false,
-      "link": "https://doi.org/10.1007/11758532_57"
+      "link": "https://doi.org/10.1007/11758532_57",
+      "venue": ""
     },
     {
       "category": "International",
       "citation": "Kim, H. K., Hunter, M. P. (2005). Effect of pedestrian-related factors on intersection performance. Transportation Research Record, 1920(1), 65-73.",
       "sci": true,
-      "link": "https://doi.org/10.1177/0361198105192000108"
+      "link": "https://doi.org/10.1177/0361198105192000108",
+      "venue": ""
     },
     {
       "category": "Domestic",
-      "citation": "이은정, 김민정, 양정모, 정지효, 김회경 (2026), 과속방지턱에 의한 긴급차량 출동 지연 관련 소방대원의 의식조사 및 분석 : 부산광역시를 중심으로, 한국도로학회논문집, accepted",
+      "citation": "정지효, 김회경 (2026), 버스 통행시간의 신뢰성 평가와 비교, 부산광역시 간선급행버스와 비간선급행버스를 중심으로, 대한교통학회지, 44(4), 683-702",
       "sci": false,
       "link": "",
       "venue": ""
     },
     {
       "category": "Domestic",
-      "citation": "정지효, 김회경 (2026), 버스 통행시간의 신뢰성 평가와 비교, 부산광역시 간선급행버스와 비간선급행버스를 중심으로, 대한교통학회지, accepted",
+      "citation": "이은정, 김민정, 양정모, 정지효, 김회경 (2026), 과속방지턱에 의한 긴급차량 출동 지연 관련 소방대원의 의식조사 및 분석 : 부산광역시를 중심으로, 한국도로학회논문집, 28(3), 63-73",
       "sci": false,
-      "link": "",
+      "link": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003344830",
       "venue": ""
     },
     {
       "category": "Domestic",
       "citation": "정지효, 이치열, 김회경. (2025), 스마트 자중계 도입에 따른 경제성 분석에 관한 연구, 한국도로학회논문집, 27(3), 17-25.",
       "sci": false,
-      "link": "https://doi.org/10.7855/IJHE.2025.27.3.017"
+      "link": "https://doi.org/10.7855/IJHE.2025.27.3.017",
+      "venue": ""
     },
     {
       "category": "Domestic",
