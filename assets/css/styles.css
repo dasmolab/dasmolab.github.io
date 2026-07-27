@@ -288,9 +288,12 @@ ul { margin: 0; padding: 0; }
    People (members) cards
    ========================================================================== */
 .people-grid { display: grid; gap: 1.25rem; grid-template-columns: repeat(2, 1fr); }
-@media (min-width: 620px) { .people-grid { grid-template-columns: repeat(3, 1fr); } }
-/* 2026-07: 구성원 사진 축소 요청 — 4열 → 5열(카드 폭 270→212px).
-   되돌릴 때 원래 값 → repeat(4, 1fr) */
+/* 2026-07 구성원 사진 축소 요청. 사진 비율(3:4)은 원본에 맞춰 고정이므로
+   크기는 오직 열 수로 조절한다 — 비율을 건드리면 크기가 아니라 '잘림'이 바뀐다.
+   휴대폰(620px 미만)만 2열 그대로: 3열로 가면 390px 화면에서 96×128px까지
+   작아져 얼굴 식별이 어렵다.
+   되돌릴 때 원래 값 → 620px: repeat(3, 1fr) / 980px: repeat(4, 1fr) */
+@media (min-width: 620px) { .people-grid { grid-template-columns: repeat(4, 1fr); } }
 @media (min-width: 980px) { .people-grid { grid-template-columns: repeat(5, 1fr); } }
 
 .person {
@@ -298,8 +301,12 @@ ul { margin: 0; padding: 0; }
   overflow: hidden; box-shadow: var(--shadow); transition: .18s; display: flex; flex-direction: column;
 }
 .person:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
-/* 사진 세로 비율도 함께 완화 (되돌릴 때 원래 값 → 3 / 3.6) */
-.person__photo { aspect-ratio: 3 / 3.4; background: var(--bg-muted) center/cover no-repeat; }
+/* 박스 비율은 원본 증명사진과 같은 3:4로 맞춘다 — members 사진 30장을 실측한
+   결과 대부분 0.75(3:4)라, 이 값이어야 object-fit:cover가 아무것도 잘라내지
+   않는다. 3/3.4로 납작하게 잡았더니 세로 15%가 잘려 상체가 사라졌었다.
+   ★ 사진 크기를 더 줄여야 하면 이 비율이 아니라 .people-grid의 열 수를 늘릴 것
+     (비율을 건드리면 크기가 아니라 '잘림'이 바뀐다). */
+.person__photo { aspect-ratio: 3 / 4; background: var(--bg-muted) center/cover no-repeat; }
 .person__photo--ph { display: grid; place-items: center; color: #b6c0cf; font-size: 2.4rem; font-weight: 700; }
 .person__body { padding: .9rem 1rem 1.1rem; }
 .person__name { font-weight: 700; color: var(--ink); font-size: 1.02rem; }
@@ -525,8 +532,9 @@ table.data .name { color: var(--ink); font-weight: 600; }
    추가 컴포넌트 (2026-07 개편)
    ========================================================================== */
 /* 썸네일·인물 사진을 <img loading="lazy">로 렌더링할 때의 형태 유지 */
-/* object-position:top — 사진을 낮은 비율로 자를 때 얼굴(윗부분)이 남도록 */
-img.person__photo { object-fit: cover; object-position: top; }
+/* object-position은 기본값(가운데)을 쓴다. top으로 밀면 잘리는 양이 전부
+   아래쪽으로 몰려 상체가 잘려 나간다 — 박스가 3:4라 애초에 잘릴 게 거의 없다. */
+img.person__photo { object-fit: cover; }
 img.person__photo { width: 100%; }
 
 /* 홈 소개 사진 */

@@ -130,7 +130,8 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 - 주요 컴포넌트: `.site-header/.nav/.nav__sub/.nav__subtoggle`(모바일 아코디언), `.subnav`, `.fbar/.fchip/.fyear/.fsearch`(필터+검색), `.hero`(`.hero__en`+`.hero__ko` 같은 크기 2줄), `.card/.grid`, `.people-grid/.person`, `.prof-*/.prof-links`, `.ref-list`, `table.data`, `.recruit`(지원 탭 모집 콜아웃), `.apply-cta/.collapse--faq`, `.loc-box/.btn--map`, `.about-photo`, `.tags--sm`.
 - 썸네일·인물 사진은 `<img loading="lazy">`로 렌더(placeholder만 div/span). `@media print` 블록 있음 — **`.hero`를 숨기므로 Home을 인쇄하면 연구실 소개가 빠진다**(소개가 히어로로 들어간 2026-07-27 이후).
 - **`.hero__lead`는 이제 소개 두 문단을 담는 `<div id="home-intro">`다**(폭 760px, 문단 간격 .9rem, 560px 이하에서 .99rem). `.section__title--en`은 홈 전용 대문자 영문 제목.
-- 구성원 사진 크기는 **`.people-grid`의 열 수(980px↑ 5열)와 `.person__photo`의 `aspect-ratio`(3/3.4) 두 값으로만** 결정된다 — 교수님이 크기 조정을 요청하면 이 둘만 만지면 되고, 원래 값(4열 · 3/3.6)은 주석에 적어 두었다.
+- **구성원 사진 크기는 `.people-grid`의 열 수로만 조절한다**(2열 / 620px↑ 4열 / 980px↑ 5열). `.person__photo`의 `aspect-ratio: 3/4`는 **크기 손잡이가 아니라 잘림 손잡이**다 — members 사진 30장을 실측하니 17장이 3×4cm(0.75), 6장이 3.5×4.5cm(민증·여권, 0.778)라 3/4가 잘림이 가장 적다. 이 값을 납작하게 바꾸면 `object-fit: cover`가 세로를 잘라내 **상체가 사라진다**(2026-07-27에 3/3.4로 잡았다가 23/24장이 −15% 잘린 사고). `object-position`도 기본(가운데) 유지 — `top`으로 밀면 잘린 양이 전부 아래로 몰린다.
+- 휴대폰(620px 미만)은 의도적으로 2열 유지 — 3열로 가면 390px 화면에서 사진이 96×128px까지 작아져 얼굴 식별이 어렵다. 새 구성원 사진은 **3×4cm 규격**으로 받으면 잘림이 0이 된다.
 - 반응형 분기: 헤더는 **한 줄(메인탭만, `--header-h: 68px`)**, `max-width: 1080px`(햄버거 + 드로어), `560px`(카드 세로 쌓기). `scrollToHash()`는 `--header-h` 대신 헤더 실제 높이(offsetHeight)를 측정한다.
 
 ---
