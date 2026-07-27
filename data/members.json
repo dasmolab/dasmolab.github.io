@@ -15,10 +15,13 @@
       "name_en": "Jung, Jihyo",
       "group": "current",
       "level": "PhD",
-      "photo": "assets/uploads/240312_3.webp",
+      "photo": "/assets/uploads/members/웹파일.jpg",
       "email": "gihyo123450@gmail.com",
       "affiliation": "동아대학교 도시공학과 대학원",
-      "period": "2026. 3. ~ 현재"
+      "period": "2026. 3. ~ 현재",
+      "grad_year": "",
+      "degree": "",
+      "thesis": ""
     },
     {
       "name_ko": "이은정",
@@ -141,7 +144,9 @@
       "group": "alumni",
       "level": "Master",
       "photo": "assets/uploads/20230103_01.jpg",
+      "email": "",
       "affiliation": "동아대학교 도시공학과 박사과정 재학",
+      "period": "",
       "grad_year": "2026. 2.",
       "degree": "공학석사"
     },
