@@ -1,5 +1,5 @@
 {
-  "lab_abbr": "DASMOLabs",
+  "lab_abbr": "DASMO Labs 1.0",
   "lab_name_ko": "동아대학교 도시공학과 교통공학연구실",
   "lab_name_en": "Dong-A Smart Mobility Laboratory",
   "tagline_en": "Smart Mobility · ITS · MaaS",
@@ -103,7 +103,8 @@
   "address": "부산시 사하구 하단동 동아대학교 승학캠퍼스 공대1호관 1404호",
   "phone": "051-200-7665",
   "email": "hoekim@dau.ac.kr",
-  "office": "동아대학교 승학캠퍼스 공대1호관 1404호(S03-0404)",  "transit_info": "부산 도시철도 1호선 하단역 하차 후 동아대학교 셔틀버스 또는 마을버스로 승학캠퍼스 이동",
+  "office": "동아대학교 승학캠퍼스 공대1호관 1404호(S03-0404)",
+  "transit_info": "부산 도시철도 1호선 하단역 하차 후 동아대학교 셔틀버스 또는 마을버스로 승학캠퍼스 이동",
   "map_kakao": "https://map.kakao.com/link/search/동아대학교%20승학캠퍼스",
   "map_naver": "https://map.naver.com/p/search/동아대학교%20승학캠퍼스",
   "map_google": "https://www.google.com/maps/search/?api=1&query=Dong-A%20University%20Seunghak%20Campus"
