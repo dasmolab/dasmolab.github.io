@@ -3,7 +3,7 @@
   "name_en": "Kim, Hoe Kyoung",
   "title": "Professor, Department of Urban Engineering, Dong-A University",
   "photo": "assets/uploads/prof.jpg",
-  "fields": "Transportation Engineering, Intelligent Transportation System (ITS)",
+  "fields": "Transportation Engineering, Intelligent Transportation System (ITS), Smart Mobility",
   "phone": "051-200-7665",
   "email": "hoekim@dau.ac.kr, transurban1@gmail.com",
   "office": "Room 1404 (S03-0404), Engineering Building 1, Seunghak Campus, Dong-A University",
@@ -103,9 +103,51 @@
   ],
   "media": [
     {
+      "date": "Aug 9, 2026",
+      "source": "Busan MBC",
+      "title": "Busan Public Transportation: What Should Be Changed First?",
+      "url": "https://www.youtube.com/watch?v=JBnwL8BOCmU&t=1686s"
+    },
+    {
+      "date": "Jul 20, 2026",
+      "source": "The Kookje Daily News",
+      "title": "Motorcycles to Get Illegal Parking Tickets Too... Concerns Over Delivery Delays",
+      "url": "https://www.kookje.co.kr/mobile/view.asp?gbn=v&code=0300&key=20260720.22010005523"
+    },
+    {
+      "date": "Jun 29, 2026",
+      "source": "The Kookje Daily News",
+      "title": "U-Turns Are Difficult on BRT Sections... Motorcycles Racing Across Crosswalks",
+      "url": "https://www.kookje.co.kr/news2011/asp/newsbody.asp?code=0300&key=20260630.22006008883"
+    },
+    {
+      "date": "May 17, 2026",
+      "source": "Busan Ilbo",
+      "title": "'International Tourism City' Rings Hollow Amid Busan–Gyeongsangnam-do Buck-Passing",
+      "url": "https://www.busan.com/view/busan/view.php?code=2026051718255173638"
+    },
+    {
+      "date": "Apr 22, 2026",
+      "source": "Busan Ilbo",
+      "title": "Busan Fire Service and Dong-A University Cut Emergency Response Time with Data",
+      "url": "https://www.busan.com/view/busan/view.php?code=2026042216062091147"
+    },
+    {
+      "date": "Apr 7, 2026",
+      "source": "tbn Traffic Broadcasting Network",
+      "title": "Traffic Inducement Charge",
+      "url": "https://www.youtube.com/watch?v=90wtd5zJ8Oc"
+    },
+    {
+      "date": "Mar 6, 2026",
+      "source": "KBS (K-Talk Busan)",
+      "title": "'Light and Shadow' of the Deep Underpass: Busan's Transportation Axis on the Cusp of Change",
+      "url": "https://www.youtube.com/watch?v=wUmTpVkgzBs&list=PLMROpIyzfpxtVPbjF6lJho37kukfLfKeP"
+    },
+    {
       "date": "Nov 30, 2025",
       "source": "KNN Power Talk",
-      "title": "Manhak–Centum Deep Underpass Nears Opening: Busan's Changing Road Network",
+      "title": "Mandeok–Centum Deep Underpass Nears Opening: Busan's Changing Road Network",
       "url": "https://www.knn.co.kr/tv/powertalk/vods/84/282439"
     },
     {
@@ -164,6 +206,38 @@
     }
   ],
   "committees": [
+    {
+      "period": "Aug 8, 2026 – Aug 7, 2028",
+      "name": "Vice Chair, Address Information Committee, Yeongdo-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Jun 26, 2026 – Jun 25, 2029",
+      "name": "Joint Architecture and Landscape Committee, Geoje City, Gyeongsangnam-do"
+    },
+    {
+      "period": "Jun 26, 2026 – Jun 25, 2029",
+      "name": "Architecture Committee, Geoje City, Gyeongsangnam-do"
+    },
+    {
+      "period": "May 2, 2026 – May 1, 2027",
+      "name": "Architecture Committee, Saha-gu, Busan Metropolitan City"
+    },
+    {
+      "period": "Apr 17, 2026 – Apr 17, 2028",
+      "name": "Construction Advisory Expert, Korea Industrial Complex Corporation"
+    },
+    {
+      "period": "Apr 1, 2026 – Mar 31, 2028",
+      "name": "Transportation Committee, Ulsan Metropolitan City"
+    },
+    {
+      "period": "Mar 4, 2026 – Mar 3, 2028",
+      "name": "Joint Urban Park Committee, Busan Metropolitan City"
+    },
+    {
+      "period": "Mar 1, 2026 – Aug 2027",
+      "name": "Advisory Committee for Railway Undergrounding and Integrated Development of the Gyeongbu Line (Busanjin Station–Busan Station)"
+    },
     {
       "period": "Dec 31, 2025 – Dec 30, 2027",
       "name": "Chair, Busan Transportation Innovation Fund Management Committee"
