@@ -1,0 +1,32 @@
+# ===========================================================================
+#  국문 ↔ 영문 데이터 정합성 점검
+#
+#  왜: 국문(data/*.json)과 영문(data/en/*.json)이 별개 파일이라 CMS에서 국문만
+#  고치면 영문판이 조용히 낡는다. 사람 눈에는 안 보이므로 push마다 숫자로 센다.
+#
+#  ※ 배포(pages.yml)와 **완전히 분리된 워크플로**다. 여기서 실패해도 사이트
+#    배포는 그대로 진행된다 — 빨간 X는 "영문도 손봐야 한다"는 알림일 뿐이다.
+# ===========================================================================
+name: KO/EN parity check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/**"
+      - "scripts/check-i18n-parity.js"
+  pull_request:
+    paths:
+      - "data/**"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: 국문/영문 정합성 점검
+        run: node scripts/check-i18n-parity.js

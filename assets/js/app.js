@@ -913,7 +913,10 @@
     }).join("");
   }
 
-  // Publications grouped by category (Papers page)
+  // Publications grouped by category (Papers page).
+  // Domestic/Books entries are written in Korean; the EN site prefers
+  // citation_en when the entry has one (keep the "(YYYY)" year in it —
+  // pubYear reads that parenthesis for the year filter).
   function buildPublications(items) {
     const order = ["International", "Domestic", "Other", "Books"];
     const html = order.filter(g => items.some(i => i.category === g)).map(g => {
@@ -921,7 +924,8 @@
       const lis = list.map(i => {
         const sci = i.sci ? `<span class="badge badge--sci">${esc(T.sciBadge)}</span>` : "";
         const link = i.link ? ` <a class="link" href="${esc(i.link)}" target="_blank" rel="noopener">[link]</a>` : "";
-        return `<li class="ref-item"><div><p class="title">${linkify(i.citation || i.title || "")}${sci}${link}</p>
+        const cite = (EN && i.citation_en) || i.citation || i.title || "";
+        return `<li class="ref-item"><div><p class="title">${linkify(cite)}${sci}${link}</p>
           ${i.venue ? `<p class="meta">${esc(i.venue)}</p>` : ""}</div></li>`;
       }).join("");
       return `<div class="group-head"><h3>${esc(T.pubLabels[g] || g)}</h3><span class="count">${list.length}</span></div>
@@ -946,7 +950,7 @@
       const list = items.filter(i => i.category === g);
       const lis = list.map(i => `<li class="ref-item"><div>
         <p class="title">${esc(title(i.title, i.category))}</p>
-        <p class="meta">${esc(i.conference || "")}${i.date ? ` · ${esc(i.date)}` : ""}</p></div></li>`).join("");
+        <p class="meta">${esc((EN && i.conference_en) || i.conference || "")}${i.date ? ` · ${esc(i.date)}` : ""}</p></div></li>`).join("");
       return `<div class="group-head"><h3>${esc(T.confLabels[g] || g)}</h3><span class="count">${list.length}</span></div>
         <ol class="ref-list">${lis}</ol>`;
     }).join("");
@@ -972,7 +976,7 @@
         <td>${esc(EN ? (TYPE[p.type] || p.type || "") : (p.type || ""))}</td>
         <td>${esc(p.date || "")}</td>
         <td>${esc(p.number || "")}</td>
-        <td>${esc(p.inventors || "")}</td>
+        <td>${esc((EN && p.inventors_en) || p.inventors || "")}</td>
       </tr>`).join("");
       return `<div class="group-head"><h3>${esc(T.patLabels[c] || c)}</h3><span class="count">${list.length}</span></div>
         <div class="table-wrap"><table class="data">
@@ -982,17 +986,20 @@
     return html || '<div class="state">' + esc(T.patNone) + "</div>";
   }
 
-  // Awards list (Awards page)
+  // Awards list (Awards page). venue carries the award rank ("우수논문상"),
+  // so the EN site needs venue_en — without it the English reader cannot tell
+  // which award this was.
   function buildAwards(awards) {
     const lis = awards.map(a => {
       const main = EN ? (a.title_en || a.title_ko || a.title || "") : (a.title_ko || a.title || "");
       const sub = (!EN && a.title_en) ? `<div class="en">${esc(a.title_en)}</div>` : "";
+      const venue = (EN && a.venue_en) || a.venue || "";
       return `<div class="award-item">
       <div class="date">${esc(a.date || "")}</div>
       <div>
         <div class="title">${esc(main)}</div>
         ${sub}
-        ${a.venue ? `<div class="venue">🏆 ${esc(a.venue)}</div>` : ""}
+        ${venue ? `<div class="venue">🏆 ${esc(venue)}</div>` : ""}
       </div>
     </div>`;
     }).join("");
@@ -1128,7 +1135,7 @@
       items: pubs,
       cats: presentCats(pubs, ["International", "Domestic", "Other", "Books"], T.pubChips),
       getCat: i => i.category, getYear: i => pubYear(i.citation),
-      getText: i => (i.citation || "") + " " + (i.venue || ""),
+      getText: i => [i.citation, i.citation_en, i.venue].filter(Boolean).join(" "),
       render: buildPublications,
     });
     wireFilters(root);
@@ -1148,7 +1155,7 @@
       items: confs,
       cats: presentCats(confs, ["International", "Domestic"], T.confLabels),
       getCat: i => i.category, getYear: i => yearIn(i.date),
-      getText: i => (i.title || "") + " " + (i.conference || ""),
+      getText: i => [i.title, i.conference, i.conference_en].filter(Boolean).join(" "),
       render: buildConferences,
     });
     wireFilters(root);
@@ -1168,7 +1175,7 @@
       items: patents,
       cats: presentCats(patents, ["Application", "Registration", "Software"], T.patChips),
       getCat: i => i.category, getYear: i => yearIn(i.date),
-      getText: i => [i.name, i.name_en, i.number, i.inventors].filter(Boolean).join(" "),
+      getText: i => [i.name, i.name_en, i.number, i.inventors, i.inventors_en].filter(Boolean).join(" "),
       render: buildPatents,
     });
     wireFilters(root);
@@ -1187,7 +1194,7 @@
     root.innerHTML = filterBlock({
       items: awards, cats: null,
       getCat: () => "", getYear: i => yearIn(i.date),
-      getText: i => [i.title_ko, i.title_en, i.venue].filter(Boolean).join(" "),
+      getText: i => [i.title_ko, i.title_en, i.venue, i.venue_en].filter(Boolean).join(" "),
       render: buildAwards,
     });
     wireFilters(root);

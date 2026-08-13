@@ -23,6 +23,7 @@
 ├─ index.html              data-page="home"   (KO)
 ├─ people/research/publications/conferences/patents/awards.html   (KO — Home 포함 7탭)
 ├─ en/                     영문 페이지 7개 — 같은 껍데기, lang="en", ../assets 참조
+│                          + 구 URL 리다이렉트 4개(professor/members/projects/achievements)
 ├─ (professor/members/projects/achievements).html  ← 구 URL 리다이렉트(noindex)
 ├─ 404.html                크롬만 마운트되는 404 (base href="/")
 ├─ sitemap.xml / robots.txt
@@ -36,6 +37,7 @@
 │                          없는 파일(publications 등)은 국문으로 자동 폴백.
 ├─ admin/                  Sveltia CMS (config.yml = 편집 메뉴 정의, 국문+영문 컬렉션)
 ├─ scripts/bump-version.ps1  ?v= 캐시버전 일괄 갱신 스크립트 (배포 전 필수)
+├─ scripts/check-i18n-parity.js  국/영문 데이터 정합성 점검 (node로 실행 · CI에서도 자동 실행)
 └─ *.md                    README, SETUP-GUIDE, EDIT-LOGIN-GUIDE, (이 파일)
 ```
 
@@ -94,7 +96,8 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 - `renderPeople` — 지도교수(`links` 연구자 프로필 버튼, media `date`+`source`)/구성원(관심분야 태그, group×level 미매칭도 '기타'로 표시)/졸업생/지원(**`apply.json` 데이터 + 현재 모집 공고 본문 + FAQ**).
 - `renderResearch` / `renderPublications`(Papers) / `renderConferences` / `renderPatents` / `renderAwards` — **다섯 개 모두 소탭 없이 `filterBlock` 하나를 바로 렌더**한다. `renderResearch`는 구 `#areas` 딥링크만 홈으로 넘겨준 뒤 연구 과제 목록(진행 중/완료 칩 + 연도 + 검색)을 그린다.
 
-**순수 빌더** — `buildResearchTopics`(**홈 전용** — Research 페이지는 더 이상 쓰지 않음), `buildLocation`, `buildProfessor`, `buildMembers`, `buildApply(prof, apply, recruit)`, `buildProjects`, `buildPublications`, `buildConferences`(EN은 `한글 / English` 제목의 영문부만), `buildPatents`(EN은 `name_en` 우선 + scope/type 영문 매핑), `buildAwards`(EN은 `title_en` 폴백).
+**순수 빌더** — `buildResearchTopics`(**홈 전용** — Research 페이지는 더 이상 쓰지 않음), `buildLocation`, `buildProfessor`, `buildMembers`, `buildApply(prof, apply, recruit)`, `buildProjects`, `buildPublications`(EN은 `citation_en` 우선), `buildConferences`(EN은 `한글 / English` 제목의 영문부 + `conference_en` 우선), `buildPatents`(EN은 `name_en`·`inventors_en` 우선 + scope/type 영문 매핑), `buildAwards`(EN은 `title_en`·`venue_en` 우선).
+  **`*_en` 우선 규칙은 렌더뿐 아니라 `render*`의 `getText`(검색 대상)에도 같이 넣어야 한다** — 안 그러면 영문 페이지에서 화면에 보이는 영어로 검색했는데 안 걸린다.
 
 **유틸** — `esc`, `escMultiline`, `imgSrc`(BASE 처리), `cssUrl`(경로를 속성/CSS url 안전하게), `linkify`, `richText`, `fmtDate`, `todayStr`, `recruitOpen`(deadline 지난 모집 자동 숨김), `fetchData`, `setState`, `yearIn`, `pubYear`, `dateKey`, **`periodEnd`**(과제 기간의 끝 월 → `YYYYMM`, 국문 `2026. 7. ~ 2027. 3.`·영문 `Apr 2026 – Mar 2027` 둘 다 해석) / **`projStatus`**(`ongoing`·`completed`).
 
@@ -108,10 +111,15 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 - **`members.json`** — `members[]`{name_ko, name_en, group("current"|"alumni"), level("PhD"|"Master"|"Undergraduate"|"Bachelor"), photo, email(재학생만 표시·졸업생은 저장도 하지 않음), affiliation, period, grad_year, degree, thesis, `interests[]`}.
 - **`news.json`** — `news[]`{date(YYYY-MM-DD), category("학술대회"|"세미나"|"랩미팅"|"모집"|"기타" — EN 파일은 "Conference"|"Seminar"|"Lab Meeting"|"Recruiting"|"Other"), `deadline`(모집 자동 종료일, 선택), title, body, photos[](문자열 배열), link}. **News 폐지 후에는 `모집`/`Recruiting` 항목만 사이트(People→지원)에 표시된다.**
 - **`projects.json`** — `projects[]`{period, title, org}. **진행 중/완료는 별도 필드가 아니라 `period`의 끝 월로 자동 판정**(`projStatus`) — 국문은 `2026. 7. ~ 2027. 3.`, 영문은 `Apr 2026 – Mar 2027` 형식을 지킬 것. 끝 월을 못 읽으면 그 해 12월로 보고 '진행 중'에 남긴다(과제가 목록에서 조용히 사라지지 않도록).
-- **`publications.json`** — `publications[]`{category("International"|"Domestic"|"Other"|"Books"), citation(연도는 반드시 `(YYYY)` 괄호 표기), venue?, sci(bool), link(DOI 권장)}.
-- **`conferences.json`** — `conferences[]`{category, title(국내는 `한글 / English` 병기), conference, date}.
-- **`patents.json`** — `patents[]`{category("Application"|"Registration"|"Software"), name, `name_en?`, scope, type, date, number, inventors}.
-- **`awards.json`** — `awards[]`{date, title_ko, title_en?, venue}.
+- **`publications.json`** — `publications[]`{category("International"|"Domestic"|"Other"|"Books"), citation(연도는 반드시 `(YYYY)` 괄호 표기), `citation_en?`, venue?, sci(bool), link(DOI 권장)}.
+- **`conferences.json`** — `conferences[]`{category, title(국내는 `한글 / English` 병기), conference, `conference_en?`, date}.
+- **`patents.json`** — `patents[]`{category("Application"|"Registration"|"Software"), name, `name_en?`, scope, type, date, number, inventors, `inventors_en?`}.
+- **`awards.json`** — `awards[]`{date, title_ko, title_en?, venue, `venue_en?`}.
+
+> **`*_en` 필드는 이 4종에만 있는 장치다.** 이들은 `data/en/` 파일이 없어 국·영문이 같은 파일을 쓰므로,
+> 항목마다 붙은 영문 칸으로 언어를 가른다(`citation_en`·`conference_en`·`name_en`·`inventors_en`·`title_en`·`venue_en`).
+> 비어 있으면 국문 값이 그대로 영문 페이지에 나온다 — 즉 **비우는 것이 곧 한글 노출**이다.
+> `citation_en`에도 연도 `(YYYY)` 괄호를 유지할 것(`pubYear`가 영문 페이지 연도 필터를 이 괄호로 만든다).
 
 ---
 
@@ -156,6 +164,14 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
   **같은 날 두 번째 배포면 `-Suffix b`(세 번째는 `c`…)를 반드시 붙일 것** — 기본값 `a`로 다시 돌리면 오늘 이미 `a`로 받아 간 브라우저가 옛 파일을 계속 쓴다.
   데이터(`data/*.json`)만 바꿀 땐 `fetch(..., {cache:"no-store"})`라 버전 불필요.
 - **편집(CMS)**: `/admin`(Sveltia) — GitHub OAuth는 Cloudflare Worker가 처리하며 실제 사이트에서만 동작(localhost 불가). → `EDIT-LOGIN-GUIDE.md`(복구 절차 §2-2 포함).
+- **국/영문 정합성 점검(데이터를 고쳤으면 돌릴 것)**:
+  ```bash
+  node scripts/check-i18n-parity.js
+  ```
+  국문과 영문의 **항목 수·구성원 소속·과제 기간·모집 공고 수**가 어긋나면 `❌ 오류`(exit 1),
+  공용 데이터(논문·학술대회·특허·수상)의 **영문 칸이 비어 있으면** `⚠️ 경고`(exit 0)로 알린다.
+  push할 때도 `.github/workflows/i18n-parity.yml`이 자동으로 돌지만 **배포(pages.yml)와는 분리된 워크플로**라
+  여기서 실패해도 사이트 배포는 그대로 진행된다(빨간 X = "영문도 손봐야 함" 알림).
 
 ---
 
@@ -176,6 +192,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 ## 10. 주의점 / 함정
 
 - **국문/영문 데이터는 이중 관리**: `data/en/`에 파일이 존재하는 6종(site·news·professor·members·projects·apply)은 국문만 고치면 영문판이 낡는다. CMS의 🌐 [영문] 메뉴로 함께 수정할 것.
+- **국문이 정본이다.** 국·영문이 어긋났을 때는 국문 값을 정답으로 삼아 영문을 맞춘다(2026-08-13 확정). 실제로 어긋난 것들을 git 이력으로 추적해 보니 전부 "교수님이 국문 CMS에서만 고친 것"이었다 — 영문 쪽이 옳았던 사례는 없었다. 반대 방향으로 고치려면 먼저 확인할 것.
 - `SUBNAV`의 `key`와 `render*` 탭의 `key`가 **반드시 일치**해야 드롭다운 딥링크가 작동.
 - 모집 공고 category 값은 **언어별로 다름**(KO "모집" / EN "Recruiting"). 코드에서 비교할 땐 `RECRUIT_CAT` 상수 사용.
 - 국내 학술대회 title은 `한글 / English` 병기 — 슬래시 구분자를 지우면 영문판에 한글이 노출됨.
