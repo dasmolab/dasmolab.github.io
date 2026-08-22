@@ -8,7 +8,10 @@
       "photo": "assets/uploads/240312_1.webp",
       "email": "skdb1@korea.kr",
       "affiliation": "김해시 대중교통과",
-      "period": "2024. 3. ~ 현재"
+      "period": "2024. 3. ~ 현재",
+      "grad_year": "",
+      "degree": "",
+      "thesis": ""
     },
     {
       "name_ko": "정지효",
@@ -21,7 +24,7 @@
       "period": "2026. 3. ~ 현재",
       "grad_year": "",
       "degree": "",
-      "thesis": ""
+      "thesis": "버스 정시성 평가와 영향요인 분석에 관한 연구 :부산광역시를 중심으로"
     },
     {
       "name_ko": "이은정",
@@ -29,11 +32,12 @@
       "group": "alumni",
       "level": "Master",
       "photo": "assets/uploads/20240516.webp",
+      "email": "",
       "affiliation": "동아대학교 도시공학과 대학원",
       "period": "2024. 3. ~ 현재",
       "grad_year": "",
       "degree": "",
-      "thesis": ""
+      "thesis": "과속방지턱이 긴급차량 출동에 미치는 영향 분석 :부산광역시 사례를 중심으로"
     },
     {
       "name_ko": "김태규",
@@ -41,11 +45,12 @@
       "group": "alumni",
       "level": "Master",
       "photo": "assets/uploads/240312_2.png",
+      "email": "",
       "affiliation": "김해시 대중교통과",
       "period": "2024. 3. ~ 현재",
       "grad_year": "",
       "degree": "",
-      "thesis": ""
+      "thesis": "긴급차량 우선신호 시스템의 효과분석에 관한 연구 :현장제어방식과 중앙제어방식을 중심으로"
     },
     {
       "name_ko": "차정은",
@@ -55,7 +60,10 @@
       "photo": "assets/uploads/1200005.jpg",
       "email": "chaje0119@naver.com",
       "affiliation": "동아대학교 도시공학과 대학원",
-      "period": "2023. 1. ~ 현재"
+      "period": "2023. 1. ~ 현재",
+      "grad_year": "",
+      "degree": "",
+      "thesis": ""
     },
     {
       "name_ko": "이정빈",
@@ -65,7 +73,10 @@
       "photo": "assets/uploads/20260205-1.webp",
       "email": "jeongbin567@gmail.com",
       "affiliation": "동아대학교 도시공학과 학부",
-      "period": "2025. 12. ~ 현재"
+      "period": "2025. 12. ~ 현재",
+      "grad_year": "",
+      "degree": "",
+      "thesis": ""
     },
     {
       "name_ko": "조수린",
@@ -75,7 +86,10 @@
       "photo": "assets/uploads/20260205-2.webp",
       "email": "surin0822@naver.com",
       "affiliation": "동아대학교 도시공학과 학부",
-      "period": "2025. 12. ~ 현재"
+      "period": "2025. 12. ~ 현재",
+      "grad_year": "",
+      "degree": "",
+      "thesis": ""
     },
     {
       "name_ko": "김동은",
@@ -85,7 +99,10 @@
       "photo": "assets/uploads/20260205-3.webp",
       "email": "dek135@naver.com",
       "affiliation": "동아대학교 도시공학과 학부",
-      "period": "2025. 12. ~ 현재"
+      "period": "2025. 12. ~ 현재",
+      "grad_year": "",
+      "degree": "",
+      "thesis": ""
     },
     {
       "name_ko": "이준휘",
@@ -93,7 +110,8 @@
       "group": "alumni",
       "level": "Undergraduate",
       "photo": "assets/uploads/20250108.webp",
-      "affiliation": "동아대학교 도시공학과 학부",
+      "email": "",
+      "affiliation": "(주)마이비",
       "period": "2024. 10. ~ 현재",
       "grad_year": "",
       "degree": "",
@@ -105,7 +123,8 @@
       "group": "alumni",
       "level": "Undergraduate",
       "photo": "assets/uploads/20250410.webp",
-      "affiliation": "동아대학교 도시공학과 학부",
+      "email": "",
+      "affiliation": "(주)거원엔지니어링 교통계획부",
       "period": "2025. 3. ~ 현재",
       "grad_year": "",
       "degree": "",
@@ -119,6 +138,7 @@
       "photo": "assets/uploads/20230921_img.jpg",
       "email": "",
       "affiliation": "창원시정연구원 도시공간연구실 책임연구원",
+      "period": "",
       "grad_year": "2022. 2.",
       "degree": "공학박사",
       "thesis": "친환경 자동차 보급에 따른 주행거리세 기반 행태모형의 개발과 적용 / Development and Application of Vehicle Miles Traveled(VMT) Tax-based Behavioral Model Depending on the Dissemination of Eco-friendly Vehicles"
@@ -129,7 +149,9 @@
       "group": "alumni",
       "level": "PhD",
       "photo": "assets/uploads/0209_04.jpg",
+      "email": "",
       "affiliation": "(전)양산시 도시계획국장",
+      "period": "",
       "grad_year": "2016. 2.",
       "degree": "공학박사",
       "thesis": "교통안전성 평가 모형의 구축에 관한 연구 : 부산광역시를 중심으로 / A Study on the Construction of Traffic Safety Evaluation Model Focused on Busan Metropolitan City"
@@ -144,7 +166,8 @@
       "affiliation": "동아대학교 도시공학과 박사과정 재학",
       "period": "",
       "grad_year": "2026. 2.",
-      "degree": "공학석사"
+      "degree": "공학석사",
+      "thesis": ""
     },
     {
       "name_ko": "유초롱",
