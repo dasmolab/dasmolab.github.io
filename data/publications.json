@@ -2,6 +2,14 @@
   "publications": [
     {
       "category": "International",
+      "citation": "Kim, M, Jung, J., Kim, H. K.(2026), Investigating the Impact of VMT Tax Coupled with Congestion Pricing on Traffic Operation in Busan, Korea, Transport Policy, Under revision",
+      "citation_en": "",
+      "sci": false,
+      "link": "",
+      "venue": ""
+    },
+    {
+      "category": "International",
       "citation": "Lee, S., Choi, B., Kwon, W., Cha, J., Jung, J., Kim, H. K.(2025), Optimal Traffic Signal Control for an Atypical Isolated Intersection Using Composite AI Model, International Journal of Urban Sciences, Accepted for Publication.",
       "sci": true,
       "link": "https://doi.org/10.1080/12265934.2025.2586754",
