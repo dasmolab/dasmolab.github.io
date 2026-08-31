@@ -2,6 +2,13 @@
   "conferences": [
     {
       "category": "Domestic",
+      "title": "AI 기반 부산진구 노인 보행 교통사고 피해 예상 모델 개발: 부산광역시를 중심으로 / Development of an AI-Based Model for Predicting Elderly Pedestrian Traffic Accident Severity: Focusing on Busan Metropolitan City",
+      "conference": "대한교통학회 2026 추계학술대회",
+      "conference_en": "",
+      "date": "2026. 9. 18"
+    },
+    {
+      "category": "Domestic",
       "title": "버스 운영체계에 따른 정시성 평가와 영향요인 분석 / Evaluation of Punctuality and Analysis of Influence Factors Based on Bus Operation Systems",
       "conference": "대한교통학회 2026 춘계학술대회",
       "conference_en": "2026 Spring Conference of the Korean Society of Transportation",
