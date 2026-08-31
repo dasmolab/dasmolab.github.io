@@ -2,9 +2,17 @@
   "publications": [
     {
       "category": "International",
-      "citation": "Kim, M, Jung, J., Kim, H. K.(2026), Investigating the Impact of VMT Tax Coupled with Congestion Pricing on Traffic Operation in Busan, Korea, Transport Policy, Under revision",
+      "citation": "Lee, H., You, C., Song, S., Jung, J. Kim, H. K.(2026), Analysis of factors affecting personal mobility user’s behavioral intention to comply with traffic regulations in Korea by extended theory of planned behavior, Case Studies on Transport Policy, Under revision.",
       "citation_en": "",
-      "sci": false,
+      "sci": true,
+      "link": "",
+      "venue": ""
+    },
+    {
+      "category": "International",
+      "citation": "Kim, M, Jung, J., Kim, H. K.(2026), Investigating the Impact of VMT Tax Coupled with Congestion Pricing on Traffic Operation in Busan, Korea, Transport Policy, Under revision.",
+      "citation_en": "",
+      "sci": true,
       "link": "",
       "venue": ""
     },
