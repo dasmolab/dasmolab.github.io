@@ -21,8 +21,8 @@
 ```
 / (repo 루트 = 사이트 루트)
 ├─ index.html              data-page="home"   (KO)
-├─ people/research/publications/conferences/patents/awards.html   (KO — Home 포함 7탭)
-├─ en/                     영문 페이지 7개 — 같은 껍데기, lang="en", ../assets 참조
+├─ people/research/publications/conferences/photos/patents/awards.html   (KO — Home 포함 8탭)
+├─ en/                     영문 페이지 8개 — 같은 껍데기, lang="en", ../assets 참조
 │                          + 구 URL 리다이렉트 4개(professor/members/projects/achievements)
 ├─ (professor/members/projects/achievements).html  ← 구 URL 리다이렉트(noindex)
 ├─ 404.html                크롬만 마운트되는 404 (base href="/")
@@ -31,7 +31,7 @@
 │  ├─ css/styles.css       디자인 토큰(:root) + 전체 스타일(플레인 CSS)
 │  ├─ js/app.js            ★ 유일한 스크립트 — KO/EN 공용(언어 감지 + I18N 테이블)
 │  ├─ img/                 로고·파비콘(favicon-32/192, apple-touch-icon)·og-image.png
-│  └─ uploads/             CMS 업로드 이미지 (신규 업로드는 members/ · news/ 하위 폴더로 분리)
+│  └─ uploads/             CMS 업로드 이미지 (신규 업로드는 members/ · news/ · photos/ 하위 폴더로 분리)
 ├─ data/*.json             ★ 국문 콘텐츠 데이터(아래 5장 스키마)
 ├─ data/en/*.json          영문 번역 데이터: site·news·professor·members·projects·apply 6종만.
 │                          없는 파일(publications 등)은 국문으로 자동 폴백.
@@ -45,14 +45,14 @@
 
 ---
 
-## 3. 네비게이션 (7탭 — 앞 2개만 소탭 전환, 나머지는 필터 딥링크)
+## 3. 네비게이션 (8탭 — 앞 2개만 소탭 전환, 나머지는 필터 딥링크)
 
-헤더는 **메인탭 한 줄뿐**이다(브랜드 줄은 2026-07 삭제, 메뉴 줄은 `.nav`의 `padding-left: clamp(0px, calc(100vw - 60rem), 10.5rem)`으로 약 4.4cm 들여씀 — 좁은 데스크톱에서는 자동으로 줄어 탭이 눌리지 않는다). **7개 탭 모두 ▾ + 호버 드롭다운**을 갖는다(모바일은 ▾ 아코디언), 소탭 클릭 = URL 해시 딥링크.
+헤더는 **메인탭 한 줄뿐**이다(브랜드 줄은 2026-07 삭제, 메뉴 줄은 `.nav`의 `padding-left: clamp(0px, calc(100vw - 60rem), 10.5rem)`으로 약 4.4cm 들여씀 — 좁은 데스크톱에서는 자동으로 줄어 탭이 눌리지 않는다). **8개 탭 모두 ▾ + 호버 드롭다운**을 갖는다(모바일은 ▾ 아코디언), 소탭 클릭 = URL 해시 딥링크.
 
 - Home/People: 소탭 = 섹션 스크롤 / 탭 전환.
 - Papers/Conferences/Patents: 단일 페이지지만 소탭이 **페이지 필터를 딥링크**한다 — `publications.html#Domestic` → Domestic 칩 자동 선택(`applyHashToFilters`).
 - **Research는 데이터에 분류 필드가 없어**, `period`의 **끝 월로 진행 중 / 완료를 계산**해 칩으로 쓴다(`projStatus`). 완료를 고르면 **연도 드롭다운이 완료 과제의 연도만** 다시 채운다(`filterBlock`의 `yearsFollowCat`).
-- **Awards만 분류 축이 없어**, `awards.json`에 **실제로 있는 연도**로 소탭을 만든다(`awardsSubnav()` — 빈 연도가 메뉴에 안 뜨게. 최대 6개).
+- **Awards·Photos는 분류 축이 없어**, 데이터에 **실제로 있는 연도**로 소탭을 만든다(`yearSubnav()` — 빈 연도가 메뉴에 안 뜨게. 최대 6개).
 
 KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전환된다.
 
@@ -63,6 +63,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 | **Research** | research | 전체(`all`) / 진행 중(`ongoing`) / 완료(`completed`) | 구분 칩 자동 선택 → 연도 드롭다운이 그 칩의 연도로 갱신 | `projects.json` |
 | **Papers** | publications | 전체(`all`) / `International` / `Domestic` / 기타(`Other`) / 저서(`Books`) | 구분 칩 자동 선택 | `publications.json` |
 | **Conferences** | conferences | 전체(`all`) / `International` / `Domestic` | 구분 칩 자동 선택 | `conferences.json` |
+| **Photos** | photos | 전체(`all`) / 연도(`2026`… 데이터 기준 최대 6개) | 연도 드롭다운 자동 선택 → 행사별 앨범(라이트박스) | `photos.json` |
 | **Patents** | patents | 전체(`all`) / 출원(`Application`) / 등록(`Registration`) / 프로그램(`Software`) | 구분 칩 자동 선택 | `patents.json` |
 | **Awards** | awards | 전체(`all`) / 연도(`2026`·`2025`… 데이터 기준 최대 6개) | 연도 드롭다운 자동 선택 | `awards.json` |
 
@@ -83,20 +84,20 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 - `EN_DATA` — 영문 번역 파일이 존재하는 데이터 이름 화이트리스트(`site, news, professor, members, projects, apply`).
   `fetchData()`는 EN에서 이 목록에 있으면 `data/en/`을 먼저, 아니면 바로 국문 `data/`를 읽는다(불필요한 404 없음).
 - `SUBNAV`, `RECRUIT_CAT`("모집"/"Recruiting") — 언어별 상수. Papers/Conferences/Patents의 `SUBNAV` 항목은 `T.pubChips`·`T.confLabels`·`T.patChips`를 그대로 쓰고 **key는 데이터의 category 코드와 반드시 같아야 한다**(딥링크가 칩을 찾는 기준).
-- `fetchData`는 **페이지당 파일별 1회만** 요청(`_dataCache`) — 헤더의 Awards 연도 메뉴와 Awards 페이지가 같은 파일을 두 번 받지 않도록.
+- `fetchData`는 **페이지당 파일별 1회만** 요청(`_dataCache`) — 헤더의 Awards·Photos 연도 메뉴(`yearSubnav`)와 해당 페이지가 같은 파일을 두 번 받지 않도록.
 
 **공통 크롬** — `buildHeader`(**브랜드 줄 없음 — 메뉴 한 줄**, 전 탭 ▾ + 드롭다운 + 모바일 아코디언 토글 버튼 + 언어 전환), `buildFooter`(연도 자동, 주소는 지도 링크), `mountChrome`, `initNav`(햄버거 + 아코디언 + Esc 닫기 + 언어 전환 시 해시 유지).
 
 **소탭 엔진** — `mountSubnav`(해시 딥링크·hashchange 반응 — **이제 People 페이지 전용**), `scrollToHash`.
 
-**필터 엔진** — `filterBlock(cfg)`: 구분 칩 + 연도 드롭다운(`yearOptions`) + **텍스트 검색(`getText`)**. `cfg.yearsFollowCat`(Research 전용)이면 칩을 바꿀 때마다 `applyFilter`가 **연도 옵션을 그 칩의 항목들로 다시 그린다**(사라진 연도가 선택돼 있었다면 '전체 연도'로 되돌림). `applyFilter`/`wireFilters`(위임 핸들러) + **`applyHashToFilters`**(URL 해시 → 칩/연도 자동 선택 — 헤더 드롭다운 딥링크의 핵심. `wireFilters`는 호출될 때마다 이걸 다시 적용한다). Publications/Conferences/Patents/Awards/Research(연구 과제)가 사용. 목록은 렌더 전에 `sortByDateDesc`로 날짜 내림차순 정렬(편집 순서 실수를 코드가 흡수) — **단 연구 과제는 예외로 파일 순서 그대로** 쓴다(영문 `period`가 `Apr 2026 – Mar 2028` 형식이라 `dateKey`가 월을 못 읽음).
+**필터 엔진** — `filterBlock(cfg)`: 구분 칩 + 연도 드롭다운(`yearOptions`) + **텍스트 검색(`getText`)**. `cfg.yearsFollowCat`(Research 전용)이면 칩을 바꿀 때마다 `applyFilter`가 **연도 옵션을 그 칩의 항목들로 다시 그린다**(사라진 연도가 선택돼 있었다면 '전체 연도'로 되돌림). `applyFilter`/`wireFilters`(위임 핸들러) + **`applyHashToFilters`**(URL 해시 → 칩/연도 자동 선택 — 헤더 드롭다운 딥링크의 핵심. `wireFilters`는 호출될 때마다 이걸 다시 적용한다). Publications/Conferences/Photos/Patents/Awards/Research(연구 과제)가 사용. 목록은 렌더 전에 `sortByDateDesc`로 날짜 내림차순 정렬(편집 순서 실수를 코드가 흡수) — **단 연구 과제는 예외로 파일 순서 그대로** 쓴다(영문 `period`가 `Apr 2026 – Mar 2028` 형식이라 `dateKey`가 월을 못 읽음).
 
 **페이지 렌더 함수** (`PAGES` 맵 → `body[data-page]` 디스패치)
 - `renderHome` — 소개(+`about_photo`)/연구/강의(문자열·`{name,link}` 겸용)/**오시는 길(`buildLocation`)**. **2026-07-27: 별도 About 섹션을 없애고 `#home-intro`(intro1+intro2)를 히어로 안으로 넣었다** — 히어로가 곧 연구실 소개이고, `<section class="hero" id="about">`이 소탭 `about` 딥링크를 받는다. 홈의 남은 3개 섹션 제목은 한글을 지우고 영문만 제목 크기로 키운 `.section__title--en`(RESEARCH / CLASSES / LOCATION) — **People 페이지 제목은 기존 eyebrow+한글 구조 그대로**다.
 - `renderPeople` — 지도교수(`links` 연구자 프로필 버튼, media `date`+`source`)/구성원(관심분야 태그, group×level 미매칭도 '기타'로 표시)/졸업생/지원(**`apply.json` 데이터 + 현재 모집 공고 본문 + FAQ**).
-- `renderResearch` / `renderPublications`(Papers) / `renderConferences` / `renderPatents` / `renderAwards` — **다섯 개 모두 소탭 없이 `filterBlock` 하나를 바로 렌더**한다. `renderResearch`는 구 `#areas` 딥링크만 홈으로 넘겨준 뒤 연구 과제 목록(진행 중/완료 칩 + 연도 + 검색)을 그린다.
+- `renderResearch` / `renderPublications`(Papers) / `renderConferences` / `renderPhotos` / `renderPatents` / `renderAwards` — **여섯 개 모두 소탭 없이 `filterBlock` 하나를 바로 렌더**한다. `renderPhotos`는 행사별 사진 앨범 + 라이트박스(`initLightbox`)를 얹는다. `renderResearch`는 구 `#areas` 딥링크만 홈으로 넘겨준 뒤 연구 과제 목록(진행 중/완료 칩 + 연도 + 검색)을 그린다.
 
-**순수 빌더** — `buildResearchTopics`(**홈 전용** — Research 페이지는 더 이상 쓰지 않음), `buildLocation`, `buildProfessor`, `buildMembers`, `buildApply(prof, apply, recruit)`, `buildProjects`, `buildPublications`(EN은 `citation_en` 우선), `buildConferences`(EN은 `한글 / English` 제목의 영문부 + `conference_en` 우선), `buildPatents`(EN은 `name_en`·`inventors_en` 우선 + scope/type 영문 매핑), `buildAwards`(EN은 `title_en`·`venue_en` 우선).
+**순수 빌더** — `buildResearchTopics`(**홈 전용** — Research 페이지는 더 이상 쓰지 않음), `buildLocation`, `buildProfessor`, `buildMembers`, `buildApply(prof, apply, recruit)`, `buildProjects`, `buildPublications`(EN은 `citation_en` 우선), `buildConferences`(EN은 `한글 / English` 제목의 영문부 + `conference_en` 우선), `buildPatents`(EN은 `name_en`·`inventors_en` 우선 + scope/type 영문 매핑), `buildAwards`(EN은 `title_en`·`venue_en` 우선), `buildPhotoEvents`(행사별 사진 앨범 — EN은 `title_en`·`description_en` 우선. 썸네일 클릭 → 라이트박스: 행사 안에서 ←/→ 순환, Esc·배경 클릭 닫기).
   **`*_en` 우선 규칙은 렌더뿐 아니라 `render*`의 `getText`(검색 대상)에도 같이 넣어야 한다** — 안 그러면 영문 페이지에서 화면에 보이는 영어로 검색했는데 안 걸린다.
 
 **유틸** — `esc`, `escMultiline`, `imgSrc`(BASE 처리), `cssUrl`(경로를 속성/CSS url 안전하게), `linkify`, `richText`, `fmtDate`, `todayStr`, `recruitOpen`(deadline 지난 모집 자동 숨김), `fetchData`, `setState`, `yearIn`, `pubYear`, `dateKey`, **`periodEnd`**(과제 기간의 끝 월 → `YYYYMM`, 국문 `2026. 7. ~ 2027. 3.`·영문 `Apr 2026 – Mar 2027` 둘 다 해석) / **`projStatus`**(`ongoing`·`completed`).
@@ -113,11 +114,12 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 - **`projects.json`** — `projects[]`{period, title, org}. **진행 중/완료는 별도 필드가 아니라 `period`의 끝 월로 자동 판정**(`projStatus`) — 국문은 `2026. 7. ~ 2027. 3.`, 영문은 `Apr 2026 – Mar 2027` 형식을 지킬 것. 끝 월을 못 읽으면 그 해 12월로 보고 '진행 중'에 남긴다(과제가 목록에서 조용히 사라지지 않도록).
 - **`publications.json`** — `publications[]`{category("International"|"Domestic"|"Other"|"Books"), citation(연도는 반드시 `(YYYY)` 괄호 표기), `citation_en?`, venue?, sci(bool), link(DOI 권장)}.
 - **`conferences.json`** — `conferences[]`{category, title(국내는 `한글 / English` 병기), conference, `conference_en?`, date}.
+- **`photos.json`** — `events[]`{date(YYYY-MM-DD), title, `title_en?`, description?, `description_en?`, photos[](문자열 배열, `assets/uploads/photos/`)}. 행사 하나 = 항목 하나. Photos 탭이 date 내림차순으로 행사별 앨범을 그린다.
 - **`patents.json`** — `patents[]`{category("Application"|"Registration"|"Software"), name, `name_en?`, scope, type, date, number, inventors, `inventors_en?`}.
 - **`awards.json`** — `awards[]`{date, title_ko, title_en?, venue, `venue_en?`}.
 
-> **`*_en` 필드는 이 4종에만 있는 장치다.** 이들은 `data/en/` 파일이 없어 국·영문이 같은 파일을 쓰므로,
-> 항목마다 붙은 영문 칸으로 언어를 가른다(`citation_en`·`conference_en`·`name_en`·`inventors_en`·`title_en`·`venue_en`).
+> **`*_en` 필드는 이 5종(논문·학술대회·행사 사진·특허·수상)에만 있는 장치다.** 이들은 `data/en/` 파일이 없어 국·영문이 같은 파일을 쓰므로,
+> 항목마다 붙은 영문 칸으로 언어를 가른다(`citation_en`·`conference_en`·`name_en`·`inventors_en`·`title_en`·`venue_en`·`description_en`).
 > 비어 있으면 국문 값이 그대로 영문 페이지에 나온다 — 즉 **비우는 것이 곧 한글 노출**이다.
 > `citation_en`에도 연도 `(YYYY)` 괄호를 유지할 것(`pubYear`가 영문 페이지 연도 필터를 이 괄호로 만든다).
 
@@ -127,7 +129,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 
 - 국문 컬렉션 + **🌐 [영문] 컬렉션**(data/en/ 6종)이 divider로 구분되어 있음.
 - select는 전부 **label(한국어)/value(코드)** 분리 — value를 바꾸면 사이트 렌더링이 깨지므로 value는 고정.
-- 사진 필드는 **필드별 media_folder**(`assets/uploads/members`, `assets/uploads/news`)와 규격 hint 포함. 뉴스 사진은 `multiple: true`(문자열 배열로 저장).
+- 사진 필드는 **필드별 media_folder**(`assets/uploads/members`, `assets/uploads/news`, `assets/uploads/photos`)와 규격 hint 포함. 뉴스·행사 사진은 `multiple: true`(문자열 배열로 저장).
 - 📰 소식 컬렉션은 남아 있지만 **실제로 사이트에 나오는 건 모집 공고뿐**(News 폐지) — 컬렉션 label/hint에 그 안내가 적혀 있다.
 - `editor: preview: false`(미리보기 패널 비활성), `site_url` 지정.
 - `admin/index.html`은 Sveltia를 **@버전 고정**으로 로드 — 반년에 한 번쯤 버전 숫자 갱신.
@@ -155,7 +157,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
   # KO: http://localhost:8000/   EN: http://localhost:8000/en/
   ```
 - **배포**: `main` 병합 → `git push origin main` → **GitHub Actions 워크플로**(`.github/workflows/pages.yml`)가 사이트 파일을 그대로 업로드해 Pages에 게시(약 1~2분). 저장소 Settings ▸ Pages ▸ Source = "GitHub Actions". (레거시 Jekyll 빌더의 간헐적 "Page build failed"를 피하기 위해 2026-07-03 이 방식으로 전환.) CMS(/admin) 저장도 main 커밋 → 같은 워크플로로 배포된다.
-- **캐시 무효화(중요)**: 루트 8개 + en/ 8개 + 404.html이 `app.js`/`styles.css`를 `?v=YYYYMMDD` 쿼리로 참조.
+- **캐시 무효화(중요)**: 루트 탭 8개 + 404.html + en/ 8개(총 17개)가 `app.js`/`styles.css`를 `?v=YYYYMMDD` 쿼리로 참조.
   **`app.js` 또는 `styles.css`를 수정하면 배포 전에 반드시 실행**:
   ```powershell
   powershell -ExecutionPolicy Bypass -File scripts/bump-version.ps1
@@ -182,6 +184,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 - **교수 정보/연구자 링크** → `data/professor.json`(+en). Scholar/ORCID는 `links[]`에.
 - **지원 안내·FAQ** → `data/apply.json`(+en).
 - **연구 분야/강의/소개/오시는 길** → `data/site.json`(+en). **연구 분야는 홈에만** 나온다(Research 탭에서 중복 제거, 2026-07-27).
+- **행사 사진 올리기** → CMS `📷 행사 사진`에서 행사 추가(행사일·행사명 + 사진 여러 장 동시 업로드 — `assets/uploads/photos/`에 저장). 파일로 고칠 땐 `data/photos.json` 하나면 된다(영문 파일 없음). 정렬은 date 내림차순 자동이라 순서 걱정이 없고, 영문 행사명은 `title_en`(비우면 국문이 그대로 노출).
 - **연구 과제 추가** → `data/projects.json` **+ `data/en/projects.json` 동시 수정**. 맨 위(최신)에 넣으면 그 순서대로 보인다(코드가 재정렬하지 않음). 연도 필터는 `period`의 **첫** 4자리, 진행 중/완료 구분은 `period`의 **끝 월**로 자동 판정되므로 **기간 표기 형식만 지키면 손댈 것이 없다**(끝나는 달이 지나면 다음 달에 저절로 '완료'로 넘어감).
 - **새 소탭 추가** → ① `app.js`의 `SUBNAV`(KO/EN 두 벌 모두) ② 해당 `render*`의 탭 배열, 같은 `key`로.
 - **UI 문자열 수정** → `app.js`의 `T` 테이블(KO/EN 두 곳).

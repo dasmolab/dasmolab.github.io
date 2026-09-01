@@ -159,10 +159,12 @@ if (KO.news && EN.news) {
 }
 
 /* ── 8. 공용 데이터의 영문 칸 (경고) ────────────────────────── */
-// 논문·학술대회·특허·수상은 영문 파일이 없고 항목별 영문 필드로 처리한다.
+// 논문·학술대회·행사 사진·특허·수상은 영문 파일이 없고 항목별 영문 필드로 처리한다.
 const cover = [
   ["publications", "publications", "citation", "citation_en", "서지정보"],
   ["conferences", "conferences", "conference", "conference_en", "학술대회명"],
+  ["photos", "events", "title", "title_en", "행사명"],
+  ["photos", "events", "description", "description_en", "행사 설명"],
   ["patents", "patents", "name", "name_en", "지식재산권명"],
   ["patents", "patents", "inventors", "inventors_en", "발명인"],
   ["awards", "awards", "venue", "venue_en", "시상·학술대회"],

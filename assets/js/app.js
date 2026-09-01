@@ -9,12 +9,13 @@
    Academic records without a translation file (publications / conferences
    / patents / awards) automatically fall back to the Korean data.
 
-   The site shows 7 main tabs; each academic-record tab has its own page
+   The site shows 8 main tabs; each academic-record tab has its own page
    and data file:
      People       = professor.json + members.json (+ apply.json, news 모집)
      Research     = projects.json  (research areas live on Home only)
      Papers       = publications.json   (publications.html)
      Conferences  = conferences.json
+     Photos       = photos.json  (event photo albums)
      Patents      = patents.json
      Awards       = awards.json
    ========================================================================== */
@@ -64,7 +65,8 @@
     projLive: "Ongoing",
     projLoadFail: "Could not load project information.",
     pubNone: "No publications yet.", confNone: "No conference presentations yet.",
-    patNone: "No patents yet.", awdNone: "No awards yet.",
+    patNone: "No patents yet.", awdNone: "No awards yet.", phNone: "No photos yet.",
+    lbLabel: "Photo viewer", lbClose: "Close", lbPrev: "Previous photo", lbNext: "Next photo",
     pubLabels: { International: "International Journals & Proceedings", Domestic: "Domestic Journals", Other: "Other", Books: "Books" },
     pubChips: { International: "International", Domestic: "Domestic", Other: "Other", Books: "Books" },
     confLabels: { International: "International", Domestic: "Domestic" },
@@ -115,6 +117,8 @@
     projLoadFail: "프로젝트 정보를 불러오지 못했습니다.",
     pubNone: "등록된 논문이 없습니다.", confNone: "등록된 학술대회 발표가 없습니다.",
     patNone: "등록된 특허가 없습니다.", awdNone: "등록된 수상 실적이 없습니다.",
+    phNone: "등록된 사진이 없습니다.",
+    lbLabel: "사진 크게 보기", lbClose: "닫기", lbPrev: "이전 사진", lbNext: "다음 사진",
     pubLabels: { International: "International Journals & Proceedings", Domestic: "국내 논문", Other: "기타", Books: "저서" },
     pubChips: { International: "International", Domestic: "Domestic", Other: "기타", Books: "저서" },
     confLabels: { International: "International", Domestic: "Domestic (국내)" },
@@ -136,6 +140,7 @@
     { href: "research.html",     label: "Research" },
     { href: "publications.html", label: "Papers" },
     { href: "conferences.html",  label: "Conferences" },
+    { href: "photos.html",       label: "Photos" },
     { href: "patents.html",      label: "Patents" },
     { href: "awards.html",       label: "Awards" },
   ];
@@ -144,8 +149,8 @@
   // `key` to activate the matching sub-tab / section / filter from the URL hash.
   //   tabbed page (People): key = sub-tab id
   //   scroll page (Home):   key = on-page element id
-  // The list pages (Papers / Conferences / Patents / Research / Awards) are
-  // filled in below — there the key is a filter value, not a sub-tab.
+  // The list pages (Papers / Conferences / Patents / Research / Awards /
+  // Photos) are filled in below — there the key is a filter value, not a sub-tab.
   const SUBNAV = EN ? {
     "index.html": [
       { label: "About the Lab", key: "about" },
@@ -376,22 +381,25 @@
       </footer>`;
   }
 
-  // Awards is the one filter page with no category axis, so its sub-tabs are
-  // the years that actually appear in awards.json — that way no dropdown entry
-  // lands on an empty list. (fetchData is memoised, so this costs one small
-  // request per page load and none at all on awards.html itself.)
-  async function awardsSubnav() {
-    const awd = await fetchData("awards");
-    const list = (awd && Array.isArray(awd.awards)) ? awd.awards : [];
-    const years = Array.from(new Set(list.map(a => yearIn(a.date)).filter(Boolean)))
+  // Awards and Photos have no category axis, so their sub-tabs are the years
+  // that actually appear in the data — that way no dropdown entry
+  // lands on an empty list. (fetchData is memoised, so each costs one small
+  // request per page load and none at all on the page itself.)
+  async function yearSubnav(page, dataName, listKey) {
+    const d = await fetchData(dataName);
+    const list = (d && Array.isArray(d[listKey])) ? d[listKey] : [];
+    const years = Array.from(new Set(list.map(x => yearIn(x.date)).filter(Boolean)))
       .sort((a, b) => Number(b) - Number(a)).slice(0, 6);
     if (!years.length) return;
-    SUBNAV["awards.html"] = [{ label: T.fbAll, key: "all" }]
+    SUBNAV[page] = [{ label: T.fbAll, key: "all" }]
       .concat(years.map(y => ({ label: EN ? y : y + "년", key: y })));
   }
 
   async function mountChrome(site) {
-    await awardsSubnav();
+    await Promise.all([
+      yearSubnav("awards.html", "awards", "awards"),
+      yearSubnav("photos.html", "photos", "events"),
+    ]);
     const h = $("[data-header]"); if (h) h.outerHTML = buildHeader();
     const f = $("[data-footer]"); if (f) f.outerHTML = buildFooter(site);
     initNav();
@@ -846,7 +854,7 @@
   }
 
   // Apply the URL hash to a page's filter bars — this is what makes the header
-  // dropdowns of Papers / Conferences / Patents / Awards work: a category key
+  // dropdowns of Papers / Conferences / Patents / Awards / Photos work: a category key
   // selects that chip, a 4-digit key selects that year, "all"/no hash resets.
   function applyHashToFilters(root) {
     if (!root) return;
@@ -1006,6 +1014,121 @@
     return lis || '<div class="state">' + esc(T.awdNone) + "</div>";
   }
 
+  // Event photo albums (Photos page). photos.json is shared by both
+  // languages (no data/en/ file), so the EN site prefers the per-event
+  // title_en / description_en fields — empty means the Korean text shows
+  // as-is on /en/, like the other shared academic records.
+  function buildPhotoEvents(events) {
+    const html = events.map(ev => {
+      const title = (EN && ev.title_en) || ev.title || "";
+      const desc = (EN && ev.description_en) || ev.description || "";
+      const photos = Array.isArray(ev.photos) ? ev.photos.filter(Boolean) : [];
+      const meta = [
+        ev.date ? `<span class="date">${esc(fmtDate(ev.date))}</span>` : "",
+        desc ? escMultiline(desc) : "",
+      ].filter(Boolean).join(" · ");
+      // the thumb button carries the accessible name; the <img> alt stays
+      // empty so screen readers do not hear every photo twice
+      const thumbs = photos.map((p, i) =>
+        `<button type="button" class="photo-thumb" aria-label="${esc(title)} — ${i + 1}/${photos.length}">` +
+        `<img src="${cssUrl(imgSrc(p))}" alt="" loading="lazy"></button>`).join("");
+      return `<section class="photo-event">
+        <div class="group-head"><h3>${esc(title)}</h3><span class="count">${photos.length}${EN ? "" : "장"}</span></div>
+        ${meta ? `<p class="photo-event__meta">${meta}</p>` : ""}
+        ${photos.length ? `<div class="photo-grid" data-title="${esc(title)}">${thumbs}</div>` : ""}
+      </section>`;
+    }).join("");
+    return html || '<div class="state">' + esc(T.phNone) + "</div>";
+  }
+
+  /* ----- lightbox (Photos page) — one shared overlay, no dependencies ----- */
+  let _lbState = null;   // { srcs, title, idx, opener } while open, else null
+  function lbNode() {
+    let lb = $(".lightbox");
+    if (lb) return lb;
+    lb = document.createElement("div");
+    lb.className = "lightbox";
+    lb.hidden = true;
+    lb.setAttribute("role", "dialog");
+    lb.setAttribute("aria-modal", "true");
+    lb.setAttribute("aria-label", T.lbLabel);
+    lb.innerHTML =
+      `<button type="button" class="lightbox__close" aria-label="${esc(T.lbClose)}">✕</button>` +
+      `<button type="button" class="lightbox__nav lightbox__nav--prev" aria-label="${esc(T.lbPrev)}">‹</button>` +
+      `<figure class="lightbox__fig"><img class="lightbox__img" alt="">` +
+      `<figcaption class="lightbox__caption" aria-live="polite"></figcaption></figure>` +
+      `<button type="button" class="lightbox__nav lightbox__nav--next" aria-label="${esc(T.lbNext)}">›</button>`;
+    lb.addEventListener("click", (e) => {
+      if (e.target === lb || e.target.closest(".lightbox__close")) { lbClose(); return; }
+      if (e.target.closest(".lightbox__nav--prev")) lbStep(-1);
+      else if (e.target.closest(".lightbox__nav--next")) lbStep(1);
+    });
+    document.body.appendChild(lb);
+    return lb;
+  }
+  function lbStep(d) { if (_lbState) lbShow(_lbState.idx + d); }
+  function lbShow(i) {
+    const st = _lbState; if (!st || !st.srcs.length) return;
+    const n = st.srcs.length;
+    st.idx = ((i % n) + n) % n;              // prev/next wrap around
+    const lb = lbNode();
+    const img = lb.querySelector(".lightbox__img");
+    img.src = st.srcs[st.idx];
+    img.alt = st.title;
+    lb.querySelector(".lightbox__caption").textContent =
+      (st.title ? st.title + " · " : "") + (st.idx + 1) + " / " + n;
+    $$(".lightbox__nav", lb).forEach(b => { b.hidden = n < 2; });
+  }
+  function lbClose() {
+    const lb = $(".lightbox");
+    if (!lb || lb.hidden) return;
+    lb.hidden = true;
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
+    const opener = _lbState && _lbState.opener;
+    _lbState = null;
+    if (opener && document.contains(opener)) opener.focus();
+  }
+  // Wire the thumbs once per page load: prev/next stay inside the clicked
+  // event's grid, Esc / backdrop click close, focus returns to the thumb.
+  function initLightbox(root) {
+    root.addEventListener("click", (e) => {
+      const btn = e.target.closest(".photo-thumb");
+      if (!btn || !root.contains(btn)) return;
+      const grid = btn.closest(".photo-grid"); if (!grid) return;
+      _lbState = {
+        srcs: $$(".photo-thumb img", grid).map(im => im.getAttribute("src")),
+        title: grid.dataset.title || "",
+        idx: 0,
+        opener: btn,
+      };
+      const lb = lbNode();
+      lb.hidden = false;
+      // lock page scroll; pad for the vanished scrollbar so the content
+      // (and the sticky header) does not shift sideways on open/close
+      const sw = window.innerWidth - document.documentElement.clientWidth;
+      if (sw > 0) document.body.style.paddingRight = sw + "px";
+      document.body.style.overflow = "hidden";
+      lbShow($$(".photo-thumb", grid).indexOf(btn));
+      lb.querySelector(".lightbox__close").focus();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (!_lbState) return;
+      if (e.key === "Escape") lbClose();
+      else if (e.key === "ArrowLeft") lbStep(-1);
+      else if (e.key === "ArrowRight") lbStep(1);
+      else if (e.key === "Tab") {
+        // the 3 buttons are all the dialog offers — keep Tab cycling there
+        const btns = $$("button", lbNode()).filter(b => !b.hidden);
+        if (!btns.length) return;
+        const first = btns[0], last = btns[btns.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        else if (!lbNode().contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      }
+    });
+  }
+
   // Generic sub-tab nav (People).
   function mountSubnav(nav, root, tabs, defaultKey) {
     if (!root || !tabs.length) return;
@@ -1162,6 +1285,26 @@
   }
 
   /* ====================================================================
+     PHOTOS  (photos.html — event photo albums)
+     ==================================================================== */
+  async function renderPhotos() {
+    const site = await fetchData("site"); mountChrome(site);
+    const data = await fetchData("photos");
+    const root = $("#photos-root");
+    if (!root) return;
+    const events = (data && Array.isArray(data.events))
+      ? sortByDateDesc(data.events, e => e.date) : [];
+    root.innerHTML = filterBlock({
+      items: events, cats: null,
+      getCat: () => "", getYear: e => yearIn(e.date),
+      getText: e => [e.title, e.title_en, e.description, e.description_en].filter(Boolean).join(" "),
+      render: buildPhotoEvents,
+    });
+    wireFilters(root);
+    initLightbox(root);
+  }
+
+  /* ====================================================================
      PATENTS  (patents.html)
      ==================================================================== */
   async function renderPatents() {
@@ -1207,7 +1350,7 @@
     home: renderHome,
     people: renderPeople, research: renderResearch,
     publications: renderPublications, conferences: renderConferences,
-    patents: renderPatents, awards: renderAwards,
+    photos: renderPhotos, patents: renderPatents, awards: renderAwards,
   };
 
   document.addEventListener("DOMContentLoaded", function () {

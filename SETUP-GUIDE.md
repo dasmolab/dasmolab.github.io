@@ -186,7 +186,7 @@ GitHub Pages엔 서버가 없어서, "GitHub으로 로그인"을 처리할 작�
 dasmolabs.github.io/         (= 업로드하는 내용물의 최상위)
 ├─ index.html               # Home
 ├─ professor.html · members.html · projects.html
-├─ publications.html · conferences.html · patents.html · awards.html
+├─ publications.html · conferences.html · photos.html · patents.html · awards.html
 ├─ .nojekyll                # (필수) GitHub Jekyll 처리 비활성화 — 삭제 금지
 ├─ assets/
 │  ├─ css/styles.css        # 디자인
@@ -195,7 +195,7 @@ dasmolabs.github.io/         (= 업로드하는 내용물의 최상위)
 │  └─ uploads/              # 교수·구성원 사진 (CMS 업로드 위치)
 ├─ data/                    # ← 실제 "내용"이 들어있는 곳 (CMS가 이 파일들을 편집)
 │  ├─ site.json · professor.json · members.json · projects.json
-│  └─ publications.json · conferences.json · patents.json · awards.json
+│  └─ publications.json · conferences.json · photos.json · patents.json · awards.json
 └─ admin/
    ├─ index.html            # 편집 화면
    └─ config.yml            # 편집 양식 정의 / 저장소·로그인 설정

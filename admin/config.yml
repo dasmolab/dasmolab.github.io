@@ -21,8 +21,8 @@ backend:
 site_url: https://dasmolabs.github.io
 display_url: https://dasmolabs.github.io
 
-# 업로드한 이미지가 저장되는 위치(기본값). 구성원·소식 사진은 필드별로
-# 하위 폴더(assets/uploads/members, assets/uploads/news)에 따로 저장됩니다.
+# 업로드한 이미지가 저장되는 위치(기본값). 구성원·소식·행사 사진은 필드별로
+# 하위 폴더(assets/uploads/ 아래 members · news · photos)에 따로 저장됩니다.
 media_folder: assets/uploads
 public_folder: /assets/uploads
 
@@ -395,6 +395,38 @@ collections:
               - { name: conference_en, label: 학술대회명(영문, 선택), widget: string, required: false, hint: "학술대회명이 한글일 때만 채우세요. 영문 사이트에 이 이름이 대신 표시됩니다. 같은 학회는 늘 같은 영문 표기를 쓰세요." }
               - { name: date, label: 일자, widget: string, required: false, hint: "예: 2025. 10. 31." }
 
+  # ───────────────────────────── 행사 사진 ─────────────────────────────
+  - name: photos
+    label: 📷 행사 사진 (Photos)
+    description: "행사(학술대회·세미나·MT 등) 하나 = 항목 하나. 사진은 여러 장을 한 번에 올릴 수 있고, Photos 탭에 최신 행사부터 앨범으로 표시됩니다."
+    delete: false
+    files:
+      - name: photos
+        label: 행사 사진 목록
+        file: data/photos.json
+        fields:
+          - name: events
+            label: 행사
+            widget: list
+            collapsed: auto
+            add_to_top: true
+            thumbnail: photos.0
+            summary: "{{fields.date}} — {{fields.title}}"
+            fields:
+              - { name: date, label: 행사일, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: false, hint: "최신 행사가 위로 오도록 정렬하고 연도 메뉴·필터를 만드는 기준입니다." }
+              - { name: title, label: 행사명, widget: string, hint: "예: 2026 대한교통학회 춘계학술대회" }
+              - { name: title_en, label: 행사명(영문, 선택), widget: string, required: false, hint: "영문 사이트에 표시됩니다. 비우면 국문 행사명이 그대로 나옵니다." }
+              - { name: description, label: 짧은 설명(선택), widget: text, required: false, hint: "행사명 아래 한두 줄로 표시됩니다." }
+              - { name: description_en, label: 짧은 설명(영문, 선택), widget: text, required: false }
+              - name: photos
+                label: 사진 (여러 장 동시 선택 가능)
+                widget: image
+                multiple: true
+                required: false
+                media_folder: /assets/uploads/photos
+                public_folder: /assets/uploads/photos
+                hint: 가로 1600px 이하·1장당 500KB 이하로 줄여서 올리면 페이지가 빨라집니다. 파일명은 날짜-내용(예 20260516-kst.jpg)으로 지으면 나중에 찾기 쉽습니다.
+
   # ───────────────────────────── 특허 ─────────────────────────────
   - name: patents
     label: 🔖 특허 (Patents)
@@ -464,9 +496,10 @@ collections:
 
   # ═════════════════════════ 🌐 영문(/en/) 사이트 콘텐츠 ═════════════════════════
   #  영문 페이지는 아래 영문 파일을 먼저 읽습니다.
-  #  논문·학술대회·특허·수상은 영문 파일이 따로 없고 국문 데이터를 함께 씁니다 —
-  #  대신 항목마다 있는 영문 칸(서지정보(영문) · 학술대회명(영문) · 영문 명칭 ·
-  #  발명인(영문) · 제목(영문) · 시상(영문))을 채우면 영문 사이트가 그 값을 씁니다.
+  #  논문·학술대회·행사 사진·특허·수상은 영문 파일이 따로 없고 국문 데이터를
+  #  함께 씁니다 — 대신 항목마다 있는 영문 칸(서지정보(영문) · 학술대회명(영문) ·
+  #  행사명(영문) · 영문 명칭 · 발명인(영문) · 제목(영문) · 시상(영문))을 채우면
+  #  영문 사이트가 그 값을 씁니다.
   #  ★ 국문 쪽을 수정했다면, 같은 내용을 여기 영문 쪽에도 반영해 주세요.
   - name: site_en
     label: 🌐 [영문] 사이트 기본정보

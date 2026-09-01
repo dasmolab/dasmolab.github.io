@@ -27,6 +27,11 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/conferences.html"/>
   </url>
   <url>
+    <loc>https://dasmolabs.github.io/photos.html</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolabs.github.io/photos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/photos.html"/>
+  </url>
+  <url>
     <loc>https://dasmolabs.github.io/patents.html</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolabs.github.io/patents.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/patents.html"/>
@@ -60,6 +65,11 @@
     <loc>https://dasmolabs.github.io/en/conferences.html</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolabs.github.io/conferences.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/conferences.html"/>
+  </url>
+  <url>
+    <loc>https://dasmolabs.github.io/en/photos.html</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolabs.github.io/photos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/photos.html"/>
   </url>
   <url>
     <loc>https://dasmolabs.github.io/en/patents.html</loc>
