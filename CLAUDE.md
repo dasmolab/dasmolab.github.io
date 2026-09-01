@@ -181,7 +181,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 
 ## 9. 자주 하는 수정 (How-to)
 
-- **구성원 추가/졸업 처리** → `data/members.json`(국문)만 고쳐도 배포 때 영문 구조가 자동으로 따라온다(sync-i18n-structure — email 비움·기간/학위 표기 변환 포함). 단 **새 항목의 소속 등 영문 문구는 국문이 임시로 들어가므로** 🌐 [영문] 구성원에서 번역을 채울 것.
+- **구성원 추가/졸업 처리** → `data/members.json`(국문)만 고쳐도 배포 때 영문 구조가 자동으로 따라온다(sync-i18n-structure — email 비움·기간/학위 표기 변환 포함). 단 **새 항목의 소속 등 영문 문구는 국문이 임시로 들어가므로** 🌐 [영문] 구성원에서 번역을 채울 것. **소속 학과명 주의**: 학부연구생·교수는 도시공학과(Urban Engineering)지만 **석·박사 대학원은 도시계획·조경학과**(Dept. of Urban Planning and Landscape Architecture — 2026-09-01 확정, 가운뎃점 ·).
 - **모집 공고 올리기/내리기** → `data/news.json`에 category "모집"(EN `Recruiting`) + `deadline`(선택). People→지원 탭에 콜아웃으로 뜨고 마감일이 지나면 자동으로 내려간다. 그 외 분류의 소식 글은 News 폐지 후 사이트에 노출되지 않는다.
 - **교수 정보/연구자 링크** → `data/professor.json`(+en). Scholar/ORCID는 `links[]`에.
 - **지원 안내·FAQ** → `data/apply.json`(+en).

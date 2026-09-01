@@ -303,7 +303,7 @@ collections:
                 widget: string
                 required: false
                 hint: 재학생만 표시됩니다. 졸업생은 개인정보 보호를 위해 비워 두세요(입력해도 화면에 표시되지 않습니다).
-              - { name: affiliation, label: 소속 · 현재 직장, widget: string, required: false }
+              - { name: affiliation, label: 소속 · 현재 직장, widget: string, required: false, hint: "석·박사 대학원생은 '동아대학교 도시계획·조경학과 대학원', 학부연구생은 '동아대학교 도시공학과'로 쓰세요(대학원 학과명이 다릅니다). 졸업생은 현재 직장." }
               - { name: period, label: 재학기간 (재학생용), widget: string, required: false, hint: "예: 2024. 3. ~ 현재" }
               - { name: grad_year, label: 졸업년도 (졸업생용), widget: string, required: false, hint: "예: 2026. 2." }
               - { name: degree, label: 학위명 (졸업생용), widget: string, required: false, hint: "예: 공학박사 / 공학석사 / 공학사" }
@@ -735,7 +735,7 @@ collections:
                 public_folder: /assets/uploads/members
                 hint: 보통 국문 구성원과 같은 사진 파일을 선택합니다.
               - { name: email, label: 이메일(선택), widget: string, required: false, hint: 졸업생은 비워 두세요. }
-              - { name: affiliation, label: 소속 · 현재 직장(영문), widget: string, required: false }
+              - { name: affiliation, label: 소속 · 현재 직장(영문), widget: string, required: false, hint: "대학원생: Graduate School, Dept. of Urban Planning and Landscape Architecture, Dong-A University / 학부연구생: Undergraduate, Dept. of Urban Engineering, Dong-A University" }
               - { name: period, label: 재학기간(영문), widget: string, required: false, hint: "예: Mar 2024 – Present" }
               - { name: grad_year, label: 졸업년도(영문), widget: string, required: false, hint: "예: Feb 2026" }
               - { name: degree, label: 학위명(영문), widget: string, required: false, hint: "예: Ph.D. / M.S. / B.S." }
