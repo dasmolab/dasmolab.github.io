@@ -38,6 +38,7 @@
 ├─ admin/                  Sveltia CMS (config.yml = 편집 메뉴 정의, 국문+영문 컬렉션)
 ├─ scripts/bump-version.ps1  ?v= 캐시버전 일괄 갱신 스크립트 (배포 전 필수)
 ├─ scripts/check-i18n-parity.js  국/영문 데이터 정합성 점검 (node로 실행 · CI에서도 자동 실행)
+├─ scripts/sync-i18n-structure.js  국문→영문 데이터 구조 자동 동기화 (배포 워크플로가 push마다 실행)
 └─ *.md                    README, SETUP-GUIDE, EDIT-LOGIN-GUIDE, (이 파일)
 ```
 
@@ -109,7 +110,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 - **`site.json`** — `lab_abbr`, `lab_name_ko/en`, `tagline_en`, `intro1/2`, `about_photo`(선택), `research_topics[]`{icon,title,desc,tags[]}, `classes_undergrad/grad[]`(**`{name, link?}` 객체** — 문자열도 하위호환), `address`, `phone`, `email`, `office`, `transit_info`, `map_kakao/naver/google`.
 - **`apply.json`** — `intro`, `items[]`{label,hint}, `faq[]`{q,a} — People→지원 탭 내용(CMS 편집 가능).
 - **`professor.json`** — 기본 정보 + `links[]`{label,url}(Google Scholar 등) + `education[]`, `careers[]`, `societies[]`, `media[]`{**date, source**, title, url}, `committees[]`.
-- **`members.json`** — `members[]`{name_ko, name_en, group("current"|"alumni"), level("PhD"|"Master"|"Undergraduate"|"Bachelor"), photo, email(재학생만 표시·졸업생은 저장도 하지 않음), affiliation, period, grad_year, degree, thesis, `interests[]`}.
+- **`members.json`** — `members[]`{name_ko, name_en, group("current"|"alumni"), level("PhD"|"Master"|"Undergraduate"|"Bachelor"), photo, email(재학생만 표시·졸업생은 값을 비움 — 화면에 안 나오며 sync 스크립트가 자동으로 비움), affiliation, period, grad_year, degree, thesis, `interests[]`}.
 - **`news.json`** — `news[]`{date(YYYY-MM-DD), category("학술대회"|"세미나"|"랩미팅"|"모집"|"기타" — EN 파일은 "Conference"|"Seminar"|"Lab Meeting"|"Recruiting"|"Other"), `deadline`(모집 자동 종료일, 선택), title, body, photos[](문자열 배열), link}. **News 폐지 후에는 `모집`/`Recruiting` 항목만 사이트(People→지원)에 표시된다.**
 - **`projects.json`** — `projects[]`{period, title, org}. **진행 중/완료는 별도 필드가 아니라 `period`의 끝 월로 자동 판정**(`projStatus`) — 국문은 `2026. 7. ~ 2027. 3.`, 영문은 `Apr 2026 – Mar 2027` 형식을 지킬 것. 끝 월을 못 읽으면 그 해 12월로 보고 '진행 중'에 남긴다(과제가 목록에서 조용히 사라지지 않도록).
 - **`publications.json`** — `publications[]`{category("International"|"Domestic"|"Other"|"Books"), citation(연도는 반드시 `(YYYY)` 괄호 표기), `citation_en?`, venue?, sci(bool), link(DOI 권장)}.
@@ -157,6 +158,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
   # KO: http://localhost:8000/   EN: http://localhost:8000/en/
   ```
 - **배포**: `main` 병합 → `git push origin main` → **GitHub Actions 워크플로**(`.github/workflows/pages.yml`)가 사이트 파일을 그대로 업로드해 Pages에 게시(약 1~2분). 저장소 Settings ▸ Pages ▸ Source = "GitHub Actions". (레거시 Jekyll 빌더의 간헐적 "Page build failed"를 피하기 위해 2026-07-03 이 방식으로 전환.) CMS(/admin) 저장도 main 커밋 → 같은 워크플로로 배포된다.
+- **국문→영문 자동 동기화(2026-09-01)**: 배포 워크플로가 업로드 전에 `node scripts/sync-i18n-structure.js`를 실행해, 국문만 고쳐도 영문 데이터의 **구조**(구성원 명단·group/level·사진·기간/학위 표기 변환, 과제 목록·기간, 모집 공고, 언론보도 URL 집합, site 비번역 값)를 맞추고 결과를 자동 커밋한다. 졸업생 email은 국문 파일에서도 비운다(개인정보 규칙). **번역 문구는 만들지 못한다** — 새 항목엔 국문이 임시로 들어가며 parity 경고가 이를 알려준다. professor의 education/careers/societies/committees·site 목록·apply는 짝 기준이 없어 제외(parity 빨간 X가 잡음). 스크립트가 실패해도 배포는 진행된다(continue-on-error).
 - **캐시 무효화(중요)**: 루트 탭 8개 + 404.html + en/ 8개(총 17개)가 `app.js`/`styles.css`를 `?v=YYYYMMDD` 쿼리로 참조.
   **`app.js` 또는 `styles.css`를 수정하면 배포 전에 반드시 실행**:
   ```powershell
@@ -171,7 +173,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
   node scripts/check-i18n-parity.js
   ```
   국문과 영문의 **항목 수·구성원 소속·과제 기간·모집 공고 수**가 어긋나면 `❌ 오류`(exit 1),
-  공용 데이터(논문·학술대회·특허·수상)의 **영문 칸이 비어 있으면** `⚠️ 경고`(exit 0)로 알린다.
+  공용 데이터(논문·학술대회·특허·수상)의 **영문 칸이 비어 있거나 `data/en/` 파일에 한글이 남아 있으면** `⚠️ 경고`(exit 0)로 알린다.
   push할 때도 `.github/workflows/i18n-parity.yml`이 자동으로 돌지만 **배포(pages.yml)와는 분리된 워크플로**라
   여기서 실패해도 사이트 배포는 그대로 진행된다(빨간 X = "영문도 손봐야 함" 알림).
 
@@ -179,7 +181,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 
 ## 9. 자주 하는 수정 (How-to)
 
-- **구성원 추가/졸업 처리** → `data/members.json` **+ `data/en/members.json` 동시 수정**. 졸업 시 email 필드 삭제(개인정보).
+- **구성원 추가/졸업 처리** → `data/members.json`(국문)만 고쳐도 배포 때 영문 구조가 자동으로 따라온다(sync-i18n-structure — email 비움·기간/학위 표기 변환 포함). 단 **새 항목의 소속 등 영문 문구는 국문이 임시로 들어가므로** 🌐 [영문] 구성원에서 번역을 채울 것.
 - **모집 공고 올리기/내리기** → `data/news.json`에 category "모집"(EN `Recruiting`) + `deadline`(선택). People→지원 탭에 콜아웃으로 뜨고 마감일이 지나면 자동으로 내려간다. 그 외 분류의 소식 글은 News 폐지 후 사이트에 노출되지 않는다.
 - **교수 정보/연구자 링크** → `data/professor.json`(+en). Scholar/ORCID는 `links[]`에.
 - **지원 안내·FAQ** → `data/apply.json`(+en).
@@ -194,7 +196,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 
 ## 10. 주의점 / 함정
 
-- **국문/영문 데이터는 이중 관리**: `data/en/`에 파일이 존재하는 6종(site·news·professor·members·projects·apply)은 국문만 고치면 영문판이 낡는다. CMS의 🌐 [영문] 메뉴로 함께 수정할 것.
+- **국문/영문 데이터는 이중 관리**: `data/en/`에 파일이 존재하는 6종(site·news·professor·members·projects·apply)은 국문만 고치면 영문판이 낡는다. **구조는 배포 때 자동 동기화**(sync-i18n-structure)되지만 **번역 문구는 아니다** — 새 항목의 영문 문구는 CMS 🌐 [영문] 메뉴로 채울 것.
 - **국문이 정본이다.** 국·영문이 어긋났을 때는 국문 값을 정답으로 삼아 영문을 맞춘다(2026-08-13 확정). 실제로 어긋난 것들을 git 이력으로 추적해 보니 전부 "교수님이 국문 CMS에서만 고친 것"이었다 — 영문 쪽이 옳았던 사례는 없었다. 반대 방향으로 고치려면 먼저 확인할 것.
 - `SUBNAV`의 `key`와 `render*` 탭의 `key`가 **반드시 일치**해야 드롭다운 딥링크가 작동.
 - 모집 공고 category 값은 **언어별로 다름**(KO "모집" / EN "Recruiting"). 코드에서 비교할 땐 `RECRUIT_CAT` 상수 사용.

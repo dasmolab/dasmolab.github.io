@@ -182,6 +182,26 @@ for (const [file, key, koField, enField, label] of cover) {
   const dirty = items.filter((x) => x[enField] && hasKorean(x[enField]));
   if (dirty.length) warn(`${file}.json ${enField}: ${dirty.length}건에 한글이 섞여 있음`);
 }
+// 영문 파일(data/en/) 안에 남은 한글 — 자동 동기화(sync-i18n-structure)가
+// 새 항목에 임시로 채워 둔 국문이거나 덜 된 번역이다.
+const enKo = [];
+if (EN.members) for (const m of arr(EN.members, "members")) {
+  const who = m.name_en || m.name_ko;
+  if (hasKorean(m.affiliation)) enKo.push(`members "${who}" 소속`);
+  if (hasKorean(m.thesis)) enKo.push(`members "${who}" 논문명`);
+}
+if (EN.projects) arr(EN.projects, "projects").forEach((p, i) => {
+  if (hasKorean(p.title) || hasKorean(p.org)) enKo.push(`projects[${i}] 과제명·기관`);
+});
+if (EN.news) for (const n of arr(EN.news, "news")) {
+  if (n.category === "Recruiting" && (hasKorean(n.title) || hasKorean(n.body))) {
+    enKo.push(`news 모집 공고 "${String(n.title || "").slice(0, 20)}"`);
+  }
+}
+if (enKo.length) {
+  warn(`data/en/ 파일에 한글이 남아 있음(번역 필요): ${enKo.length}건 — ${enKo.slice(0, 6).join(", ")}${enKo.length > 6 ? " 외" : ""}`);
+}
+
 // 국내 학술대회 제목의 "한글 / English" 병기 규칙
 const conf = load("data/conferences.json");
 if (conf) {

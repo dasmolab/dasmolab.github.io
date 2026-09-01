@@ -13,7 +13,7 @@ on:
   workflow_dispatch:   # 저장소 Actions 탭에서 수동 실행도 가능
 
 permissions:
-  contents: read
+  contents: write   # KO→EN 자동 동기화 커밋을 push하기 위해 (배포 자체는 read면 충분)
   pages: write
   id-token: write
 
@@ -31,6 +31,27 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 동기화 커밋을 rebase-push하기 위해 전체 이력 필요
+
+      - name: KO → EN 데이터 구조 자동 동기화
+        # 국문 컬렉션만 저장해도 영문 데이터의 구조(명단·기간·사진 등)가 따라오게
+        # 한다. 번역 문구는 만들지 못하므로 parity 워크플로 경고로 남는다.
+        # 이 단계가 실패해도 배포는 막지 않는다 — 남은 구조 불일치는 다음 사람
+        # push의 parity 검사(빨간 X)가, 임시로 채워진 국문 문구는 parity 경고가 잡는다.
+        # (아래 push는 GITHUB_TOKEN이라 다른 워크플로를 다시 촉발하지 않고,
+        #  push가 실패해도 이번 배포 산출물에는 이미 동기화 결과가 들어간다.)
+        continue-on-error: true
+        run: |
+          node scripts/sync-i18n-structure.js
+          if ! git diff --quiet -- data; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data
+            git commit -m "auto: 국문 → 영문 데이터 구조 동기화 (sync-i18n-structure)"
+            git pull --rebase origin main || git rebase --abort
+            git push origin main || echo "::warning::동기화 커밋 push 실패 — 이번 배포에는 반영되며 다음 push 때 다시 시도됨"
+          fi
 
       - name: Assemble site (exclude VCS / CI / dev-only files)
         run: |
