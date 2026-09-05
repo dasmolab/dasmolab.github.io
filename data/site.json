@@ -68,25 +68,31 @@
   ],
   "classes_undergrad": [
     {
-      "name": "교통공학"
+      "name": "도시와 Smart Mobility (1학년 1학기 and 2학기)",
+      "link": ""
     },
     {
-      "name": "교통계획"
+      "name": "도시시설계획 (2학년 2학기)",
+      "link": ""
     },
     {
-      "name": "지능형교통시스템(ITS)"
+      "name": "교통학개론 (2학년 2학기)",
+      "link": ""
     },
     {
-      "name": "교통학개론"
+      "name": "교통계획 (3학년 1학기)",
+      "link": ""
     },
     {
-      "name": "도시시설계획"
+      "name": "교통공학 (3학년 2학기)",
+      "link": ""
     },
     {
-      "name": "졸업설계"
+      "name": "지능형교통시스템(ITS) (4학년 1학기)",
+      "link": ""
     },
     {
-      "name": "도시와 Smart Mobility, 1학년 1학기 and 2학기",
+      "name": "졸업설계 (4학년 1학기)",
       "link": ""
     }
   ],
