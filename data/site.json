@@ -1,7 +1,7 @@
 {
   "lab_abbr": "DASMO Labs 1.0",
   "lab_name_ko": "동아대학교 도시공학과 교통공학연구실",
-  "lab_name_en": "Dong-A Smart Mobility Laboratory",
+  "lab_name_en": "Dong-A Smart MObility Laboratory",
   "tagline_en": "Smart Mobility · ITS · MaaS",
   "intro1": "동아대학교 도시공학과 교통공학연구실은 4차산업혁명 시대 ICT 기술의 급속한 발전에 발맞춰 지능형교통체계(ITS, Intelligent Transportation System) 분야를 연구하고 있으며, 특히 미시적 시뮬레이션 기법을 활용한 개별 차량의 주행과 이동행태의 분석을 통해 각종 교통시설 및 운영에 대한 평가를 수행하고 있습니다.",
   "intro2": "또한 교통분야 패러다임의 변화 속에서 지속가능한 도시교통의 실현을 위한 친환경 교통수단, 스마트 모빌리티(Smart Mobility), MaaS(Mobility-as-a-Service) 등의 분야를 연구하고 있으며, 주로 이용자 측면의 안전성과 편리성 평가, 그리고 운영상의 효율성과 적용가능성에 대해 제언하는 역할을 수행하고 있습니다.",
@@ -84,6 +84,10 @@
     },
     {
       "name": "졸업설계"
+    },
+    {
+      "name": "도시와 Smart Mobility, 1학년 1학기 and 2학기",
+      "link": ""
     }
   ],
   "classes_grad": [
