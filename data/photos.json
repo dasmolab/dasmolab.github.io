@@ -31,26 +31,6 @@
           "src": "assets/uploads/photos/20260313-kst94-04.jpg",
           "caption": "「긴급차량 우선신호 운영방식에 따른 통행시간 단축 효과분석」 발표 — 우수논문상 수상",
           "caption_en": "Presentation — Travel Time Reduction by Emergency Vehicle Signal Preemption (Best Paper Award)"
-        },
-        {
-          "src": "assets/uploads/photos/20260313-kst94-05.jpg",
-          "caption": "행사장 앞에서",
-          "caption_en": "At the venue"
-        },
-        {
-          "src": "assets/uploads/photos/20260313-kst94-06.jpg",
-          "caption": "「긴급차량 우선신호 운영방식에 따른 통행시간 단축 효과분석」 발표",
-          "caption_en": "Presentation — Emergency Vehicle Signal Preemption"
-        },
-        {
-          "src": "assets/uploads/photos/20260313-kst94-07.jpg",
-          "caption": "「과속방지턱이 긴급차량 출동에 미치는 실증적 영향 분석」 발표",
-          "caption_en": "Presentation — Impact of Speed Bumps on Emergency Vehicle Dispatch"
-        },
-        {
-          "src": "assets/uploads/photos/20260313-kst94-08.jpg",
-          "caption": "발표 세션 현장",
-          "caption_en": "Presentation session"
         }
       ]
     },
@@ -65,7 +45,8 @@
       "description_en": "A seminar on the current state and future tasks of smart mobility projects in the Busan-Ulsan-Gyeongnam region.",
       "photos": [
         "assets/uploads/photos/20241121-its-seminar-01.jpg",
-        "assets/uploads/photos/20241121-its-seminar-02.jpg"
+        "assets/uploads/photos/20241121-its-seminar-02.jpg",
+        "assets/uploads/photos/20241121-its-seminar-03.jpg"
       ]
     }
   ]
