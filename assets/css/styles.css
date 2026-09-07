@@ -576,10 +576,32 @@ img.person__photo { width: 100%; }
 .photo-event__meta { color: var(--text-soft); font-size: .95rem; margin: -.5rem 0 .55rem; }
 .photo-event__meta .date { font-weight: 700; color: var(--teal-dark); font-variant-numeric: tabular-nums; }
 .photo-event__desc { margin: 0 0 .9rem; max-width: 62rem; }
-.photo-event > .photo-grid { margin-top: .55rem; }
-.photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .55rem; }
-@media (min-width: 620px) { .photo-grid { grid-template-columns: repeat(3, 1fr); gap: .8rem; } }
-@media (min-width: 980px) { .photo-grid { grid-template-columns: repeat(4, 1fr); } }
+.photo-event > .photo-strip { margin-top: .55rem; }
+/* 한 행사 = 한 줄. 썸네일 폭을 화면당 2장(모바일)/3장/4장(데스크톱)으로 잡아 두고,
+   그보다 많으면 트랙이 가로로 넘쳐 좌우 화살표(app.js syncPhotoStrip)가 나타난다.
+   스크롤바는 숨기지만 트랙 자체는 스와이프·휠로도 넘길 수 있다. */
+.photo-strip { position: relative; }
+.photo-track { display: flex; gap: .55rem; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity; scroll-behavior: smooth;
+  scrollbar-width: none; -ms-overflow-style: none; }
+.photo-track::-webkit-scrollbar { display: none; }
+.photo-track .photo-thumb { flex: 0 0 calc((100% - .55rem) / 2); scroll-snap-align: start; }
+@media (min-width: 620px) {
+  .photo-track { gap: .8rem; }
+  .photo-track .photo-thumb { flex-basis: calc((100% - 1.6rem) / 3); }
+}
+@media (min-width: 980px) { .photo-track .photo-thumb { flex-basis: calc((100% - 2.4rem) / 4); } }
+.photo-strip__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 2.3rem; height: 2.3rem; display: grid; place-items: center;
+  border: 1px solid var(--line); border-radius: 999px; background: rgba(255, 255, 255, .95);
+  color: var(--navy); font-size: 1.45rem; line-height: 1; cursor: pointer;
+  box-shadow: var(--shadow); transition: background .15s, opacity .15s; }
+.photo-strip__nav:hover { background: #fff; }
+.photo-strip__nav--prev { left: -.55rem; }
+.photo-strip__nav--next { right: -.55rem; }
+.photo-strip__nav[disabled] { opacity: .3; cursor: default; box-shadow: none; }
+/* 사진이 한 화면에 다 들어오면 화살표 자체를 감춘다 */
+.photo-strip:not(.is-scrollable) .photo-strip__nav { display: none; }
 /* 썸네일은 4:3 고정 박스에 cover로 채운다 — 원본 비율은 라이트박스(크게 보기)가
    보여주므로 여기서의 잘림은 문제가 되지 않는다. */
 .photo-thumb { padding: 0; border: 1px solid var(--line); background: var(--bg-muted);
@@ -609,7 +631,8 @@ img.person__photo { width: 100%; }
    ========================================================================== */
 @media print {
   .site-header, .site-footer, .subnav, .fbar, .skip-link, .hero,
-  .breadcrumb, .nav__toggle, .lightbox { display: none !important; }
+  .breadcrumb, .nav__toggle, .lightbox, .photo-strip__nav { display: none !important; }
+  .photo-track { flex-wrap: wrap; overflow: visible; }
   .page-hero { background: none !important; color: #000; padding: 0 0 .6rem; }
   .page-hero h1 { color: #000; }
   .page-hero::after { display: none; }

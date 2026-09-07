@@ -55,6 +55,7 @@
 - **Projects는 데이터에 분류 필드가 없어**, `period`의 **끝 월로 진행 중 / 완료를 계산**해 칩으로 쓴다(`projStatus`). 완료를 고르면 **연도 드롭다운이 완료 과제의 연도만** 다시 채운다(`filterBlock`의 `yearsFollowCat`).
 - **Awards는 분류 축이 없어**, 데이터에 **실제로 있는 연도**로 소탭을 만든다(`yearSubnav()` — 빈 연도가 메뉴에 안 뜨게. 최대 6개).
 - **Photos는 행사 유형**(학술대회·세미나·현장조사·연구실 활동)이 소탭이다(2026-09-07 — 그전에는 Awards처럼 연도였다). 연도는 페이지 안 드롭다운이 계속 맡으므로 `photos.html#2026` 같은 옛 링크도 그대로 작동한다(`applyHashToFilters`가 칩 → 연도 순으로 해시를 찾는다).
+  **Photos의 구분 칩만은 `presentCats`를 쓰지 않고 `PHOTO_CATS` 4종을 통째로 그린다**(2026-09-07 지도교수님 요청) — 아직 사진이 없는 유형도 칩에 남겨 어떤 활동을 기록하는 연구실인지 드러내기 위해서다. 빈 유형을 고르면 `T.fbNone`이 뜬다.
 
 KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전환된다.
 
@@ -101,6 +102,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 - `renderProjects` / `renderPublications`(Papers) / `renderConferences` / `renderPhotos` / `renderPatents` / `renderAwards` — **여섯 개 모두 소탭 없이 `filterBlock` 하나를 바로 렌더**한다. `renderPhotos`는 행사별 사진 앨범 + 라이트박스(`initLightbox`)를 얹는다. `renderProjects`는 구 `#areas` 딥링크만 홈으로 넘겨준 뒤 연구 과제 목록(진행 중/완료 칩 + 연도 + 검색)을 그린다.
 
 **순수 빌더** — `buildResearchTopics`(**홈 전용** — Projects 페이지는 더 이상 쓰지 않음), `buildLocation`, `buildProfessor`, `buildMembers`, `buildApply(prof, apply, recruit)`, `buildProjects`, `buildPublications`(EN은 `citation_en` 우선), `buildConferences`(EN은 `한글 / English` 제목의 영문부 + `conference_en` 우선), `buildPatents`(EN은 `name_en`·`inventors_en` 우선 + scope/type 영문 매핑), `buildAwards`(EN은 `title_en`·`venue_en` 우선), `buildPhotoEvents`(행사별 사진 앨범 — 유형 배지 + 날짜·장소·참여자 메타 + 설명. EN은 `title_en`·`description_en`·`place_en`·`people_en` 우선. 썸네일 클릭 → 라이트박스: 행사 안에서 ←/→ 순환, 사진별 캡션 표시, Esc·배경 클릭 닫기). 보조 함수 `photoList`(문자열 경로와 `{src,caption}` 객체를 함께 받는다)·`peopleText`·`listText`.
+  **한 행사의 사진은 줄바꿈 없이 한 줄(`.photo-track`)로 흐르고, 화면에 다 안 들어오면 좌우 화살표가 나타난다**(2026-09-07 — 그전에는 2~4열 그리드라 10장이면 세 줄로 쌓였다). 넘침 판정과 화살표 활성/비활성은 `syncPhotoStrip`, 배선은 `initPhotoStrips`(클릭·스크롤 capture·resize·썸네일 load). **필터로 목록을 다시 그리면 트랙이 새로 생기므로** `filterBlock`의 **`after` 훅**이 `applyFilter` 끝에서 `initPhotoStrips`를 다시 부른다 — Photos 말고는 이 훅을 쓰지 않는다.
   **`*_en` 우선 규칙은 렌더뿐 아니라 `render*`의 `getText`(검색 대상)에도 같이 넣어야 한다** — 안 그러면 영문 페이지에서 화면에 보이는 영어로 검색했는데 안 걸린다.
 
 **유틸** — `esc`, `escMultiline`, `imgSrc`(BASE 처리), `cssUrl`(경로를 속성/CSS url 안전하게), `linkify`, `richText`, `fmtDate`, `todayStr`, `recruitOpen`(deadline 지난 모집 자동 숨김), `fetchData`, `setState`, `yearIn`, `pubYear`, `dateKey`, **`periodEnd`**(과제 기간의 끝 월 → `YYYYMM`, 국문 `2026. 7. ~ 2027. 3.`·영문 `Apr 2026 – Mar 2027` 둘 다 해석) / **`projStatus`**(`ongoing`·`completed`).

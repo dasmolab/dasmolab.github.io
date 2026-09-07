@@ -209,13 +209,9 @@
   // Photos: the dropdown is the event type. The year still filters on the
   // page itself (and #2026 style deep links keep working — applyHashToFilters
   // matches a hash against the chips first, then the year <select>).
-  SUBNAV["photos.html"] = [
-    { label: T.fbAll, key: "all" },
-    { label: T.phChips.Conference, key: "Conference" },
-    { label: T.phChips.Seminar, key: "Seminar" },
-    { label: T.phChips.Fieldwork, key: "Fieldwork" },
-    { label: T.phChips.Lab, key: "Lab" },
-  ];
+  const PHOTO_CATS = ["Conference", "Seminar", "Fieldwork", "Lab"];
+  SUBNAV["photos.html"] = [{ label: T.fbAll, key: "all" }]
+    .concat(PHOTO_CATS.map(k => ({ label: T.phChips[k], key: k })));
   // Projects has no category field in the data: the chips are the project
   // status derived from the period's end date (projStatus). Picking 완료 then
   // narrows further by year — that year list follows the chip (yearsFollowCat).
@@ -864,6 +860,7 @@
     if (q && cfg.getText) list = list.filter(i => String(cfg.getText(i)).toLowerCase().indexOf(q) !== -1);
     listEl.innerHTML = list.length ? cfg.render(list)
       : '<div class="state">' + esc(T.fbNone) + "</div>";
+    if (cfg.after) cfg.after(listEl);   // 다시 그린 목록에 필요한 뒷정리(Photos: 사진 줄 화살표)
   }
 
   // Apply the URL hash to a page's filter bars — this is what makes the header
@@ -1069,10 +1066,57 @@
         <div class="group-head"><h3>${cat}${esc(title)}</h3><span class="count">${photos.length}${EN ? "" : "장"}</span></div>
         ${meta ? `<p class="photo-event__meta">${meta}</p>` : ""}
         ${desc ? `<p class="photo-event__desc">${escMultiline(desc)}</p>` : ""}
-        ${photos.length ? `<div class="photo-grid" data-title="${esc(title)}">${thumbs}</div>` : ""}
+        ${photos.length ? `<div class="photo-strip">
+          <button type="button" class="photo-strip__nav photo-strip__nav--prev" aria-label="${esc(T.lbPrev)}">‹</button>
+          <div class="photo-track" data-title="${esc(title)}">${thumbs}</div>
+          <button type="button" class="photo-strip__nav photo-strip__nav--next" aria-label="${esc(T.lbNext)}">›</button>
+        </div>` : ""}
       </section>`;
     }).join("");
     return html || '<div class="state">' + esc(T.phNone) + "</div>";
+  }
+
+  /* ----- 사진 줄(한 행사 = 한 줄) — 넘치면 좌우 화살표로 넘긴다 ----- */
+  // 썸네일은 CSS가 한 화면에 2장(모바일)/3장/4장(데스크톱)씩 보이도록 폭을 잡고,
+  // 그보다 많으면 트랙이 가로로 넘친다. 화살표는 그때만 나타난다.
+  function syncPhotoStrip(strip) {
+    if (!strip || !strip.classList || !strip.classList.contains("photo-strip")) return;
+    const track = strip.querySelector(".photo-track");
+    if (!track) return;
+    const max = track.scrollWidth - track.clientWidth;
+    strip.classList.toggle("is-scrollable", max > 4);
+    const prev = strip.querySelector(".photo-strip__nav--prev");
+    const next = strip.querySelector(".photo-strip__nav--next");
+    if (prev) prev.disabled = track.scrollLeft <= 2;
+    if (next) next.disabled = track.scrollLeft >= max - 2;
+  }
+
+  function initPhotoStrips(root) {
+    if (!root) return;
+    const syncAll = () => $$(".photo-strip", root).forEach(syncPhotoStrip);
+    if (!root._stripWired) {
+      root._stripWired = true;
+      root.addEventListener("click", (e) => {
+        const btn = e.target.closest(".photo-strip__nav");
+        if (!btn || btn.disabled || !root.contains(btn)) return;
+        const track = btn.closest(".photo-strip").querySelector(".photo-track");
+        if (!track) return;
+        const step = Math.max(track.clientWidth * 0.9, 160);   // 한 화면씩
+        track.scrollBy({ left: btn.classList.contains("photo-strip__nav--prev") ? -step : step,
+                         behavior: "smooth" });
+      });
+      // scroll은 버블링하지 않으므로 capture 단계에서 받는다
+      root.addEventListener("scroll", (e) => {
+        const t = e.target;
+        if (t && t.classList && t.classList.contains("photo-track")) syncPhotoStrip(t.parentNode);
+      }, true);
+      // 폭이 바뀌면(창 크기·지연 로드된 썸네일) 넘침 여부를 다시 잰다
+      window.addEventListener("resize", syncAll);
+      root.addEventListener("load", (e) => {
+        if (e.target && e.target.tagName === "IMG") syncAll();
+      }, true);
+    }
+    syncAll();
   }
 
   /* ----- lightbox (Photos page) — one shared overlay, no dependencies ----- */
@@ -1130,11 +1174,11 @@
     root.addEventListener("click", (e) => {
       const btn = e.target.closest(".photo-thumb");
       if (!btn || !root.contains(btn)) return;
-      const grid = btn.closest(".photo-grid"); if (!grid) return;
+      const track = btn.closest(".photo-track"); if (!track) return;
       _lbState = {
-        srcs: $$(".photo-thumb img", grid).map(im => im.getAttribute("src")),
-        caps: $$(".photo-thumb", grid).map(b => b.dataset.caption || ""),
-        title: grid.dataset.title || "",
+        srcs: $$(".photo-thumb img", track).map(im => im.getAttribute("src")),
+        caps: $$(".photo-thumb", track).map(b => b.dataset.caption || ""),
+        title: track.dataset.title || "",
         idx: 0,
         opener: btn,
       };
@@ -1145,7 +1189,7 @@
       const sw = window.innerWidth - document.documentElement.clientWidth;
       if (sw > 0) document.body.style.paddingRight = sw + "px";
       document.body.style.overflow = "hidden";
-      lbShow($$(".photo-thumb", grid).indexOf(btn));
+      lbShow($$(".photo-thumb", track).indexOf(btn));
       lb.querySelector(".lightbox__close").focus();
     });
     document.addEventListener("keydown", (e) => {
@@ -1332,15 +1376,19 @@
       ? sortByDateDesc(data.events, e => e.date) : [];
     root.innerHTML = filterBlock({
       items: events,
-      cats: presentCats(events, ["Conference", "Seminar", "Fieldwork", "Lab"], T.phChips),
+      // 다른 탭과 달리 데이터에 없는 유형도 칩으로 보여 준다(2026-09-07 요청) —
+      // 어떤 활동을 기록하는 연구실인지 목록이 비어 있어도 드러나도록.
+      cats: PHOTO_CATS.map(k => ({ key: k, label: T.phChips[k] })),
       getCat: e => e.category, getYear: e => yearIn(e.date),
       getText: e => [e.title, e.title_en, e.description, e.description_en,
                      e.place, e.place_en, listText(e.people), listText(e.people_en)]
                     .filter(Boolean).join(" "),
       render: buildPhotoEvents,
+      after: () => initPhotoStrips(root),   // 필터로 목록이 바뀔 때마다 화살표 재계산
     });
     wireFilters(root);
     initLightbox(root);
+    initPhotoStrips(root);
   }
 
   /* ====================================================================
