@@ -1,3 +1,52 @@
 {
-  "events": []
+  "events": [
+    {
+      "date": "2026-03-13",
+      "category": "Conference",
+      "title": "대한교통학회 2026 춘계학술대회 (제94회 학술발표회)",
+      "title_en": "2026 Spring Conference of the Korean Society of Transportation",
+      "place": "광주 김대중컨벤션센터",
+      "place_en": "Kimdaejung Convention Center, Gwangju",
+      "people": "김태규, 이은정, 정지효",
+      "people_en": "Taegyu Kim, Eunjung Lee, Jihyo Jung",
+      "description": "연구실에서 3편을 발표했고, 「긴급차량 우선신호 운영방식에 따른 통행시간 단축 효과분석」이 우수논문상을 받았습니다.",
+      "description_en": "The lab presented three papers, and \"Analysis of Travel Time Reduction Effects by Emergency Vehicle Signal Preemption Operation Modes\" received the Best Paper Award.",
+      "photos": [
+        {
+          "src": "assets/uploads/photos/20260313-kst94-01.jpg",
+          "caption": "학술발표회 참가 단체사진",
+          "caption_en": "Lab members at the conference"
+        },
+        {
+          "src": "assets/uploads/photos/20260313-kst94-02.jpg",
+          "caption": "「버스 운영체계에 따른 정시성 평가와 영향요인 분석」 발표",
+          "caption_en": "Presentation — Evaluation of Punctuality Based on Bus Operation Systems"
+        },
+        {
+          "src": "assets/uploads/photos/20260313-kst94-03.jpg",
+          "caption": "「과속방지턱이 긴급차량 출동에 미치는 실증적 영향 분석」 발표",
+          "caption_en": "Presentation — Impact of Speed Bumps on Emergency Vehicle Dispatch"
+        },
+        {
+          "src": "assets/uploads/photos/20260313-kst94-04.jpg",
+          "caption": "「긴급차량 우선신호 운영방식에 따른 통행시간 단축 효과분석」 발표 — 우수논문상 수상",
+          "caption_en": "Presentation — Travel Time Reduction by Emergency Vehicle Signal Preemption (Best Paper Award)"
+        }
+      ]
+    },
+    {
+      "date": "2024-11-21",
+      "category": "Seminar",
+      "title": "한국ITS학회 부울경지회 세미나 — 부울경 스마트 모빌리티 사업의 현재와 미래",
+      "title_en": "KITS Busan-Ulsan-Gyeongnam Chapter Seminar — Smart Mobility Projects in the Region",
+      "place": "부경대학교 환경해양관",
+      "place_en": "Pukyong National University, Busan",
+      "description": "부울경 지역의 스마트 모빌리티 사업 현황과 앞으로의 과제를 다룬 세미나입니다.",
+      "description_en": "A seminar on the current state and future tasks of smart mobility projects in the Busan-Ulsan-Gyeongnam region.",
+      "photos": [
+        "assets/uploads/photos/20241121-its-seminar-01.jpg",
+        "assets/uploads/photos/20241121-its-seminar-02.jpg"
+      ]
+    }
+  ]
 }
