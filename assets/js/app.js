@@ -66,6 +66,9 @@
     projLoadFail: "Could not load project information.",
     pubNone: "No publications yet.", confNone: "No conference presentations yet.",
     patNone: "No patents yet.", awdNone: "No awards yet.", phNone: "No photos yet.",
+    phLabels: { Conference: "Conference", Seminar: "Seminar & Workshop", Fieldwork: "Fieldwork & Experiment", Lab: "Lab Life" },
+    phChips: { Conference: "Conference", Seminar: "Seminar", Fieldwork: "Fieldwork", Lab: "Lab Life" },
+    phPlace: "Venue", phPeople: "With",
     lbLabel: "Photo viewer", lbClose: "Close", lbPrev: "Previous photo", lbNext: "Next photo",
     pubLabels: { International: "International Journals & Proceedings", Domestic: "Domestic Journals", Other: "Other", Books: "Books" },
     pubChips: { International: "International", Domestic: "Domestic", Other: "Other", Books: "Books" },
@@ -118,6 +121,9 @@
     pubNone: "등록된 논문이 없습니다.", confNone: "등록된 학술대회 발표가 없습니다.",
     patNone: "등록된 특허가 없습니다.", awdNone: "등록된 수상 실적이 없습니다.",
     phNone: "등록된 사진이 없습니다.",
+    phLabels: { Conference: "학술대회", Seminar: "세미나·워크숍", Fieldwork: "현장조사·실험", Lab: "연구실 활동" },
+    phChips: { Conference: "학술대회", Seminar: "세미나", Fieldwork: "현장조사", Lab: "연구실 활동" },
+    phPlace: "장소", phPeople: "참여",
     lbLabel: "사진 크게 보기", lbClose: "닫기", lbPrev: "이전 사진", lbNext: "다음 사진",
     pubLabels: { International: "International Journals & Proceedings", Domestic: "국내 논문", Other: "기타", Books: "저서" },
     pubChips: { International: "International", Domestic: "Domestic", Other: "기타", Books: "저서" },
@@ -199,6 +205,16 @@
     { label: T.patChips.Application, key: "Application" },
     { label: T.patChips.Registration, key: "Registration" },
     { label: T.patChips.Software, key: "Software" },
+  ];
+  // Photos: the dropdown is the event type. The year still filters on the
+  // page itself (and #2026 style deep links keep working — applyHashToFilters
+  // matches a hash against the chips first, then the year <select>).
+  SUBNAV["photos.html"] = [
+    { label: T.fbAll, key: "all" },
+    { label: T.phChips.Conference, key: "Conference" },
+    { label: T.phChips.Seminar, key: "Seminar" },
+    { label: T.phChips.Fieldwork, key: "Fieldwork" },
+    { label: T.phChips.Lab, key: "Lab" },
   ];
   // Projects has no category field in the data: the chips are the project
   // status derived from the period's end date (projStatus). Picking 완료 then
@@ -381,10 +397,10 @@
       </footer>`;
   }
 
-  // Awards and Photos have no category axis, so their sub-tabs are the years
-  // that actually appear in the data — that way no dropdown entry
-  // lands on an empty list. (fetchData is memoised, so each costs one small
-  // request per page load and none at all on the page itself.)
+  // Awards has no category axis, so its sub-tabs are the years that actually
+  // appear in the data — that way no dropdown entry lands on an empty list.
+  // (fetchData is memoised, so it costs one small request per page load and
+  // none at all on the Awards page itself.)
   async function yearSubnav(page, dataName, listKey) {
     const d = await fetchData(dataName);
     const list = (d && Array.isArray(d[listKey])) ? d[listKey] : [];
@@ -396,10 +412,7 @@
   }
 
   async function mountChrome(site) {
-    await Promise.all([
-      yearSubnav("awards.html", "awards", "awards"),
-      yearSubnav("photos.html", "photos", "events"),
-    ]);
+    await yearSubnav("awards.html", "awards", "awards");
     const h = $("[data-header]"); if (h) h.outerHTML = buildHeader();
     const f = $("[data-footer]"); if (f) f.outerHTML = buildFooter(site);
     initNav();
@@ -1018,23 +1031,44 @@
   // languages (no data/en/ file), so the EN site prefers the per-event
   // title_en / description_en fields — empty means the Korean text shows
   // as-is on /en/, like the other shared academic records.
+  // a comma list that accepts either "a, b" or ["a","b"] from the data
+  function listText(v) { return Array.isArray(v) ? v.filter(Boolean).join(", ") : String(v || ""); }
+  function peopleText(ev) { return listText((EN && ev.people_en) || ev.people); }
+  // photos[] takes a plain path (what the CMS writes when several files are
+  // uploaded at once) or {src, caption, caption_en} — captions show up in the
+  // lightbox, so only the photos worth a line need the longer form.
+  function photoList(ev) {
+    const arr = Array.isArray(ev.photos) ? ev.photos : [];
+    return arr.map(p => (typeof p === "string")
+      ? { src: p, caption: "" }
+      : { src: (p && p.src) || "", caption: (p && ((EN && p.caption_en) || p.caption)) || "" })
+      .filter(p => p.src);
+  }
+
   function buildPhotoEvents(events) {
     const html = events.map(ev => {
       const title = (EN && ev.title_en) || ev.title || "";
       const desc = (EN && ev.description_en) || ev.description || "";
-      const photos = Array.isArray(ev.photos) ? ev.photos.filter(Boolean) : [];
+      const place = (EN && ev.place_en) || ev.place || "";
+      const people = peopleText(ev);
+      const photos = photoList(ev);
+      const cat = T.phLabels[ev.category]
+        ? `<span class="photo-event__cat">${esc(T.phLabels[ev.category])}</span>` : "";
       const meta = [
         ev.date ? `<span class="date">${esc(fmtDate(ev.date))}</span>` : "",
-        desc ? escMultiline(desc) : "",
+        place ? esc(T.phPlace) + " " + esc(place) : "",
+        people ? esc(T.phPeople) + " " + esc(people) : "",
       ].filter(Boolean).join(" · ");
       // the thumb button carries the accessible name; the <img> alt stays
       // empty so screen readers do not hear every photo twice
       const thumbs = photos.map((p, i) =>
-        `<button type="button" class="photo-thumb" aria-label="${esc(title)} — ${i + 1}/${photos.length}">` +
-        `<img src="${cssUrl(imgSrc(p))}" alt="" loading="lazy"></button>`).join("");
+        `<button type="button" class="photo-thumb" data-caption="${esc(p.caption)}"` +
+        ` aria-label="${esc(title)} — ${i + 1}/${photos.length}${p.caption ? " · " + esc(p.caption) : ""}">` +
+        `<img src="${cssUrl(imgSrc(p.src))}" alt="" loading="lazy"></button>`).join("");
       return `<section class="photo-event">
-        <div class="group-head"><h3>${esc(title)}</h3><span class="count">${photos.length}${EN ? "" : "장"}</span></div>
+        <div class="group-head"><h3>${cat}${esc(title)}</h3><span class="count">${photos.length}${EN ? "" : "장"}</span></div>
         ${meta ? `<p class="photo-event__meta">${meta}</p>` : ""}
+        ${desc ? `<p class="photo-event__desc">${escMultiline(desc)}</p>` : ""}
         ${photos.length ? `<div class="photo-grid" data-title="${esc(title)}">${thumbs}</div>` : ""}
       </section>`;
     }).join("");
@@ -1076,7 +1110,8 @@
     img.src = st.srcs[st.idx];
     img.alt = st.title;
     lb.querySelector(".lightbox__caption").textContent =
-      (st.title ? st.title + " · " : "") + (st.idx + 1) + " / " + n;
+      [st.title, (st.caps && st.caps[st.idx]) || "", (st.idx + 1) + " / " + n]
+        .filter(Boolean).join(" · ");
     $$(".lightbox__nav", lb).forEach(b => { b.hidden = n < 2; });
   }
   function lbClose() {
@@ -1098,6 +1133,7 @@
       const grid = btn.closest(".photo-grid"); if (!grid) return;
       _lbState = {
         srcs: $$(".photo-thumb img", grid).map(im => im.getAttribute("src")),
+        caps: $$(".photo-thumb", grid).map(b => b.dataset.caption || ""),
         title: grid.dataset.title || "",
         idx: 0,
         opener: btn,
@@ -1295,9 +1331,12 @@
     const events = (data && Array.isArray(data.events))
       ? sortByDateDesc(data.events, e => e.date) : [];
     root.innerHTML = filterBlock({
-      items: events, cats: null,
-      getCat: () => "", getYear: e => yearIn(e.date),
-      getText: e => [e.title, e.title_en, e.description, e.description_en].filter(Boolean).join(" "),
+      items: events,
+      cats: presentCats(events, ["Conference", "Seminar", "Fieldwork", "Lab"], T.phChips),
+      getCat: e => e.category, getYear: e => yearIn(e.date),
+      getText: e => [e.title, e.title_en, e.description, e.description_en,
+                     e.place, e.place_en, listText(e.people), listText(e.people_en)]
+                    .filter(Boolean).join(" "),
       render: buildPhotoEvents,
     });
     wireFilters(root);

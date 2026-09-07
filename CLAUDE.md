@@ -53,7 +53,8 @@
 - Home/People: 소탭 = 섹션 스크롤 / 탭 전환.
 - Papers/Conferences/Patents: 단일 페이지지만 소탭이 **페이지 필터를 딥링크**한다 — `publications.html#Domestic` → Domestic 칩 자동 선택(`applyHashToFilters`).
 - **Projects는 데이터에 분류 필드가 없어**, `period`의 **끝 월로 진행 중 / 완료를 계산**해 칩으로 쓴다(`projStatus`). 완료를 고르면 **연도 드롭다운이 완료 과제의 연도만** 다시 채운다(`filterBlock`의 `yearsFollowCat`).
-- **Awards·Photos는 분류 축이 없어**, 데이터에 **실제로 있는 연도**로 소탭을 만든다(`yearSubnav()` — 빈 연도가 메뉴에 안 뜨게. 최대 6개).
+- **Awards는 분류 축이 없어**, 데이터에 **실제로 있는 연도**로 소탭을 만든다(`yearSubnav()` — 빈 연도가 메뉴에 안 뜨게. 최대 6개).
+- **Photos는 행사 유형**(학술대회·세미나·현장조사·연구실 활동)이 소탭이다(2026-09-07 — 그전에는 Awards처럼 연도였다). 연도는 페이지 안 드롭다운이 계속 맡으므로 `photos.html#2026` 같은 옛 링크도 그대로 작동한다(`applyHashToFilters`가 칩 → 연도 순으로 해시를 찾는다).
 
 KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전환된다.
 
@@ -64,7 +65,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 | **Projects** | projects | 전체(`all`) / 진행 중(`ongoing`) / 완료(`completed`) | 구분 칩 자동 선택 → 연도 드롭다운이 그 칩의 연도로 갱신 | `projects.json` |
 | **Papers** | publications | 전체(`all`) / `International` / `Domestic` / 기타(`Other`) / 저서(`Books`) | 구분 칩 자동 선택 | `publications.json` |
 | **Conferences** | conferences | 전체(`all`) / `International` / `Domestic` | 구분 칩 자동 선택 | `conferences.json` |
-| **Photos** | photos | 전체(`all`) / 연도(`2026`… 데이터 기준 최대 6개) | 연도 드롭다운 자동 선택 → 행사별 앨범(라이트박스) | `photos.json` |
+| **Photos** | photos | 전체(`all`) / 학술대회(`Conference`) / 세미나(`Seminar`) / 현장조사(`Fieldwork`) / 연구실 활동(`Lab`) | 구분 칩 자동 선택 → 행사별 앨범(라이트박스) | `photos.json` |
 | **Patents** | patents | 전체(`all`) / 출원(`Application`) / 등록(`Registration`) / 프로그램(`Software`) | 구분 칩 자동 선택 | `patents.json` |
 | **Awards** | awards | 전체(`all`) / 연도(`2026`·`2025`… 데이터 기준 최대 6개) | 연도 드롭다운 자동 선택 | `awards.json` |
 
@@ -99,7 +100,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 - `renderPeople` — 지도교수(`links` 연구자 프로필 버튼, media `date`+`source`)/구성원(관심분야 태그, group×level 미매칭도 '기타'로 표시)/졸업생/지원(**`apply.json` 데이터 + 현재 모집 공고 본문 + FAQ**).
 - `renderProjects` / `renderPublications`(Papers) / `renderConferences` / `renderPhotos` / `renderPatents` / `renderAwards` — **여섯 개 모두 소탭 없이 `filterBlock` 하나를 바로 렌더**한다. `renderPhotos`는 행사별 사진 앨범 + 라이트박스(`initLightbox`)를 얹는다. `renderProjects`는 구 `#areas` 딥링크만 홈으로 넘겨준 뒤 연구 과제 목록(진행 중/완료 칩 + 연도 + 검색)을 그린다.
 
-**순수 빌더** — `buildResearchTopics`(**홈 전용** — Projects 페이지는 더 이상 쓰지 않음), `buildLocation`, `buildProfessor`, `buildMembers`, `buildApply(prof, apply, recruit)`, `buildProjects`, `buildPublications`(EN은 `citation_en` 우선), `buildConferences`(EN은 `한글 / English` 제목의 영문부 + `conference_en` 우선), `buildPatents`(EN은 `name_en`·`inventors_en` 우선 + scope/type 영문 매핑), `buildAwards`(EN은 `title_en`·`venue_en` 우선), `buildPhotoEvents`(행사별 사진 앨범 — EN은 `title_en`·`description_en` 우선. 썸네일 클릭 → 라이트박스: 행사 안에서 ←/→ 순환, Esc·배경 클릭 닫기).
+**순수 빌더** — `buildResearchTopics`(**홈 전용** — Projects 페이지는 더 이상 쓰지 않음), `buildLocation`, `buildProfessor`, `buildMembers`, `buildApply(prof, apply, recruit)`, `buildProjects`, `buildPublications`(EN은 `citation_en` 우선), `buildConferences`(EN은 `한글 / English` 제목의 영문부 + `conference_en` 우선), `buildPatents`(EN은 `name_en`·`inventors_en` 우선 + scope/type 영문 매핑), `buildAwards`(EN은 `title_en`·`venue_en` 우선), `buildPhotoEvents`(행사별 사진 앨범 — 유형 배지 + 날짜·장소·참여자 메타 + 설명. EN은 `title_en`·`description_en`·`place_en`·`people_en` 우선. 썸네일 클릭 → 라이트박스: 행사 안에서 ←/→ 순환, 사진별 캡션 표시, Esc·배경 클릭 닫기). 보조 함수 `photoList`(문자열 경로와 `{src,caption}` 객체를 함께 받는다)·`peopleText`·`listText`.
   **`*_en` 우선 규칙은 렌더뿐 아니라 `render*`의 `getText`(검색 대상)에도 같이 넣어야 한다** — 안 그러면 영문 페이지에서 화면에 보이는 영어로 검색했는데 안 걸린다.
 
 **유틸** — `esc`, `escMultiline`, `imgSrc`(BASE 처리), `cssUrl`(경로를 속성/CSS url 안전하게), `linkify`, `richText`, `fmtDate`, `todayStr`, `recruitOpen`(deadline 지난 모집 자동 숨김), `fetchData`, `setState`, `yearIn`, `pubYear`, `dateKey`, **`periodEnd`**(과제 기간의 끝 월 → `YYYYMM`, 국문 `2026. 7. ~ 2027. 3.`·영문 `Apr 2026 – Mar 2027` 둘 다 해석) / **`projStatus`**(`ongoing`·`completed`).
@@ -116,7 +117,8 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 - **`projects.json`** — `projects[]`{period, title, org}. **진행 중/완료는 별도 필드가 아니라 `period`의 끝 월로 자동 판정**(`projStatus`) — 국문은 `2026. 7. ~ 2027. 3.`, 영문은 `Apr 2026 – Mar 2027` 형식을 지킬 것. 끝 월을 못 읽으면 그 해 12월로 보고 '진행 중'에 남긴다(과제가 목록에서 조용히 사라지지 않도록).
 - **`publications.json`** — `publications[]`{category("International"|"Domestic"|"Other"|"Books"), citation(연도는 반드시 `(YYYY)` 괄호 표기), `citation_en?`, venue?, sci(bool), link(DOI 권장)}.
 - **`conferences.json`** — `conferences[]`{category, title(국내는 `한글 / English` 병기), conference, `conference_en?`, date}.
-- **`photos.json`** — `events[]`{date(YYYY-MM-DD), title, `title_en?`, description?, `description_en?`, photos[](문자열 배열, `assets/uploads/photos/`)}. 행사 하나 = 항목 하나. Photos 탭이 date 내림차순으로 행사별 앨범을 그린다.
+- **`photos.json`** — `events[]`{date(YYYY-MM-DD), `category`("Conference"|"Seminar"|"Fieldwork"|"Lab"), title, `title_en?`, `place?`, `place_en?`, `people?`(문자열 또는 배열), `people_en?`, description?, `description_en?`, photos[]}. 행사 하나 = 항목 하나. Photos 탭이 date 내림차순으로 행사별 앨범을 그린다.
+  **`photos[]`는 두 가지 모양을 받는다** — 문자열 경로(CMS가 여러 장 동시 업로드할 때 쓰는 모양)와 `{src, caption?, caption_en?}` 객체. 캡션은 라이트박스에 뜨므로 **설명을 붙일 사진만** 객체로 바꾸면 된다(`photoList`가 흡수).
 - **`patents.json`** — `patents[]`{category("Application"|"Registration"|"Software"), name, `name_en?`, scope, type, date, number, inventors, `inventors_en?`}.
 - **`awards.json`** — `awards[]`{date, title_ko, title_en?, venue, `venue_en?`}.
 
@@ -187,7 +189,7 @@ KO⇄EN 토글은 현재 페이지·현재 소탭(해시)을 유지한 채 전�
 - **교수 정보/연구자 링크** → `data/professor.json`(+en). Scholar/ORCID는 `links[]`에.
 - **지원 안내·FAQ** → `data/apply.json`(+en).
 - **연구 분야/강의/소개/오시는 길** → `data/site.json`(+en). **연구 분야는 홈에만** 나온다(Projects 탭에서 중복 제거, 2026-07-27).
-- **행사 사진 올리기** → CMS `📷 행사 사진`에서 행사 추가(행사일·행사명 + 사진 여러 장 동시 업로드 — `assets/uploads/photos/`에 저장). 파일로 고칠 땐 `data/photos.json` 하나면 된다(영문 파일 없음). 정렬은 date 내림차순 자동이라 순서 걱정이 없고, 영문 행사명은 `title_en`(비우면 국문이 그대로 노출).
+- **행사 사진 올리기** → CMS `📷 행사 사진`에서 행사 추가(행사일 + **행사 유형** + 행사명 + 장소·참여자(선택) + 사진 여러 장 동시 업로드 — `assets/uploads/photos/`에 저장). 파일로 고칠 땐 `data/photos.json` 하나면 된다(영문 파일 없음). 정렬은 date 내림차순 자동이라 순서 걱정이 없고, 영문 문구는 `title_en`·`place_en`·`people_en`·`description_en`(비우면 국문이 그대로 노출). **행사 유형을 비우면** 그 행사는 구분 칩에 안 잡히고 '전체'에서만 보인다.
 - **연구 과제 추가** → `data/projects.json` **+ `data/en/projects.json` 동시 수정**. 맨 위(최신)에 넣으면 그 순서대로 보인다(코드가 재정렬하지 않음). 연도 필터는 `period`의 **첫** 4자리, 진행 중/완료 구분은 `period`의 **끝 월**로 자동 판정되므로 **기간 표기 형식만 지키면 손댈 것이 없다**(끝나는 달이 지나면 다음 달에 저절로 '완료'로 넘어감).
 - **새 소탭 추가** → ① `app.js`의 `SUBNAV`(KO/EN 두 벌 모두) ② 해당 `render*`의 탭 배열, 같은 `key`로.
 - **UI 문자열 수정** → `app.js`의 `T` 테이블(KO/EN 두 곳).

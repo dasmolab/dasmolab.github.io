@@ -398,7 +398,7 @@ collections:
   # ───────────────────────────── 행사 사진 ─────────────────────────────
   - name: photos
     label: 📷 행사 사진 (Photos)
-    description: "행사(학술대회·세미나·MT 등) 하나 = 항목 하나. 사진은 여러 장을 한 번에 올릴 수 있고, Photos 탭에 최신 행사부터 앨범으로 표시됩니다."
+    description: "행사(학술대회·세미나·현장조사·연구실 활동) 하나 = 항목 하나. 사진은 여러 장을 한 번에 올릴 수 있고, Photos 탭에 최신 행사부터 앨범으로 표시됩니다. 행사 유형·장소·참여자를 채우면 방문자가 유형별로 골라 볼 수 있습니다."
     delete: false
     files:
       - name: photos
@@ -413,9 +413,23 @@ collections:
             thumbnail: photos.0
             summary: "{{fields.date}} — {{fields.title}}"
             fields:
-              - { name: date, label: 행사일, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: false, hint: "최신 행사가 위로 오도록 정렬하고 연도 메뉴·필터를 만드는 기준입니다." }
+              - { name: date, label: 행사일, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: false, hint: "최신 행사가 위로 오도록 정렬하고 연도 필터를 만드는 기준입니다." }
+              - name: category
+                label: 행사 유형
+                widget: select
+                default: Conference
+                options:
+                  - { label: "학술대회", value: Conference }
+                  - { label: "세미나·워크숍", value: Seminar }
+                  - { label: "현장조사·실험", value: Fieldwork }
+                  - { label: "연구실 활동 (MT·졸업·회식 등)", value: Lab }
+                hint: "Photos 탭의 구분 칩과 헤더 드롭다운 메뉴가 이 값으로 만들어집니다."
               - { name: title, label: 행사명, widget: string, hint: "예: 2026 대한교통학회 춘계학술대회" }
               - { name: title_en, label: 행사명(영문, 선택), widget: string, required: false, hint: "영문 사이트에 표시됩니다. 비우면 국문 행사명이 그대로 나옵니다." }
+              - { name: place, label: "장소 (선택)", widget: string, required: false, hint: "예: 부산 벡스코 · 동아대 승학캠퍼스" }
+              - { name: place_en, label: "장소(영문, 선택)", widget: string, required: false }
+              - { name: people, label: "참여자 (선택)", widget: string, required: false, hint: "쉼표로 구분해 적어 주세요. 예: 홍길동, 김철수" }
+              - { name: people_en, label: "참여자(영문, 선택)", widget: string, required: false }
               - { name: description, label: 짧은 설명(선택), widget: text, required: false, hint: "행사명 아래 한두 줄로 표시됩니다." }
               - { name: description_en, label: 짧은 설명(영문, 선택), widget: text, required: false }
               - name: photos

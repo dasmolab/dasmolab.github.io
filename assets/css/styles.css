@@ -569,8 +569,14 @@ img.person__photo { width: 100%; }
    행사 사진 (Photos)
    ========================================================================== */
 .photo-event { margin-bottom: 1.2rem; }
-.photo-event__meta { color: var(--text-soft); font-size: .95rem; margin: -.5rem 0 1.1rem; }
+/* 행사 유형 배지 — 제목 앞에 붙어 학술대회/세미나/현장조사/연구실 활동을 구분한다 */
+.photo-event__cat { display: inline-block; margin-right: .5rem; padding: .1rem .5rem;
+  border-radius: 999px; background: rgba(11, 117, 104, .12); color: var(--teal-dark);
+  font-size: .72rem; font-weight: 700; letter-spacing: .01em; vertical-align: middle; }
+.photo-event__meta { color: var(--text-soft); font-size: .95rem; margin: -.5rem 0 .55rem; }
 .photo-event__meta .date { font-weight: 700; color: var(--teal-dark); font-variant-numeric: tabular-nums; }
+.photo-event__desc { margin: 0 0 .9rem; max-width: 62rem; }
+.photo-event > .photo-grid { margin-top: .55rem; }
 .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .55rem; }
 @media (min-width: 620px) { .photo-grid { grid-template-columns: repeat(3, 1fr); gap: .8rem; } }
 @media (min-width: 980px) { .photo-grid { grid-template-columns: repeat(4, 1fr); } }
