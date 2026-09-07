@@ -12,7 +12,7 @@
    The site shows 8 main tabs; each academic-record tab has its own page
    and data file:
      People       = professor.json + members.json (+ apply.json, news 모집)
-     Research     = projects.json  (research areas live on Home only)
+     Projects     = projects.json  (research areas live on Home only)
      Papers       = publications.json   (publications.html)
      Conferences  = conferences.json
      Photos       = photos.json  (event photo albums)
@@ -137,7 +137,7 @@
   const NAV = [
     { href: "index.html",        label: "Home" },
     { href: "people.html",       label: "People" },
-    { href: "research.html",     label: "Research" },
+    { href: "projects.html",     label: "Projects" },
     { href: "publications.html", label: "Papers" },
     { href: "conferences.html",  label: "Conferences" },
     { href: "photos.html",       label: "Photos" },
@@ -149,7 +149,7 @@
   // `key` to activate the matching sub-tab / section / filter from the URL hash.
   //   tabbed page (People): key = sub-tab id
   //   scroll page (Home):   key = on-page element id
-  // The list pages (Papers / Conferences / Patents / Research / Awards /
+  // The list pages (Papers / Conferences / Patents / Projects / Awards /
   // Photos) are filled in below — there the key is a filter value, not a sub-tab.
   const SUBNAV = EN ? {
     "index.html": [
@@ -200,10 +200,10 @@
     { label: T.patChips.Registration, key: "Registration" },
     { label: T.patChips.Software, key: "Software" },
   ];
-  // Research has no category field in the data: the chips are the project
+  // Projects has no category field in the data: the chips are the project
   // status derived from the period's end date (projStatus). Picking 완료 then
   // narrows further by year — that year list follows the chip (yearsFollowCat).
-  SUBNAV["research.html"] = [
+  SUBNAV["projects.html"] = [
     { label: T.fbAll, key: "all" },
     { label: T.projChips.ongoing, key: "ongoing" },
     { label: T.projChips.completed, key: "completed" },
@@ -468,7 +468,7 @@
       introEl.innerHTML = parts + photo;
     }
 
-    // research topics (shared with the Research page)
+    // research-area cards (Home only — the Projects page lists the projects)
     const topicsEl = $("#home-topics");
     if (topicsEl) topicsEl.innerHTML = buildResearchTopics(site);
 
@@ -503,7 +503,7 @@
      Content builders — pure (data → HTML string), reused by merged pages.
      ==================================================================== */
 
-  // Research-area cards (Home — the Research page no longer repeats them)
+  // Research-area cards (Home — the Projects page no longer repeats them)
   function buildResearchTopics(site) {
     if (!site || !Array.isArray(site.research_topics)) return "";
     return site.research_topics.map(t => {
@@ -832,7 +832,7 @@
     const cat = chip ? (chip.dataset.cat || "") : "";
     const sel = bar ? bar.querySelector(".fyear") : null;
     let year = sel ? sel.value : "";
-    // Research: after picking 진행 중 / 완료 the year list must offer only the
+    // Projects: after picking 진행 중 / 완료 the year list must offer only the
     // years that chip actually has, so 완료 → 연도 never lands on an empty list.
     if (cfg.yearsFollowCat && sel) {
       const pool = cat ? cfg.items.filter(i => cfg.getCat(i) === cat) : cfg.items;
@@ -1211,17 +1211,17 @@
   }
 
   /* ====================================================================
-     RESEARCH  (research.html — projects only)
-     The research areas used to sit here as a second sub-tab, but they are
-     already on Home (#research), so the page now opens straight on the
-     project list (2026-07).
+     PROJECTS  (projects.html — research projects)
+     The research areas used to sit here as a second sub-tab (and the tab was
+     named Research until 2026-09), but they are on Home (#research), so this
+     page opens straight on the project list.
      ==================================================================== */
-  async function renderResearch() {
+  async function renderProjects() {
     // legacy deep link from the two-sub-tab era → the areas now live on Home
     if (hashKey() === "areas") { location.replace("index.html#research"); return; }
     const site = await fetchData("site"); mountChrome(site);
     const data = await fetchData("projects");
-    const root = $("#research-root");
+    const root = $("#projects-root");
     if (!root) return;
     const projects = (data && Array.isArray(data.projects)) ? data.projects : null;
     if (!projects) { setState(root, T.projLoadFail); return; }
@@ -1348,7 +1348,7 @@
      ==================================================================== */
   const PAGES = {
     home: renderHome,
-    people: renderPeople, research: renderResearch,
+    people: renderPeople, projects: renderProjects,
     publications: renderPublications, conferences: renderConferences,
     photos: renderPhotos, patents: renderPatents, awards: renderAwards,
   };

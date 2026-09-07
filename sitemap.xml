@@ -12,9 +12,9 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/people.html"/>
   </url>
   <url>
-    <loc>https://dasmolabs.github.io/research.html</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolabs.github.io/research.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/research.html"/>
+    <loc>https://dasmolabs.github.io/projects.html</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolabs.github.io/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/projects.html"/>
   </url>
   <url>
     <loc>https://dasmolabs.github.io/publications.html</loc>
@@ -52,9 +52,9 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/people.html"/>
   </url>
   <url>
-    <loc>https://dasmolabs.github.io/en/research.html</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolabs.github.io/research.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/research.html"/>
+    <loc>https://dasmolabs.github.io/en/projects.html</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://dasmolabs.github.io/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dasmolabs.github.io/en/projects.html"/>
   </url>
   <url>
     <loc>https://dasmolabs.github.io/en/publications.html</loc>
