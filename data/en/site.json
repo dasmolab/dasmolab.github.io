@@ -1,7 +1,7 @@
 {
   "lab_abbr": "DASMO Labs 1.0",
   "lab_name_ko": "동아대학교 도시공학과 교통공학연구실",
-  "lab_name_en": "Dong-A Smart Mobility Laboratory",
+  "lab_name_en": "Dong-A Smart MObility Laboratory",
   "tagline_en": "Smart Mobility · ITS · MaaS",
   "intro1": "The Transportation Engineering Laboratory in the Department of Urban Engineering at Dong-A University conducts research in the field of Intelligent Transportation Systems (ITS) in step with the rapid advancement of ICT technologies in the era of the Fourth Industrial Revolution. In particular, by leveraging microscopic simulation techniques to analyze the driving and movement behavior of individual vehicles, we carry out evaluations of various transportation facilities and their operations.",
   "intro2": "In addition, amid the shifting paradigm of the transportation field, we conduct research on eco-friendly transportation modes, Smart Mobility, and Mobility-as-a-Service (MaaS) for the realization of sustainable urban transportation. We primarily focus on evaluating safety and convenience from the user's perspective, and on providing recommendations regarding operational efficiency and applicability.",
@@ -68,22 +68,32 @@
   ],
   "classes_undergrad": [
     {
-      "name": "Transportation Engineering"
+      "name": "Cities and Smart Mobility (Year 1, Spring & Fall)",
+      "link": ""
     },
     {
-      "name": "Transportation Planning"
+      "name": "Urban Facility Planning (Year 2, Fall)",
+      "link": ""
     },
     {
-      "name": "Intelligent Transportation Systems (ITS)"
+      "name": "Introduction to Transportation (Year 2, Fall)",
+      "link": ""
     },
     {
-      "name": "Introduction to Transportation"
+      "name": "Transportation Planning (Year 3, Spring)",
+      "link": ""
     },
     {
-      "name": "Urban Facility Planning"
+      "name": "Transportation Engineering (Year 3, Fall)",
+      "link": ""
     },
     {
-      "name": "Capstone Design"
+      "name": "Intelligent Transportation Systems (ITS) (Year 4, Spring)",
+      "link": ""
+    },
+    {
+      "name": "Capstone Design (Year 4, Spring)",
+      "link": ""
     }
   ],
   "classes_grad": [
@@ -103,7 +113,8 @@
   "address": "Room 1404, Engineering Building 1, Seunghak Campus, Dong-A University, Hadan-dong, Saha-gu, Busan",
   "phone": "051-200-7665",
   "email": "hoekim@dau.ac.kr",
-  "office": "Room 1404 (S03-0404), Engineering Building 1, Seunghak Campus, Dong-A University",  "transit_info": "Take Busan Metro Line 1 to Hadan Station, then the Dong-A University shuttle bus or a local bus to Seunghak Campus.",
+  "office": "Room 1404 (S03-0404), Engineering Building 1, Seunghak Campus, Dong-A University",
+  "transit_info": "Take Busan Metro Line 1 to Hadan Station, then the Dong-A University shuttle bus or a local bus to Seunghak Campus.",
   "map_kakao": "https://map.kakao.com/link/search/동아대학교%20승학캠퍼스",
   "map_naver": "https://map.naver.com/p/search/동아대학교%20승학캠퍼스",
   "map_google": "https://www.google.com/maps/search/?api=1&query=Dong-A%20University%20Seunghak%20Campus"
